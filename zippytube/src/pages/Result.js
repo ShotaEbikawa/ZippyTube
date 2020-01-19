@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux';
 import { fetchResults, getVideo } from '../redux/action/mediaAction';
 import Card from '@material-ui/core/Card';
+import Paper from '@material-ui/core/Paper'
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
@@ -26,6 +27,10 @@ const useStyles = makeStyles(theme => ({
     contentSize: {
         width:'50vw',
         height:'10rem',
+    },
+    containerStyle: {
+        backgroundColor: '#f2f2f2',
+        paddingLeft:'2vw',
     },
     cover: {
       width:'100%',
@@ -121,7 +126,12 @@ const Results = ({dispatch,history,media,query}) => {
         return (
             <>
             <Container>
-                {medias}
+                <br/>
+                <Paper>
+                    <div className={classes.containerStyle}>
+                        {medias}
+                    </div>
+                </Paper>
             </Container>
             </>
         )

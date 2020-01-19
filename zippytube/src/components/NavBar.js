@@ -97,7 +97,7 @@ const NavBar = () => {
                     <SearchBar/>
                 </div>
                 <div className={classes.iconContainer}>
-                    <VideoButton/>
+                    {isAuthenticated() ? <VideoButton/> : ''}
                     <AppsButton/>
                     <NotificationButton/>
                     {isAuthenticated() ? <Avatar/> : <SignInModal/>}
