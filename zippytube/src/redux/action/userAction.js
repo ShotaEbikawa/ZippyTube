@@ -1,12 +1,19 @@
 import axios from 'axios'
 
+
+// registerUser sends a request to the server to 
+// use an entered data to create an account
 export const registerUser = (newUser, history) => {
     axios.post('/auth/register-account', newUser)
     .then(res => { history.push('/'); })
     .catch(err => { console.log('err'); })
 }
 
-export const loginUser = (userName, passWord) => {
+
+// loginUser sends a request to the server to check whether
+// the given username and password matches in any of the 
+// document in the users collecion
+export const loginUser = (userName, passWord) => (dispatch) => {
     let userObj = {
         username: userName, 
         password: passWord
@@ -17,9 +24,14 @@ export const loginUser = (userName, passWord) => {
         document.cookie = `id=${res.data.id};`;
         document.cookie = `token=${res.data.token};`;
         console.log('redirecting...');
-        window.location.reload();
     })
-    .catch(err => {console.log(err)})
+    .then(result => {
+        dispatch({
+            type: 'CACHE_USERNAME',
+            payload: userName,
+        })
+    })
+    .catch(err => {console.log(err)});
 }
 
 export const isAuthenticated = () => {
@@ -33,8 +45,13 @@ export const getCookieType = (type) => {
     return b ? b.pop() : '';
 }
 
-export const signOut = () => {
+export const signOut = () => (dispatch) => {
     document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    dispatch({
+        type: 'SIGN_OUT',
+        payload: ''
+    })
     window.location.reload();
+
 }

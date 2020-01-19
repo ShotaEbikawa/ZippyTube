@@ -8,9 +8,10 @@ import md5 from 'md5';
 import Typography from '@material-ui/core/Typography'
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
+import { connect } from 'react-redux';
 import { loginUser, isAuthenticated } from '../../redux/action/userAction.js';
 import { withRouter } from 'react-router-dom';
-import Avatar from '../button/Avatar'
+import Avatar from '../button/Avatar';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 
 const useStyles = makeStyles(theme => ({
@@ -48,7 +49,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center'
     }
 }))
-const SignInModal = (props) => {
+const SignInModal = ({username,dispatch}) => {
     const classes = useStyles();
     const [toggle, setToggle] = React.useState(false);
     const [userName, setUserName] = React.useState('');
@@ -81,7 +82,7 @@ const SignInModal = (props) => {
     const handleSubmit = () => {
         // input validation logic goes here
         if (validate) {
-            loginUser(userName, md5(passWord));
+            dispatch(loginUser(userName, md5(passWord)));
             setToggle(false);
         }
     }
@@ -149,4 +150,8 @@ const SignInModal = (props) => {
     )
 }
 
-export default withRouter(SignInModal);
+const mapStateToProps = (state,props) => ({
+    username: state.user.username,
+    dispatch: props.dispatch,
+}) 
+export default withRouter(connect(mapStateToProps)(SignInModal));

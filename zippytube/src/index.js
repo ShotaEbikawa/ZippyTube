@@ -8,11 +8,13 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {BrowserRouter as Router} from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import { mediaReducer } from './redux/reducer/mediaReducer';
+import { userReducer } from './redux/reducer/userReducer';
 
 const initialState = {};
 const middleware = [thunk];
 const rootReducer = combineReducers({
     media: mediaReducer,
+    user: userReducer,
 })
 
 const store = createStore(rootReducer, initialState, applyMiddleware(...middleware));

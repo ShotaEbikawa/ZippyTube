@@ -11,6 +11,8 @@ import Avatar from './button/Avatar';
 import LogoButton from './button/LogoButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Divider from '@material-ui/core/Divider';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import {isAuthenticated} from '../redux/action/userAction';
 import NotificationButton from './button/NotificationButton';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
@@ -77,7 +79,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const NavBar = () => {
+const NavBar = ({username,dispatch}) => {
     const classes = useStyles();
 
     return(
@@ -116,5 +118,9 @@ const NavBar = () => {
     )
 }
 
+const mapStateToProps = (state,props) => ({
+    username: state.user.username,
+    dispatch: props.dispatch,
+})
 
-export default NavBar
+export default withRouter(connect(mapStateToProps)(NavBar))
