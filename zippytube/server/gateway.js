@@ -8,7 +8,8 @@ const apiProxy = httpProxy.createProxyServer(app);
 
 const GATEWAY_PORT = 4000;
 const USER_URL = process.env.USER_URL || 'http://localhost:3003';
-const MEDIA_URL = process.env.MEDIA_URL || 'http://localhost:3004';
+const MEDIA_WRITE_URL = process.env.MEDIA_WRITE_URL || 'http://localhost:3012';
+const MEDIA_READ_URL = process.env.MEDIA_READ_URL || 'http://localhost:3005';
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
 
 app.use((req, res, next) => {
@@ -23,9 +24,13 @@ app.all('/auth*', (req, res)=>{
     apiProxy.web(req, res, {target: USER_URL});
 })
 
-app.all('/media*', (req,res) => {
-    console.log("Routhing to Media: ", req.url);
-    apiProxy.web(req,res, {target: MEDIA_URL})
+app.all('/media/write*', (req,res) => {
+    console.log("Routing to Media (write): ", req.url);
+    apiProxy.web(req,res, {target: MEDIA_WRITE_URL})
+})
+app.all('/media/read*', (req,res) => {
+    console.log("Routing to Media (read): ", req.url);
+    apiProxy.web(req,res, {target: MEDIA_READ_URL})
 })
 
 app.all('/*', (req,res) => {

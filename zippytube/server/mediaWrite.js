@@ -14,7 +14,7 @@ const fs = require('fs');
 const MediaMethods = require('./methods/MediaMethods')
 const app = express();
 const awsCredendials = require('./secret/awsCredentials')
-const port = process.env.PORT || 3004;
+const port = process.env.PORT || 3012;
 const ID = awsCredendials.id;
 const SECRET = awsCredendials.secretKey;
 const BUCKET_NAME = 'zippytube'
@@ -170,33 +170,13 @@ app.use(bodyParser());
 app.use(cookieParser());
 
 // create-video endpoint handles logic regarding video uploads
-app.post('/media/create-video', upload.single('file'),(req,res,next) => {
+app.post('/media/write/create-video', upload.single('file'),(req,res,next) => {
     console.log(req.body.token)
     let fileInfo = path.parse(req.file.originalname);
     let filePath = `uploads/${fileInfo.name}.mp4`;
     convertVideo(req,fileInfo,filePath);
     res.json({downloaded: true})
 })
-
-app.get('/media/get-all-videos', (req,res) => {
-    MediaMethods.getAllVideo(res);
-})
-
-// fetch-video endpoint fetches videos with the given query
-// that the user entered from the client-side
-app.get('/media/fetch-video', (req,res) => {
-    console.log('connecting to the server');
-    console.log(req.query.search);
-    MediaMethods.fetchVideo(req.query.search, res);
-})
-
-app.get('/media/video', (req,res) => {
-    console.log('connecting to the server');
-    console.log(req.query.id);
-    MediaMethods.getVideo(req.query.id,res)
-})
-
-
 
 // Listens to port 3004
 app.listen(port, ()=> console.log(`Example app listening on port ${port}!`));

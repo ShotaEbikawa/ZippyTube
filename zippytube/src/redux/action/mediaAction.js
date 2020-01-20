@@ -20,7 +20,7 @@ export const createVideos = (files,title,desc,username) => {
     console.log('connecting...')
     console.log(files[0]);
     
-    axios.post('/media/create-video', formData, {
+    axios.post('/media/write/create-video', formData, {
         headers: {
             'content-type': 'multipart/form-data',
             // onUploadProgress: progressEvent => console.log(progressEvent.loaded)
@@ -33,7 +33,7 @@ export const createVideos = (files,title,desc,username) => {
 }
 
 export const fetchAllVideos = (setFlag) => (dispatch) => {
-    axios.get('/media/get-all-videos')
+    axios.get('/media/read/get-all-videos')
     .then(res=>res.data)
     .then(results=>{
         dispatch({
@@ -48,7 +48,7 @@ export const fetchAllVideos = (setFlag) => (dispatch) => {
 // of the documents in the media collection that matches the 
 // given query that the user made
 export const fetchResults = (query,setFlag) => (dispatch) => {
-    axios.get(`/media/fetch-video?search=${query}`)
+    axios.get(`/media/read/fetch-video?search=${query}`)
     .then(res=>res.data)
     .then(results=>{
         dispatch({
@@ -62,7 +62,7 @@ export const fetchResults = (query,setFlag) => (dispatch) => {
 }
 
 export const fetchRelated = (setFlag,query,id) => (dispatch) => {
-    axios.get(`/media/fetch-video?search=${query}`)
+    axios.get(`/media/read/fetch-video?search=${query}`)
     .then(res=>res.data)
     .then(results=>{
         let temp = [];
@@ -84,7 +84,7 @@ export const fetchRelated = (setFlag,query,id) => (dispatch) => {
 // getVideo sends the request to the server to retrieve the 
 // media collection with the matching video id.
 export const getVideo = (id,setFlag,history) => (dispatch) => {
-    axios.get(`/media/video?id=${id}`)
+    axios.get(`/media/read/video?id=${id}`)
     .then(res=>res.data)
     .then(result=>{
         dispatch({

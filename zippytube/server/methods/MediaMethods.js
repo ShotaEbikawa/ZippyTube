@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const uploadPhoto = require('../media')
+const uploadPhoto = require('../mediaWrite')
 const Media = require('../model/MediaModel');
 
 class MediaMethods {
