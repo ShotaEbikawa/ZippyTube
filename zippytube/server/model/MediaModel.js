@@ -16,6 +16,11 @@ const MediaModel = mongoose.Schema({
         unique: false,
         required: true,
     },
+    username: {
+        type: String,
+        unique: false,
+        required: true,
+    },
     comment: {
         type: Array,
         unique: false,

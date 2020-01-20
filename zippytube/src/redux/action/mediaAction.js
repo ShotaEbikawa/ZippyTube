@@ -9,13 +9,14 @@ import { getCookieType } from './userAction';
 // 3) given title
 // 4) given description
 // to the server
-export const createVideos = (files,title,desc) => {
+export const createVideos = (files,title,desc,username) => {
     let token = getCookieType('token');
     let formData = new FormData();
     formData.append('file', files[0]);
     formData.append('token',token);
     formData.append('title',title);
     formData.append('desc',desc);
+    formData.append('username',username);
     console.log('connecting...')
     console.log(files[0]);
     

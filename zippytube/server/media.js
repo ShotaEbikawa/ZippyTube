@@ -153,7 +153,7 @@ function uploadFile(source,target,req,fileInfo,filePath) {
                             console.log('file deleted');
                             const url = `http://zippytube.s3.us-west-1.amazonaws.com/${target}`
                             console.log(req.body.token)
-                            MediaMethods.createVideo(url,req.body.token,req.body.title,req.body.desc,req,fileInfo,filePath);
+                            MediaMethods.createVideo(url,req.body.token,req.body.title,req.body.desc,req.body.username,req,fileInfo,filePath);
                         }
                     });
                 }

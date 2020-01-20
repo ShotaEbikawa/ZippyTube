@@ -23,6 +23,7 @@ export const loginUser = (userName, passWord) => (dispatch) => {
         console.log(`id=${res.data.id};token=${res.data.token};`);
         document.cookie = `id=${res.data.id};`;
         document.cookie = `token=${res.data.token};`;
+        document.cookie = `first=${userName.substring(0,1).toUpperCase()}`
         console.log('redirecting...');
     })
     .then(result => {
@@ -34,8 +35,15 @@ export const loginUser = (userName, passWord) => (dispatch) => {
     .catch(err => {console.log(err)});
 }
 
-export const isAuthenticated = () => {
-    return getCookieType('id') != '' && getCookieType('token') != '';
+export const isAuthenticated = () => (dispatch) => {
+    if (getCookieType('id') != '' && getCookieType('token') != '') {
+        dispatch({
+            type: 'CACHE_USERNAME',
+            payload: getCookieType('first'),
+        })
+        return true;
+    }
+    return false;
 }
 
 // Credit goes to this user Mac
@@ -47,6 +55,7 @@ export const getCookieType = (type) => {
 
 export const signOut = () => (dispatch) => {
     document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie="first=; expires=Thue, 01 Jan 1970 00:00:00 UTC; path=/;"
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     dispatch({
         type: 'SIGN_OUT',

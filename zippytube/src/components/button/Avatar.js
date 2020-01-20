@@ -23,7 +23,8 @@ const Avatar = ({username,dispatch}) => {
     // check whether the user is authenticated
     // before all components are rendered
     React.useEffect(()=> {
-        setIsLogged(isAuthenticated())
+        setIsLogged(dispatch(isAuthenticated()))
+        console.log(isLogged);
     })
 
     // displays the dropdown if a user clicks on
@@ -43,6 +44,7 @@ const Avatar = ({username,dispatch}) => {
     // the existing cookie and the existing 
     // username cached in redux
     const handleLogOut = () => {
+        console.log('is it working')
         setAnchorEl(null);
         dispatch(signOut());
     }

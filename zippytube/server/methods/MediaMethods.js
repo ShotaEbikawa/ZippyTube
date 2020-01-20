@@ -7,12 +7,13 @@ class MediaMethods {
     // createVideo creates a new document in the media collection.
     // It accepts four attributes: url, title, description, and the 
     // user's token.
-    static createVideo(url,token,title,desc,req,fileInfo,filePath) {
+    static createVideo(url,token,title,desc,username,req,fileInfo,filePath) {
         const newVideo = new Media({
             url: url,
             title: title,
             desc: desc,
             token: token,
+            username: username,
         });
 
         newVideo.save((error) => {

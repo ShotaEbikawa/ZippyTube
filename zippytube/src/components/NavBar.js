@@ -99,10 +99,10 @@ const NavBar = ({username,dispatch}) => {
                     <SearchBar/>
                 </div>
                 <div className={classes.iconContainer}>
-                    {isAuthenticated() ? <VideoButton/> : ''}
+                    {dispatch(isAuthenticated()) ? <VideoButton/> : ''}
                     <AppsButton/>
                     <NotificationButton/>
-                    {isAuthenticated() ? <Avatar/> : <SignInModal/>}
+                    {dispatch(isAuthenticated()) ? <Avatar/> : <SignInModal/>}
                 </div>
             </Toolbar>
             <Divider />

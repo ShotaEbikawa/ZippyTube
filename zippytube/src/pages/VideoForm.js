@@ -6,6 +6,7 @@ import VideoSuccess from '../components/VideoSuccess'
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Grow from '@material-ui/core/Grow';
+import { connect } from 'react-redux'; 
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import { createVideos } from '../redux/action/mediaAction';
@@ -55,7 +56,7 @@ const useStyle = makeStyles(theme => ({
     }
 }))
 
-const VideoForm = () => {
+const VideoForm = ({username}) => {
     const classes = useStyle();
     const [video,setVideo] = React.useState('');
     const [videoUrl, setVideoUrl] = React.useState('');
@@ -73,8 +74,8 @@ const VideoForm = () => {
     }
     
     const submitVideos = () => {
-        console.log(video,title,desc);
-        createVideos(video, title, desc);
+        console.log(video,title,desc,username);
+        createVideos(video, title, desc,username);
         setSuccess(true)
         
         
@@ -183,4 +184,8 @@ const VideoForm = () => {
     )
 }
 
-export default VideoForm
+const mapStateToProps = (state,props) => ({
+    username: state.user.username
+})
+
+export default withRouter(connect(mapStateToProps)(VideoForm))
