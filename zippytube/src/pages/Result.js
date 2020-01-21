@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
         paddingTop: '3rem',
     },
     card: {
+        cursor: 'pointer'
     },
     details: {
       flexDirection: 'column',
@@ -53,6 +54,9 @@ const useStyles = makeStyles(theme => ({
       height: 38,
       width: 38,
     },
+    titleStyle: {
+        fontWeight:'540',
+    },
   }));
 
 
@@ -85,22 +89,31 @@ const Results = ({dispatch,history,media,query}) => {
             return (
                 media.map(results => 
                     <div
-                        className={classes.card}
                         key={results._id}
                     >
                         <br/><br/><br/>
-                        <Grid container spacing={2}>
-                            <Grid item className={classes.imgContainer}>
+                        <Grid container 
+                            className={classes.card}
+                            onClick={() => handleClick(results._id)}
+                            spacing={2}
+                        >
+                            <Grid 
+                                item 
+                                className={classes.imgContainer}
+                            >
                                 <CardMedia
-                                    onClick={() => handleClick(results._id)}
                                     className = {classes.cover}
                                     image={results.thumbnail}
                                 />
                             </Grid>
-                            <Grid item className={classes.contentSize}>
+                            <Grid 
+                                item 
+                                className={classes.contentSize}
+                            >
                                 <CardContent>
-                                    <Typography variant='h6'>{results.title.length > 55 ? results.title.substring(0,55)+'...' : results.title}</Typography>
-                                    <Typography variant='p'>{results.desc.length > 100 ? results.desc.substring(0,100)+'...' : results.desc}</Typography>
+                                    <Typography className={classes.titleStyle} variant='h6'>{results.title.length > 55 ? results.title.substring(0,55)+'...' : results.title}</Typography>
+                                    <Typography vairant='p'>{results.username}</Typography>
+                                    <Typography variant='p'>{results.desc.length > 50 ? results.desc.substring(0,50)+'...' : results.desc}</Typography>
                                 </CardContent>
                             </Grid>
                         </Grid>

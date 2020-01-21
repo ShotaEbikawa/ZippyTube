@@ -48,5 +48,10 @@ app.post('/auth/login-account', (req,res)=> {
     }
 })
 
+// get-username endpoint retrieves a user's username
+app.post('/auth/get-username', (req,res) => {
+    UserMethods.getUser(req.body.token, res);
+})
+
 // Listens to port 3003
 app.listen(port, ()=> console.log(`Example app listening on port ${port}!`));

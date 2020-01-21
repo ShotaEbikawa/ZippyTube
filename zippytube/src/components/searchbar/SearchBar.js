@@ -37,22 +37,22 @@ const SearchBar = ({dispatch,history}) => {
     }
     return (
         <>
-            
-            <InputBase 
-                placeholder=' Search for videos' 
-                className={classes.inputStyle}
-                value = {values}
-                onChange = {e => {setValues(e.target.value)}}
-            />
-            <Button 
-                variant='contained' 
-                color='primary' 
-                onClick={handleClick}
-                className={classes.inputButton}
-            >
-                Submit
-            </Button>
-            
+            <form onSubmit={handleClick}>
+                <InputBase 
+                    placeholder=' Search for videos' 
+                    className={classes.inputStyle}
+                    value = {values}
+                    onChange = {e => {setValues(e.target.value)}}
+                />
+                <Button
+                    type="submit"
+                    variant='contained' 
+                    color='primary' 
+                    className={classes.inputButton}
+                >
+                    Submit
+                </Button>
+            </form>
         </>
     )
 }

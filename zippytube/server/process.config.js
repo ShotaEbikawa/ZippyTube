@@ -3,26 +3,32 @@ module.exports = {
         {
             name: 'gateway',
             script: './gateway.js',
-            ignore_watch: ["../node_modules"],
+            ignore_watch: ["../node_modules","./uploads"],
             watch: true,
         },
         {
             name: 'user-server',
             script: './user-server.js',
-            ignore_watch: ["../node_modules"],
+            ignore_watch: ["../node_modules", "./uploads"],
             watch: true,
         },
         {
             name: 'presentation',
             script: './fileServer.js',
-            ignore_watch: ["../node_modules"],
+            ignore_watch: ["../node_modules","./uploads"],
             watch: true,
         },
-/*         {
-            name: 'media-server',
-            script: './media.js',
-            ignore_watch: ["../node_modules"],
+        {
+            name: 'media-server-write',
+            script: './mediaWrite.js',
+            ignore_watch: ["../node_modules","./uploads"],
             watch: true,
-        } */
+        },
+        {
+            name: 'media-server-read',
+            script: './mediaRead.js',
+            ignore_watch: ["../node_modules","./uploads"],
+            watch: true,
+        }
     ]
 }

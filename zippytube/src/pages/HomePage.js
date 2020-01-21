@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
     cardStyle: {
         flexShrink: 0,
         minHeight:'50rem',
+        cursor: 'pointer',
         borderRadius:'0',
         '@media only screen and (max-width: 1200px)': {
             fontSize:'0.8em'

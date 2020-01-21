@@ -14,7 +14,8 @@ const fs = require('fs');
 const MediaMethods = require('./methods/MediaMethods')
 const app = express();
 const awsCredendials = require('./secret/awsCredentials')
-const port = process.env.PORT || 3012;
+const ObjectId = mongoose.Types.ObjectId;
+const port = process.env.PORT || 3004;
 const ID = awsCredendials.id;
 const SECRET = awsCredendials.secretKey;
 const BUCKET_NAME = 'zippytube'
@@ -55,18 +56,19 @@ const upload = multer({
 // A wrapper function that handles logic for
 // generating thumbnail from the video and uploading
 // them on the given document in the DB
-function uploadPhoto(req,fileInfo,filePath) {
-    ffmpeg(req.file.location)
+function uploadPhoto(req,url,fileInfo,filePath) {
+    console.log(url);
+    ffmpeg(url)
     .setFfmpegPath(ffmpegInstaller.path)
     .setFfprobePath(ffprobeInstaller.path)
     .on('end', () => {
         console.log('screenshots processed');
-        filePath = `uploads/${fileInfo.name}.png`;
-        fileUrl = `http://zippytube.s3.us-west-1.amazonaws.com/${fileInfo.name}.mp4`
-        uploadScreenshots(filePath, `${fileInfo.name}.jpeg`, fileUrl,req.body.token);
+        filePath = `uploads/${fileInfo}.png`;
+        fileUrl = `http://zippytube.s3.us-west-1.amazonaws.com/${fileInfo}.mp4`
+        uploadScreenshots(filePath, `${fileInfo}.jpeg`, fileUrl,req.body.token);
     })
     .takeScreenshots({
-        filename: fileInfo.name,
+        filename: fileInfo,
         count: 1,
     }, `uploads/`);
 }
@@ -82,7 +84,7 @@ function convertVideo(req,fileInfo,filePath) {
     .output(filePath)
     .on('end', () => {
         console.log('processing is done');
-        uploadFile(filePath,`${fileInfo.name}.mp4`,req, fileInfo,filePath);
+        uploadFile(filePath,`${fileInfo}.mp4`,req, fileInfo,filePath);
     })
     .on('error', (err) => {
         console.log(err);
@@ -123,8 +125,7 @@ function uploadScreenshots(source,target,video_url,token) {
                 else {console.log(err);}
             })
         }
-        else {console.log(err);} 
-            
+        else {console.log(err);}      
     })
 }
 
@@ -153,7 +154,7 @@ function uploadFile(source,target,req,fileInfo,filePath) {
                             console.log('file deleted');
                             const url = `http://zippytube.s3.us-west-1.amazonaws.com/${target}`
                             console.log(req.body.token)
-                            MediaMethods.createVideo(url,req.body.token,req.body.title,req.body.desc,req.body.username,req,fileInfo,filePath);
+                            MediaMethods.createVideo(url,req,fileInfo,filePath);
                         }
                     });
                 }
@@ -164,16 +165,36 @@ function uploadFile(source,target,req,fileInfo,filePath) {
     })
 };
 
+// create a function that parses the period
+function parsePeriod(name,uniqueId) {
+    let newName = []
+
+    for (let i = 0; i < name.length; i++) {
+        let c = name.charCodeAt(i);
+        if ((c >= 97 && c <= 122) || (c >= 65 && c <= 90))
+            newName.push(name[i]);
+    };
+    for (let i = 0; i < uniqueId.length; i++) {
+        newName.push(uniqueId[i]);
+    };
+
+    console.log(newName.join(''));
+    return newName.join('');
+}
+
 // Initializing required middlewares
 app.use(cors());
 app.use(bodyParser());
 app.use(cookieParser());
 
 // create-video endpoint handles logic regarding video uploads
-app.post('/media/write/create-video', upload.single('file'),(req,res,next) => {
-    console.log(req.body.token)
+app.post('/media-write/create-video', upload.single('file'),(req,res,next) => {
     let fileInfo = path.parse(req.file.originalname);
-    let filePath = `uploads/${fileInfo.name}.mp4`;
+    let uniqueId = new ObjectId();
+    uniqueId = uniqueId.toString();
+    fileInfo = parsePeriod(fileInfo.name,uniqueId);
+    console.log(fileInfo)
+    let filePath = `uploads/${fileInfo}.mp4`;
     convertVideo(req,fileInfo,filePath);
     res.json({downloaded: true})
 })

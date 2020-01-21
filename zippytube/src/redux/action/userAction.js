@@ -36,14 +36,25 @@ export const loginUser = (userName, passWord) => (dispatch) => {
 }
 
 export const isAuthenticated = () => (dispatch) => {
-    if (getCookieType('id') != '' && getCookieType('token') != '') {
-        dispatch({
-            type: 'CACHE_USERNAME',
-            payload: getCookieType('first'),
-        })
+    const token = getCookieType('token');
+    const id = getCookieType('id');
+    if (id != '' && token != '') {
+        axios.post('/auth/get-username', {token:token})
+        .then(res=>res.data)
+        .then(result => {
+            console.log(result);
+            console.log(result.data[0].username);
+            console.log(token)
+            dispatch({
+                type: 'CACHE_USERNAME',
+                payload: result.data[0].username,
+            });
+            return true;
+        });
         return true;
     }
-    return false;
+    else
+        return false;
 }
 
 // Credit goes to this user Mac

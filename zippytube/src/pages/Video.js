@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {videoSize, relatedSize, contentContainer} from '../components/media'
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -15,7 +16,9 @@ const useStyles = makeStyles(theme => ({
     videoContainer: videoSize,
     contentSize: relatedSize,
     titleContainer: contentContainer,
-    
+    card: {
+        cursor: 'pointer',
+    },
     details: {
         flexDirection: 'column',
     },
@@ -25,6 +28,13 @@ const useStyles = makeStyles(theme => ({
     playIcon: {
         width: 38,
         height: 38,
+    },
+    relatedUserStyle: {
+        fontSize: '1rem',
+        fontWeight:'348',
+    },
+    relatedTitleStyle: {
+        fontWeight:'540',
     },
     videoSize: {
         width:'100%',
@@ -37,6 +47,9 @@ const useStyles = makeStyles(theme => ({
     cover: {
       width: '200px',
       height:'100px',
+    },
+    commentStyle: {
+        width:'100%',
     },
     controls: {
       display: 'flex',
@@ -81,13 +94,18 @@ const Video = ({id,media,history,dispatch,video}) => {
                             </video>
                         </div> <br/>         
                         <div className={classes.titleContainer}>
-                        <Typography variant='h5' >
-                                {result.title}
-                        </Typography>
-                        <hr/>
-                        <Typography variant='p'>
-                            {result.desc}
-                        </Typography>
+                            <Typography variant='h5' >
+                                    {result.title}
+                            </Typography>
+                            <hr/>
+                            <Typography variant='h6' >
+                                    {result.username}
+                            </Typography>
+                            <br/>
+                            <Typography variant='p'>
+                                {result.desc}
+                            </Typography>
+                            <br/>
                         </div>      
                     </>        
                 ))  : ''
@@ -96,21 +114,23 @@ const Video = ({id,media,history,dispatch,video}) => {
     // component that stores JSX regarding media documents that matches
     // the selected video's title
     let medias = media && media.length > 0 ? media.map(results => 
-        <div
-            className={classes.card}
-            key={results._id}
-        >
-            <Grid container spacing={2}>
+        <div key={results._id}>
+            <Grid 
+                className={classes.card}
+                onClick={() => handleClick(results._id)}
+                container 
+                spacing={2}
+            >
                 <Grid item>
                     <CardMedia
-                        onClick={() => handleClick(results._id)}
                         className = {classes.cover}
                         image={results.thumbnail}
                     />
                 </Grid>
                 <Grid item>
                     <CardContent className={classes.contentSize}>
-                        <Typography variant='p'>{results.title.length > 40 ? results.title.substring(0,40) + '...' : results.title}</Typography>
+                        <Typography className={classes.relatedTitleStyle}variant='p'>{results.title.length > 40 ? results.title.substring(0,40) + '...' : results.title}</Typography>
+                        <Typography className={classes.relatedUserStyle}>{results.username}</Typography>
                     </CardContent>
                 </Grid>
             </Grid>
@@ -126,6 +146,7 @@ const Video = ({id,media,history,dispatch,video}) => {
                 <Grid container spacing={3}>
                     <Grid item>
                         {certainVideo}
+                        <TextField className={classes.commentStyle} label="Add a public comment..." />
                     </Grid>
                     <Grid item>
                         <Typography variant='h6'>
@@ -135,7 +156,7 @@ const Video = ({id,media,history,dispatch,video}) => {
                         {medias}
                     </Grid>
                 </Grid>
-                <button>leave comments</button>
+                <br/>
             </Container>
     )
 }

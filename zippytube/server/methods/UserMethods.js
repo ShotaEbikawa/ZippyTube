@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const User = require('../model/UserModel.js');
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -34,7 +33,18 @@ class UserMethods {
         })
     }
 
-
+    // retrieves a document from users collection that matches
+    // the given token
+    static getUser(token,res) {
+        User.find({token:token}, (err,user) => {
+            if (err) {
+                res.send('err');
+                return;
+            }
+            let username = {username: user.username};
+            res.json({data:user});
+        })
+    }
 
     // loginUser validates whether the given username and password
     // given by the user matches to the document in users collection.
