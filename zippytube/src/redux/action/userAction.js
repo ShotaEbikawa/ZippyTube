@@ -62,12 +62,11 @@ export const getCookieType = (type) => {
 }
 
 export const signOut = () => (dispatch) => {
-        document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
-        document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/results";
-        document.cookie="first=; expires=Thue, 01 Jan 1970 00:00:00 UTC; path=/"
-        document.cookie = "first=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/results";
-        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
-        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/results;";
+    const type = ['id','first','token']
+    for (var i = 0; i < 3; i++) {
+        document.cookie = `${type[i]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`
+        document.cookie = `${type[i]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/results`;
+    }
     dispatch({
         type: 'SIGN_OUT',
         payload: ''
