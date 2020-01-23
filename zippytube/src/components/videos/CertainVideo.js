@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 
 
 const useStyles = makeStyles(theme => ({
-    videoContainer: videoSize,
     titleContainer: contentContainer,
     card: {
         cursor: 'pointer',
@@ -22,8 +21,8 @@ const CertainVideo = (props) => {
         <>
         {
             props.video ?
-            <>
-                <div key={props.video.id} className={classes.videoContainer}>
+            <div>
+                <div key={props.video.id}>
                     <video className={classes.videoSize} controls> 
                         <source src={props.video.url} type="video/mp4">
                         </source>
@@ -43,7 +42,7 @@ const CertainVideo = (props) => {
                     </Typography>
                     <br/>
                 </div> 
-            </> 
+            </div> 
         : ''
         }
         </>

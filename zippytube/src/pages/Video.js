@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {videoSize, relatedSize, contentContainer} from '../components/media'
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 import Container from '@material-ui/core/Container';
+import CommentList from '../components/CommentList';
 import CertainVideo from '../components/videos/CertainVideo';
 import RelatedVideo from '../components/videos/RelatedVideo';
 import Grid from '@material-ui/core/Grid';
@@ -12,7 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { withRouter } from 'react-router-dom'
 
 
-const useStyles = makeStyles(theme => ({}))
+const useStyles = makeStyles(theme => ({
+    videoContainer: videoSize,
+}))
 
 const Video = ({comment,id,media,history,dispatch,video}) => {
     const classes = useStyles();
@@ -43,7 +46,12 @@ const Video = ({comment,id,media,history,dispatch,video}) => {
                 <br/><br/>
                 <Grid container spacing={3}>
                     <Grid item>
-                        {flag ? <>{certainVideo}<CommentForm videoId={id}/></> : ''}
+                        {flag ? <div className={classes.videoContainer}>
+                                    {certainVideo}
+                                    <CommentForm videoId={id}/>
+                                    <CommentList comment={video[0].comment[0]}/>
+                                </div> : 
+                        ''}
                     </Grid>
                     <Grid item>
                         <Typography variant='h6'>
@@ -60,7 +68,7 @@ const Video = ({comment,id,media,history,dispatch,video}) => {
 
 const mapStateToProps = (state,props) => ({
     video: state.media.video.data,
-    //comment: state.media.video.data[0].comment[0],
+    // comment: state.media.video.data[0].comment[0],
     media: state.media.results.data,
     history: props.history,
     id: props.match.params.id,

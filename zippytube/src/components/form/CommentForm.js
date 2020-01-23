@@ -5,13 +5,12 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
+import {videoSize, relatedSize, contentContainer} from '../media';
 import { createComment } from '../../redux/action/commentAction';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 
 const useStyles = makeStyles(theme => ({
-    commentStyle: {
-        width:'100%',
-    },
+    commentStyle: contentContainer,
     submitStyle: {
         marginLeft: '0.5rem',
         color: 'white',
@@ -38,21 +37,23 @@ const CommentForm = ({dispatch,username, videoId}) => {
 
     return(
         <>
-            <TextField 
-                className={classes.commentStyle} 
-                label="Add a public comment..." 
-                onChange={e => setDesc(e.target.value)}
-                multiline={true}
-                value={desc}
-                onClick={()=>setFlag(true)}
-            />
-            {flag ? <div className={classes.buttonStyle}>
-                        <Button onClick={()=>setFlag(false)}>CANCEL</Button>
-                        <Button onClick={handleSubmit} className={classes.submitStyle}>
-                            COMMENT
-                        </Button>
-                    </div> : 
-            ''}
+            <div>
+                <TextField 
+                    className={classes.commentStyle}
+                    label="Add a public comment..." 
+                    onChange={e => setDesc(e.target.value)}
+                    multiline={true}
+                    value={desc}
+                    onClick={()=>setFlag(true)}
+                />
+                {flag ? <div className={classes.buttonStyle}>
+                            <Button onClick={()=>setFlag(false)}>CANCEL</Button>
+                            <Button onClick={handleSubmit} className={classes.submitStyle}>
+                                COMMENT
+                            </Button>
+                        </div> : 
+                ''}
+            </div>
         </>
     )
 }
