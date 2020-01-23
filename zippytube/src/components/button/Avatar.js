@@ -25,7 +25,7 @@ const Avatar = ({username,dispatch}) => {
     React.useEffect(()=> {
         setIsLogged(dispatch(isAuthenticated()))
         console.log(isLogged);
-    })
+    },[username])
 
     // displays the dropdown if a user clicks on
     // the Avatar component
@@ -47,6 +47,7 @@ const Avatar = ({username,dispatch}) => {
         console.log('is it working')
         setAnchorEl(null);
         dispatch(signOut());
+        console.log(username);
     }
 
     return(
