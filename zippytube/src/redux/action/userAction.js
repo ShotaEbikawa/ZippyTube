@@ -42,9 +42,6 @@ export const isAuthenticated = () => (dispatch) => {
         axios.post('/auth/get-username', {token:token})
         .then(res=>res.data)
         .then(result => {
-            console.log(result);
-            console.log(result.data[0].username);
-            console.log(token)
             dispatch({
                 type: 'CACHE_USERNAME',
                 payload: result.data[0].username,
@@ -72,6 +69,4 @@ export const signOut = () => (dispatch) => {
         type: 'SIGN_OUT',
         payload: ''
     })
-    window.location.reload();
-
 }

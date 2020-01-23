@@ -29,15 +29,19 @@ const SearchBar = ({dispatch,history}) => {
     const classes = useStyles();
     const [values, setValues] = React.useState('');
 
-    const handleClick = () => {
-        console.log('connected to the handleClick()')
-        console.log(values);
-        dispatch(fetchResults(values));
-        history.push(`/results/${values}`)
+    // onClick handler that prevents the form 
+    // from submitting its data if the query is empty
+    const handleClick = (e) => {
+        if (values != '') {
+            dispatch(fetchResults(values));
+            history.push(`/results/${values}`)
+            return true;
+        }
+        e.preventDefault();
     }
     return (
         <>
-            <form onSubmit={handleClick}>
+            <form onSubmit={(e)=>handleClick(e)}>
                 <InputBase 
                     placeholder=' Search for videos' 
                     className={classes.inputStyle}

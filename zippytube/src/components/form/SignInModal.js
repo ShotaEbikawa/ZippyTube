@@ -56,7 +56,7 @@ const SignInModal = ({username,dispatch}) => {
     const [passWord, setPassWord] = React.useState('');
     const [isLogged, setIsLogged] = React.useState(false)
 
-    React.useEffect(()=> {
+    React.useEffect(() => {
         setIsLogged(dispatch(isAuthenticated()))
     })
 

@@ -38,6 +38,24 @@ class MediaMethods {
             console.log(doc);
         })
     }
+
+    // updateComment adds a new comment document to the media
+    // document's comment array.
+    static updateComment(req,res) {
+        let comment = req.body.comment.comment;
+        let videoId = comment.videoId;
+        let commentId = comment._id;
+        let queryId = mongoose.Types.ObjectId(videoId);
+        console.log(queryId);
+        let setQuery = `comment.0.${commentId}`;
+        let query = {_id: queryId};
+        Media.updateOne(query, {$set: {[setQuery]:comment}}, (err, data) => {
+            if (err)
+                console.log(err);
+            console.log(data,'success');
+        });
+        // insert logic here
+    }
 }
 
 module.exports = MediaMethods;

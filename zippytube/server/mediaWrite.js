@@ -199,6 +199,10 @@ app.post('/media-write/create-video', upload.single('file'),(req,res,next) => {
     res.json({downloaded: true})
 })
 
+app.post('/media-write/update-comment', (req,res) => {
+    MediaMethods.updateComment(req,res);
+})
+
 // Listens to port 3004
 app.listen(port, ()=> console.log(`Example app listening on port ${port}!`));
 

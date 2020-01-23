@@ -3,157 +3,54 @@ import { connect } from 'react-redux'
 import {videoSize, relatedSize, contentContainer} from '../components/media'
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
+import CertainVideo from '../components/videos/CertainVideo';
+import RelatedVideo from '../components/videos/RelatedVideo';
 import Grid from '@material-ui/core/Grid';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+import CommentForm from '../components/form/CommentForm';
 import {fetchResults, getVideo} from '../redux/action/mediaAction'
 import Typography from '@material-ui/core/Typography';
 import { withRouter } from 'react-router-dom'
 
 
-const useStyles = makeStyles(theme => ({
-    videoContainer: videoSize,
-    contentSize: relatedSize,
-    titleContainer: contentContainer,
-    card: {
-        cursor: 'pointer',
-    },
-    details: {
-        flexDirection: 'column',
-    },
-    content: {
-        flex: '1 0 auto',
-    },
-    playIcon: {
-        width: 38,
-        height: 38,
-    },
-    relatedUserStyle: {
-        fontSize: '1rem',
-        fontWeight:'348',
-    },
-    relatedTitleStyle: {
-        fontWeight:'540',
-    },
-    videoSize: {
-        width:'100%',
-        height:'100%',
-    },
-    noResults: {
-        textAlign: 'center',
-        paddingTop: '3rem',
-    },
-    cover: {
-      width: '200px',
-      height:'100px',
-    },
-    commentStyle: {
-        width:'100%',
-    },
-    controls: {
-      display: 'flex',
-      alignItems: 'center',
-      paddingLeft: theme.spacing(1),
-      paddingBottom: theme.spacing(1),
-    },
-}))
+const useStyles = makeStyles(theme => ({}))
 
-const Video = ({id,media,history,dispatch,video}) => {
+const Video = ({comment,id,media,history,dispatch,video}) => {
     const classes = useStyles();
     // validates whether the server successfully sent the
     // given media document to redux
     const [flag, setFlag] = React.useState(false);
+    const [certainVideo,setCertainVideo] = React.useState('');
 
 
     // Sends a request to the server to return the media
     // document matching the given id, alongside with the related
     // document media matching the document's title
     // It runs everytime the id (in mapStateToProps) changes
-    React.useEffect(()=>{
-        dispatch(getVideo(id,setFlag,history));
-    }, [id])
-
-
-    // sets flag to false and navigates to the
-    // same url path to render selected related video
     function handleClick(id) {
         setFlag(false);
-        history.push(`/video/${id}`)
+        console.log(video[0].comment[0])
+        history.push(`/video/${id}`);
     }
 
-    // component storing JSX regarding the selected video.
-    // It checks whether the video exists and whether the flag
-    // is set to true before initializing the JSX to the component
-    const certainVideo = video && flag ? video.map(
-        result => (<>
-                        <div key={id} className={classes.videoContainer}>
-                            <video className={classes.videoSize} controls> 
-                                <source src={result.url} type="video/mp4">
-                                </source>
-                            </video>
-                        </div> <br/>         
-                        <div className={classes.titleContainer}>
-                            <Typography variant='h5' >
-                                    {result.title}
-                            </Typography>
-                            <hr/>
-                            <Typography variant='h6' >
-                                    {result.username}
-                            </Typography>
-                            <br/>
-                            <Typography variant='p'>
-                                {result.desc}
-                            </Typography>
-                            <br/>
-                        </div>      
-                    </>        
-                ))  : ''
+    React.useEffect(()=>{
+        //console.log(id);
+        setFlag(false);
+        dispatch(getVideo(id,setFlag,history,setCertainVideo,CertainVideo));
+    }, [id,history])
 
-
-    // component that stores JSX regarding media documents that matches
-    // the selected video's title
-    let medias = media && media.length > 0 ? media.map(results => 
-        <div key={results._id}>
-            <Grid 
-                className={classes.card}
-                onClick={() => handleClick(results._id)}
-                container 
-                spacing={2}
-            >
-                <Grid item>
-                    <CardMedia
-                        className = {classes.cover}
-                        image={results.thumbnail}
-                    />
-                </Grid>
-                <Grid item>
-                    <CardContent className={classes.contentSize}>
-                        <Typography className={classes.relatedTitleStyle}variant='p'>{results.title.length > 40 ? results.title.substring(0,40) + '...' : results.title}</Typography>
-                        <Typography className={classes.relatedUserStyle}>{results.username}</Typography>
-                    </CardContent>
-                </Grid>
-            </Grid>
-        </div>) : 
-        <div>
-            <Container className={classes.noResults}>
-                <Typography variant='p'>The query does not match any of the video...</Typography>
-            </Container>
-        </div>
     return(
             <Container>
                 <br/><br/>
                 <Grid container spacing={3}>
                     <Grid item>
-                        {certainVideo}
-                        <TextField className={classes.commentStyle} label="Add a public comment..." />
+                        {flag ? <>{certainVideo}<CommentForm videoId={id}/></> : ''}
                     </Grid>
                     <Grid item>
                         <Typography variant='h6'>
                             Related Videos
                         </Typography>
                         <br/>
-                        {medias}
+                        {flag ? <RelatedVideo media={media} handleClick={handleClick}/> : ''}
                     </Grid>
                 </Grid>
                 <br/>
@@ -163,6 +60,7 @@ const Video = ({id,media,history,dispatch,video}) => {
 
 const mapStateToProps = (state,props) => ({
     video: state.media.video.data,
+    //comment: state.media.video.data[0].comment[0],
     media: state.media.results.data,
     history: props.history,
     id: props.match.params.id,

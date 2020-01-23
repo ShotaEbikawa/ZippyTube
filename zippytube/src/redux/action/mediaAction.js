@@ -84,7 +84,7 @@ export const fetchRelated = (setFlag,query,id) => (dispatch) => {
 
 // getVideo sends the request to the server to retrieve the 
 // media collection with the matching video id.
-export const getVideo = (id,setFlag,history) => (dispatch) => {
+export const getVideo = (id,setFlag,history,setCertainVideo, CertainVideo) => (dispatch) => {
     axios.get(`/media-read/video?id=${id}`)
     .then(res=>res.data)
     .then(result=>{
@@ -94,8 +94,20 @@ export const getVideo = (id,setFlag,history) => (dispatch) => {
         })
         return result.data
     })
-    .then(result => 
-        dispatch(fetchRelated(setFlag,result[0].title,id))
+    .then(result =>{
+        setCertainVideo(<CertainVideo video={result[0]}/>)
+        return dispatch(fetchRelated(setFlag,result[0].title,id))
+        }
     )
-    
+}
+
+export const updateComment = (req) => (dispatch) => {
+    console.log(req)
+    let body = {
+        comment: req,
+        commentId: req._id,
+        videoId: req.videoId,
+    }
+    axios.post('/media-write/update-comment',body)
+    .then(res=> {console.log('submitted')});
 }

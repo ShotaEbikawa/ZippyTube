@@ -1,17 +1,12 @@
 const mongoose = require('mongoose');
 
-const MediaModel = mongoose.Schema({
-    title: {
-        type: String,
-        unique: false,
-        required: false,
-    },
+const CommentModel = mongoose.Schema({
     desc: {
         type: String,
         unique: false,
-        required: false,
+        required: true,
     },
-    url: {
+    videoId: {
         type: String,
         unique: false,
         required: true,
@@ -21,20 +16,15 @@ const MediaModel = mongoose.Schema({
         unique: false,
         required: true,
     },
-    comment: {
-        type: Object,
-        unique: false,
-        default: {},
-    },
     token: {
         type: String,
         unique: false,
         required: true,
     },
-    thumbnail: {
-        type: String,
+    comment: {
+        type: Array,
         unique: false,
-        default: '',
+        default: {}
     },
     created_at: {
         type: Date,
@@ -45,10 +35,9 @@ const MediaModel = mongoose.Schema({
         type: Date,
         required: true,
         default: new Date()
-    }
-
+    },
 })
-MediaModel.index({title: 'text', desc: 'text'});
-const Media = mongoose.model('Media', MediaModel);
 
-module.exports = Media;
+CommentModel.index({desc: 'text', username: 'text'});
+const Comment = mongoose.model('Comment', CommentModel);
+module.exports = Comment;
