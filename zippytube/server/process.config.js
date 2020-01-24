@@ -18,12 +18,12 @@ module.exports = {
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
         },
-/*         {
+        {
             name: 'media-server-write',
             script: './mediaWrite.js',
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
-        }, */
+        },
         {
             name: 'media-server-read',
             script: './mediaRead.js',

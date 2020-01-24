@@ -101,7 +101,7 @@ export const getVideo = (id,setFlag,history,setCertainVideo, CertainVideo) => (d
     )
 }
 
-export const updateComment = (req) => (dispatch) => {
+export const updateComment = (req,setIsOpen,history) => (dispatch) => {
     console.log(req)
     let body = {
         comment: req,
@@ -109,5 +109,14 @@ export const updateComment = (req) => (dispatch) => {
         videoId: req.videoId,
     }
     axios.post('/media-write/update-comment',body)
-    .then(res=> {console.log('submitted')});
+    .then(res=>res.data)
+    .then(result=>{
+        console.log(result);
+        dispatch({
+            type: 'GET_VIDEO',
+            payload:result.data
+        }) 
+        setIsOpen(false);
+    })
+    .catch(err => console.log(err));
 }

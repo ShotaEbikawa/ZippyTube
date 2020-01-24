@@ -49,12 +49,12 @@ class MediaMethods {
         console.log(queryId);
         let setQuery = `comment.0.${commentId}`;
         let query = {_id: queryId};
-        Media.updateOne(query, {$set: {[setQuery]:comment}}, (err, data) => {
+        Media.findOneAndUpdate(query, {$set: {[setQuery]:comment}}, (err, data) => {
             if (err)
-                console.log(err);
+                res.send(err);
             console.log(data,'success');
+            res.json({data:data});
         });
-        // insert logic here
     }
 }
 

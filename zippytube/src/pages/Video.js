@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     videoContainer: videoSize,
 }))
 
-const Video = ({comment,id,media,history,dispatch,video}) => {
+const Video = ({id,media,history,dispatch,video}) => {
     const classes = useStyles();
     // validates whether the server successfully sent the
     // given media document to redux
@@ -30,17 +30,15 @@ const Video = ({comment,id,media,history,dispatch,video}) => {
     // document media matching the document's title
     // It runs everytime the id (in mapStateToProps) changes
     function handleClick(id) {
-        setFlag(false);
         console.log(video[0].comment[0])
         history.push(`/video/${id}`);
     }
 
     React.useEffect(()=>{
-        //console.log(id);
         setFlag(false);
         dispatch(getVideo(id,setFlag,history,setCertainVideo,CertainVideo));
-    }, [id,history])
-
+    }, [id,history,])
+    // <CommentList comment={video[0].comment[0]} setFlag={setFlag}/>
     return(
             <Container>
                 <br/><br/>
@@ -49,7 +47,6 @@ const Video = ({comment,id,media,history,dispatch,video}) => {
                         {flag ? <div className={classes.videoContainer}>
                                     {certainVideo}
                                     <CommentForm videoId={id}/>
-                                    <CommentList comment={video[0].comment[0]}/>
                                 </div> : 
                         ''}
                     </Grid>
@@ -68,7 +65,7 @@ const Video = ({comment,id,media,history,dispatch,video}) => {
 
 const mapStateToProps = (state,props) => ({
     video: state.media.video.data,
-    // comment: state.media.video.data[0].comment[0],
+    //comment: state.media.video.data ? state.media.video.data[0].comment[0] : '',
     media: state.media.results.data,
     history: props.history,
     id: props.match.params.id,

@@ -199,6 +199,7 @@ app.post('/media-write/create-video', upload.single('file'),(req,res,next) => {
     res.json({downloaded: true})
 })
 
+// updates comment of the given media document
 app.post('/media-write/update-comment', (req,res) => {
     MediaMethods.updateComment(req,res);
 })

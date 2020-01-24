@@ -1,6 +1,6 @@
 const initialState = {
     results: [],
-    video: []
+    video: [],
 }
 
 export const mediaReducer = (state=initialState, action) => {
@@ -13,7 +13,8 @@ export const mediaReducer = (state=initialState, action) => {
         case 'GET_VIDEO':
             return {
                 ...state,
-                video: action.payload
+                video: action.payload,
+                comment: action.payload
             }
         default:
             return state;
