@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import {videoSize, relatedSize, contentContainer} from './media'
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
@@ -16,6 +15,7 @@ const useStyles = makeStyles(theme => ({
         fontWeight: '348'
     }
 }))
+
 const CommentList = ({comment}) => {
     const classes = useStyles();
     return(

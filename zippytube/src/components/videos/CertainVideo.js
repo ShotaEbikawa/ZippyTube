@@ -23,7 +23,7 @@ const CertainVideo = (props) => {
             props.video ?
             <div>
                 <div key={props.video.id}>
-                    <video className={classes.videoSize} controls> 
+                    <video className={classes.videoSize} controls autoPlay> 
                         <source src={props.video.url} type="video/mp4">
                         </source>
                     </video>

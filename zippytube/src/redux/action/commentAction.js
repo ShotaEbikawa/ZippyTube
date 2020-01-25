@@ -13,9 +13,9 @@ export const createComment = (obj,CommentList) => (dispatch) => {
     console.log(body)
     axios.post('/comment-write/create-comment',body)
     .then(result=>{
-        obj.setCommentObj(obj.commentObj.concat([result.data.comment]))
+        obj.setCommentObj([result.data.comment].concat(obj.commentObj))
         console.log(obj.commentObj)
-        obj.setComments(obj.comments.concat([<CommentList comment={result.data.comment}/>]))
+        obj.setComments([<CommentList comment={result.data.comment}/>].concat(obj.comments))
         dispatch(updateComment(result.data,obj.setIsOpen,obj.history))
     })
     .catch(err=>console.log(err));

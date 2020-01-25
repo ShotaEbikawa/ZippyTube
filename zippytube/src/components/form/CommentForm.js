@@ -48,8 +48,8 @@ const CommentForm = ({dispatch,username, videoId,history, setFlag,comment}) => {
         setDesc('');
     }
     React.useEffect(() => {
-        const commentsObj = comment? Object.values(comment) : ''
-        const comments = comment ? Object.values(comment).map((result,i) =><CommentList comment={result}/>) : ''
+        const commentsObj = comment? Object.values(comment).reverse() : ''
+        const comments = comment ? Object.values(comment).reverse().map((result,i) => <CommentList comment={result}/>) : ''
         console.log(commentsObj, comments);
         setComments(comments);
         setCommentObj(commentsObj);
@@ -68,7 +68,9 @@ const CommentForm = ({dispatch,username, videoId,history, setFlag,comment}) => {
                 />
                 {isOpen ?
                     <div className={classes.buttonStyle}>
-                        <Button onClick={()=>setIsOpen(false)}>CANCEL</Button>
+                        <Button onClick={()=>setIsOpen(false)}>
+                            CANCEL
+                        </Button>
                         <Button onClick={handleSubmit} className={classes.submitStyle}>
                             COMMENT
                         </Button>

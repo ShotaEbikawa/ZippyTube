@@ -77,9 +77,12 @@ const ResultVideo = ({dispatch,history,media,query}) => {
                     <Grid item className={classes.contentSize}>
                         <CardContent>
                             <Typography className={classes.titleStyle} variant='h6'>
-                                {results.title.length > 40 ? results.title.substring(0,40)+'...' : results.title}</Typography>
+                                {results.title.length > 40 ? results.title.substring(0,40)+'...' : results.title}
+                            </Typography>
                             <Typography variant='p'>{results.username}</Typography><br/>
-                            <Typography variant='p'>{results.desc.length > 50 ? results.desc.substring(0,50)+'...' : results.desc}</Typography>
+                            <Typography variant='p'>
+                                {results.desc.length > 50 ? results.desc.substring(0,50)+'...' : results.desc}
+                            </Typography>
                         </CardContent>
                     </Grid>
                 </Grid>

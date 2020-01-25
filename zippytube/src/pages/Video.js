@@ -30,7 +30,6 @@ const Video = ({id,media,history,dispatch,video}) => {
     // document media matching the document's title
     // It runs everytime the id (in mapStateToProps) changes
     function handleClick(id) {
-        console.log(video[0].comment[0])
         history.push(`/video/${id}`);
     }
 
