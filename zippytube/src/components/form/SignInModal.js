@@ -67,23 +67,29 @@ const SignInModal = ({username,dispatch}) => {
 
 
     const validate = () => {
-        if (userName == null) {
+        if (userName == '') {
             setUsrErr(true);
             setUserError('Please fill in your username')
         }
-        if (passWord == null) {
+        else {
+            setUsrErr(false);
+            setUserError('')
+        }
+        if (passWord == '') {
             setPassErr(true)
             setPassError('Please fill in your password')
         }
-        return userErr && passErr == false;
-
+        else {
+            setPassErr(false);
+            setPassError('')
+        }
+        return userErr == false && passErr == false;
     }
 
     const handleSubmit = () => {
         // input validation logic goes here
-        if (validate) {
-            dispatch(loginUser(userName, md5(passWord)));
-            setToggle(false);
+        if (validate()) {
+            dispatch(loginUser(userName, md5(passWord),setToggle));
         }
     }
 
@@ -154,4 +160,5 @@ const mapStateToProps = (state,props) => ({
     username: state.user.username,
     dispatch: props.dispatch,
 }) 
+
 export default withRouter(connect(mapStateToProps)(SignInModal));

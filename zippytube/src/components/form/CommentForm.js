@@ -12,13 +12,11 @@ import { makeStyles, withTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     commentStyle: contentContainer,
-    submitStyle: {
-        marginLeft: '0.5rem',
-        color: 'white',
-        backgroundColor: 'lightgray'
-    },
     buttonStyle: {
         marginTop:'0.2rem',
+    },
+    submitStyle: {
+        marginLeft:'0.2rem',
     },
     commentListStyle: {
         marginTop: '1rem',
@@ -31,6 +29,7 @@ const CommentForm = ({dispatch,username, videoId,history, setFlag,comment}) => {
     const [commentObj, setCommentObj] = React.useState('');
     const [comments,setComments] = React.useState('');
     const classes = useStyles(); 
+
     const handleSubmit = () => {
         //setComments(comments.concat([<p>{desc}</p>]))
         const obj = {
@@ -71,7 +70,12 @@ const CommentForm = ({dispatch,username, videoId,history, setFlag,comment}) => {
                         <Button onClick={()=>setIsOpen(false)}>
                             CANCEL
                         </Button>
-                        <Button onClick={handleSubmit} className={classes.submitStyle}>
+                        <Button 
+                            onClick={handleSubmit} 
+                            className={classes.submitStyle} 
+                            variant='contained'
+                            color='primary' 
+                            disabled={desc == ''}>
                             COMMENT
                         </Button>
                     </div>

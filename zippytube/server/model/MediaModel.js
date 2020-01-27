@@ -24,6 +24,7 @@ const MediaModel = mongoose.Schema({
     comment: {
         type: Object,
         unique: false,
+        required: true,
         default: {},
     },
     token: {

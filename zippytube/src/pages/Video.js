@@ -45,7 +45,9 @@ const Video = ({id,media,history,dispatch,video}) => {
                     <Grid item>
                         {flag ? <div className={classes.videoContainer}>
                                     {certainVideo}
+                                    <br/>
                                     <CommentForm videoId={id}/>
+                                    <br/>
                                 </div> : 
                         ''}
                     </Grid>

@@ -38,7 +38,7 @@ class UserMethods {
     static getUser(token,res) {
         User.find({token:token}, (err,user) => {
             if (err) {
-                res.send('err');
+                res.status(404).send(err);
                 return;
             }
             let username = {username: user.username};
@@ -54,7 +54,7 @@ class UserMethods {
     static loginUser(username, password, res) {
         User.find({username: username, password: password}, (err, user) => {
             if (err || user.length === 0) {
-                res.send('err');
+                res.status(404).send('err');
                 return;
             }
             let userId = user[0]._id;

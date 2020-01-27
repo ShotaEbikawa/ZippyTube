@@ -9,8 +9,12 @@ class MReadMethods {
     // description will be considered as a document to be returned
     static fetchVideo(query,res) {
         Media.find({$text: {$search: query}}).then((videos) => {
-            console.log(videos);
-            res.json({data: videos});
+            if (videos) {
+                console.log(videos);
+                res.json({data: videos});
+                return;
+            }
+            res.status(403).send('error');
         })
     }
 
@@ -19,8 +23,12 @@ class MReadMethods {
     // media collection.
     static getAllVideo(res) {
         Media.find({}).then((videos) => {
-            console.log(videos);
-            res.json({data: videos})
+            if (videos) {
+                console.log(videos);
+                res.json({data: videos})
+                return;
+            }
+            res.status(403).send('error');
         })
     }
 
@@ -28,8 +36,12 @@ class MReadMethods {
     // getVideo returns media document that matches the given id
     static getVideo(id,res) {
         Media.find({_id:id}).then((videos) => {
-            console.log(videos);
-            res.json({data:videos});
+            if (videos) {
+                console.log(videos);
+                res.json({data:videos});
+                return;
+            }
+            res.status(403).send('error');
         })
     }
 }

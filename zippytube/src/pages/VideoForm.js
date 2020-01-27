@@ -59,28 +59,48 @@ const useStyle = makeStyles(theme => ({
 const VideoForm = ({username}) => {
     const classes = useStyle();
     const [video,setVideo] = React.useState('');
-    const [videoUrl, setVideoUrl] = React.useState('');
     const [title, setTitle] = React.useState('');
+    const [titleErr,setTitleErr] = React.useState(false);
     const [desc, setDesc] = React.useState('')
+    const [descErr,setDescErr] = React.useState(false);
     const [success,setSuccess] = React.useState(false);
-    const [loading, setLoading] = React.useState(false);
     const [next, setNext] = React.useState(false);
 
+    // Once the video is submitted,
+    // the given video will be stored as the video state
+    // and it will move forward to next form
     function handleChange(e) {
         console.log(e.target.files)
         setVideo(e.target.files);
         setNext(true);
-        // createVideos(e.target.files,loading,setLoading,setVideoUrl)
     }
     
-    const submitVideos = () => {
-        console.log(video,title,desc,username);
-        createVideos(video, title, desc,username);
-        setSuccess(true)
-        
-        
+    // checks whether the title and description
+    // is empty or vice versa
+    const validate = () => {
+        if (title == '')
+            setTitleErr(true);
+        else
+            setTitleErr(false);
+        if (desc == '')
+            setDescErr(true);
+        else
+            setDescErr(false);
+        return title != '' && desc != '';
     }
 
+    // sends the request to the server
+    // if the validate function returns true
+    const submitVideos = () => {
+        if (validate()) {
+            console.log(video,title,desc,username);
+            createVideos(video, title, desc,username);
+            setSuccess(true)
+        }
+    }
+
+    // Displays loading component until the video is uploaded and shown
+    // via the presentation layer of the application (FEATURE POST-PONED)
     const LoadingComponent = ()=> {
         return (
             <div>
@@ -115,13 +135,16 @@ const VideoForm = ({username}) => {
                                                             </Typography>
                                                             <br/><br/>
                                                             <TextField
+                                                                error={titleErr}
                                                                 label='title'
                                                                 variant='outlined'
-                                                                value = {title}
-                                                                onChange = {e=>setTitle(e.target.value)}
+                                                                value={title}
+                                                                onChange={e=>setTitle(e.target.value)}
+                                                                helperText={titleErr ? 'Please fill the given field' : ''}
                                                             />
                                                             <br/>
                                                             <TextField 
+                                                                error={descErr}
                                                                 label='description'
                                                                 multiline={true}
                                                                 variant='outlined'
@@ -129,6 +152,7 @@ const VideoForm = ({username}) => {
                                                                 rowsMax={6}
                                                                 value = {desc}
                                                                 onChange = {e=>setDesc(e.target.value)}
+                                                                helperText={descErr ? 'Please fill the given field' : ''}
                                                             />
                                                             <br/><br/>
                                                             <Button variant='contained' color='primary' onClick={submitVideos}>Publish Video</Button>        

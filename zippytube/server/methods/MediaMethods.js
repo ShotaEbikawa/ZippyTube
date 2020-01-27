@@ -12,6 +12,7 @@ class MediaMethods {
             title: req.body.title,
             desc: req.body.desc,
             token: req.body.token,
+            comment: [{}],
             username: req.body.username,
         });
 

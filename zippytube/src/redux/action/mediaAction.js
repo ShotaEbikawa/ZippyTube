@@ -43,6 +43,7 @@ export const fetchAllVideos = (setFlag) => (dispatch) => {
         })
         setFlag(true);
     })
+    .catch(err => console.log(err));
 }
 
 // fetchResults sends the request to the server to retrieve all 
@@ -58,6 +59,7 @@ export const fetchResults = (query,setFlag) => (dispatch) => {
         })
         setFlag(true);
     })
+    .catch(err=>console.log(err));
     
     //.catch(err=> console.log(err));
 }
