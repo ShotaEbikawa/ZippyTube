@@ -13,7 +13,7 @@ export const registerUser = (newUser, history) => {
 // loginUser sends a request to the server to check whether
 // the given username and password matches in any of the 
 // document in the users collecion
-export const loginUser = (userName, passWord, setToggle) => (dispatch) => {
+export const loginUser = (userName, passWord, setToggle,setPassErr,setPassError,setUsrErr,setUserError) => (dispatch) => {
     let userObj = {
         username: userName, 
         password: passWord
@@ -33,7 +33,13 @@ export const loginUser = (userName, passWord, setToggle) => (dispatch) => {
             payload: userName,
         })
     })
-    .catch(err => {console.log(err)});
+    .catch(err => {
+        console.log('cannot find username');
+        setPassErr(true);
+        setUsrErr(true);
+        setPassError('username/password is incorrect');
+        setUserError('username/password is incorrect');
+    });
 }
 
 
@@ -60,8 +66,8 @@ export const isAuthenticated = () => (dispatch) => {
             console.log('cannot find username'); 
             return false;
         });
+        return true;
     }
-    return true;
 }
 
 

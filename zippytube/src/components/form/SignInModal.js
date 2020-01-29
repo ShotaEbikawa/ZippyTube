@@ -55,17 +55,21 @@ const SignInModal = ({username,dispatch}) => {
     const [userName, setUserName] = React.useState('');
     const [passWord, setPassWord] = React.useState('');
     const [isLogged, setIsLogged] = React.useState(false)
-
-    React.useEffect(() => {
-        setIsLogged(dispatch(isAuthenticated()))
-    })
-
     const [userErr, setUsrErr] = React.useState(false);
     const [passErr, setPassErr] = React.useState(false);
     const [userError, setUserError] = React.useState('');
     const [passError, setPassError] = React.useState('');
 
 
+    // checks whether a user is signed in to one's account
+    // by checking whether a cookie's value matches to its 
+    // document's value
+    React.useEffect(() => {
+        setIsLogged(dispatch(isAuthenticated()))
+    })
+
+    // validate function handles all of the cornercase
+    // existing in SignInModal
     const validate = () => {
         if (userName == '') {
             setUsrErr(true);
@@ -86,72 +90,74 @@ const SignInModal = ({username,dispatch}) => {
         return userErr == false && passErr == false;
     }
 
+
+    // handleSubmit sends a given username and password
+    // to userAction, which sends a request to the serverside.
     const handleSubmit = () => {
-        // input validation logic goes here
         if (validate()) {
-            dispatch(loginUser(userName, md5(passWord),setToggle));
+            dispatch(loginUser(userName, md5(passWord),setToggle,setPassErr,setPassError,setUsrErr,setUserError));
         }
     }
 
 
     return(
         <>
-         <div>
-            <Button
-                variant='outlined'
-                color='primary' 
-                className={classes.signin}
-                onClick = {()=>setToggle(!toggle)}
-            >
-                Sign in
-            </Button>
-            <Modal
-                open={toggle}
-                onClose={()=>setToggle(!toggle)}
-                className={classes.root}
-            >
-                <Container maxWidth='sm' className={classes.root}>
-                    <Paper className={classes.paperStyle}>
-                        <FormControl>
-                            <Typography variant='h4' className={classes.signInText}>
-                                Sign In
-                            </Typography>
-                            <br/>
-                            <Typography variant='h6'>
-                                to continue to ZippyTube
-                            </Typography>
-                            <br/>
-                            <TextField 
-                                error = {userErr}
-                                label='username'
-                                value={userName}
-                                onChange={e=>setUserName(e.target.value)}
-                                helperText={userError}
-                                fullWidth
-                            />
-                            <br/>
-                            <TextField 
-                                error = {passErr}
-                                label='password'
-                                type='password'
-                                value={passWord}
-                                onChange={e=>setPassWord(e.target.value)}
-                                helperText={passError}
-                                fullWidth
-                            />
-                            <br/><br/>
-                            <Link href='/signup'>
-                            Create account
-                            </Link>
-                            <br/>
-                            <Button onClick={handleSubmit} variant='contained' color='primary'>
-                                Sign in
-                            </Button>
-                        </FormControl>
-                    </Paper>
-                </Container>
-            </Modal>
-     </div>
+            <div>
+                <Button
+                    variant='outlined'
+                    color='primary' 
+                    className={classes.signin}
+                    onClick = {()=>setToggle(!toggle)}
+                >
+                    Sign in
+                </Button>
+                <Modal
+                    open={toggle}
+                    onClose={()=>setToggle(!toggle)}
+                    className={classes.root}
+                >
+                    <Container maxWidth='sm' className={classes.root}>
+                        <Paper className={classes.paperStyle}>
+                            <FormControl>
+                                <Typography variant='h4' className={classes.signInText}>
+                                    Sign In
+                                </Typography>
+                                <br/>
+                                <Typography variant='h6'>
+                                    to continue to ZippyTube
+                                </Typography>
+                                <br/>
+                                <TextField 
+                                    error = {userErr}
+                                    label='username'
+                                    value={userName}
+                                    onChange={e=>setUserName(e.target.value)}
+                                    helperText={userError}
+                                    fullWidth
+                                />
+                                <br/>
+                                <TextField 
+                                    error = {passErr}
+                                    label='password'
+                                    type='password'
+                                    value={passWord}
+                                    onChange={e=>setPassWord(e.target.value)}
+                                    helperText={passError}
+                                    fullWidth
+                                />
+                                <br/><br/>
+                                <Link href='/signup'>
+                                Create account
+                                </Link>
+                                <br/>
+                                <Button onClick={handleSubmit} variant='contained' color='primary'>
+                                    Sign in
+                                </Button>
+                            </FormControl>
+                        </Paper>
+                    </Container>
+                </Modal>
+            </div>
         </>
     )
 }

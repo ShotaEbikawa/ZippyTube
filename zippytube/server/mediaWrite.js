@@ -188,7 +188,8 @@ app.use(bodyParser());
 app.use(cookieParser());
 
 // create-video endpoint handles logic regarding video uploads
-app.post('/media-write/create-video', upload.single('file'),(req,res,next) => {
+app.post('/media-write/create-video',upload.single('file'), (req,res,next) => {
+    res.json({downloaded: true})
     let fileInfo = path.parse(req.file.originalname);
     let uniqueId = new ObjectId();
     uniqueId = uniqueId.toString();
@@ -196,7 +197,6 @@ app.post('/media-write/create-video', upload.single('file'),(req,res,next) => {
     console.log(fileInfo)
     let filePath = `uploads/${fileInfo}.mp4`;
     convertVideo(req,fileInfo,filePath);
-    res.json({downloaded: true})
 })
 
 // updates comment of the given media document

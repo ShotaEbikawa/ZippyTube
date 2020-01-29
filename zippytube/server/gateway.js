@@ -23,26 +23,41 @@ app.use(cors())
 app.all('/auth*', (req, res)=>{
     console.log("Routing to Auth: ", req.url);
     apiProxy.web(req, res, {target: USER_URL});
+    apiProxy.on('error', (req,res) => {
+        res.send('something bad happened');
+    });
 })
 
 app.all('/media-write*', (req,res) => {
     console.log("Routing to Media (write): ", req.url);
-    apiProxy.web(req,res, {target: MEDIA_WRITE_URL})
+    apiProxy.web(req,res, {target: MEDIA_WRITE_URL});
+    apiProxy.on('error', (req,res) => {
+        res.send('something bad happened');
+    });
 })
 
 app.all('/media-read*', (req,res) => {
     console.log("Routing to Media (read): ", req.url);
-    apiProxy.web(req,res, {target: MEDIA_READ_URL})
+    apiProxy.web(req,res, {target: MEDIA_READ_URL});
+    apiProxy.on('error', (req,res) => {
+        res.send('something bad happened');
+    });
 })
 
 app.all('/comment-write*', (req,res) => {
     console.log("Routing to Comment (write): ", req.url);
-    apiProxy.web(req,res, {target: COMMENT_WRITE_URL})
+    apiProxy.web(req,res, {target: COMMENT_WRITE_URL});
+    apiProxy.on('error', (req,res) => {
+        res.send('something bad happened');
+    });
 })
 
 app.all('/*', (req,res) => {
     console.log("Routing to the Presentation layer of the app")
     apiProxy.web(req,res, {target: FRONTEND_URL});
+    apiProxy.on('error', (req,res) => {
+        res.send('something bad happened');
+    });
 })
 
 appServer.listen(GATEWAY_PORT);

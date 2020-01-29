@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const uploadPhoto = require('../mediaWrite')
 const Media = require('../model/MediaModel');
+const createTopic = require('../admin')
 
 class MediaMethods {
     // createVideo creates a new document in the media collection.
@@ -36,6 +37,7 @@ class MediaMethods {
             if (err) {
                 console.log(err);
             }
+            createTopic(token,'The video has been uploaded!!','video')
             console.log(doc);
         })
     }
