@@ -94,8 +94,7 @@ const VideoForm = ({username}) => {
     const submitVideos = () => {
         if (validate()) {
             console.log(video,title,desc,username);
-            createVideos(video, title, desc,username);
-            setSuccess(true)
+            createVideos(video, title, desc,username,setSuccess);
         }
     }
 

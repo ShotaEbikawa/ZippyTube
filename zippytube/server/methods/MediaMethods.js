@@ -3,6 +3,19 @@ const uploadPhoto = require('../mediaWrite')
 const Media = require('../model/MediaModel');
 const createTopic = require('../admin')
 
+
+const MONGODB_URL = (process.env.MONGO_HOST && `${process.env.MONGO_HOST}/zippytube-database`) || 'mongodb://localhost:27017/zippytube-database'
+
+// Block of codes that connects to the given DB.
+mongoose.connect(MONGODB_URL, {useNewUrlParser: true});
+mongoose.connection.on('connected', () => {
+    console.log("Connected to MongoDB");
+});
+mongoose.connection.on('error', (error) => {
+    console.log(`ERROR: ${error}`);
+})
+
+
 class MediaMethods {
     // createVideo creates a new document in the media collection.
     // It accepts four attributes: url, title, description, and the 
@@ -16,14 +29,13 @@ class MediaMethods {
             comment: [{}],
             username: req.body.username,
         });
-
         newVideo.save((error) => {
             if (error) {
                 console.log(error)
                 return -1;
             }
             console.log('success');
-            console.log(req.body.title)
+            console.log(req.body.title);
             uploadPhoto.uploadPhoto(req,url,fileInfo,filePath);
             return 1;
         })

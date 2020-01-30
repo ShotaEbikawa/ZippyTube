@@ -11,7 +11,8 @@ const multerS3 = require('multer-s3');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const fs = require('fs');
-const MediaMethods = require('./methods/MediaMethods')
+const FeedMethods = require('./methods/FeedMethods');
+const MediaMethods = require('./methods/MediaMethods');
 const app = express();
 const awsCredendials = require('./secret/awsCredentials')
 const ObjectId = mongoose.Types.ObjectId;
@@ -19,7 +20,7 @@ const port = process.env.PORT || 3004;
 const ID = awsCredendials.id;
 const SECRET = awsCredendials.secretKey;
 const BUCKET_NAME = 'zippytube'
-const MONGODB_URL = (process.env.MONGO_HOST && `${process.env.MONGO_HOST}/zippytube-database`) || 'mongodb://localhost:27017/zippytube-database'
+/* const MONGODB_URL = (process.env.MONGO_HOST && `${process.env.MONGO_HOST}/zippytube-database`) || 'mongodb://localhost:27017/zippytube-database'
 
 
 // Block of codes that connects to the given DB.
@@ -29,7 +30,7 @@ mongoose.connection.on('connected', () => {
 });
 mongoose.connection.on('error', (error) => {
     console.log(`ERROR: ${error}`);
-})
+}) */
 
 // Initializing the given S3 bucket for
 // storing medias (photo/videos)

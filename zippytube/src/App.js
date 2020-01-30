@@ -9,6 +9,10 @@ import {Switch, Route} from 'react-router-dom'
 import './App.css';
 
 function App() {
+  const ws = new WebSocket('ws://localhost:8000');
+  ws.onmessage = (message) => {
+    console.log(message);
+  }
   return (
       <>
       <head>

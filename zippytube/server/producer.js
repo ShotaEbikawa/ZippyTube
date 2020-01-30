@@ -1,5 +1,5 @@
 const {Kafka} = require('kafkajs');
-
+//produceMessage('lol','ok')
 async function produceMessage(token,msg) {
     try {
         const kafka = new Kafka({
@@ -8,7 +8,7 @@ async function produceMessage(token,msg) {
         });
         const producer = kafka.producer();
         console.log("Connecting...")
-        await producer.connect()
+        await producer.connect();
         console.log("Connected!!!")
 /*         await admin.createTopics({
             "topics": [{
@@ -19,7 +19,7 @@ async function produceMessage(token,msg) {
 /*      let partition = msg[0] > "n" ? 1 : 0;
         console.log(msg[0],msg[0] > "N");
         console.log("N">"M",partition) */
-        producer.send({
+        await producer.send({
             "topic": 'video',
             "messages": [
                 {
@@ -27,8 +27,8 @@ async function produceMessage(token,msg) {
                 }
             ]
         });
-        await producer.disconnect();
         console.log("Created Successfully!!!");
+        await producer.disconnect();
     } catch(ex) {
         console.log(`Something bad happened ${ex}`)
     }

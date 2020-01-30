@@ -1,6 +1,6 @@
 const {Kafka} = require('kafkajs');
 const producer  = require('./producer');
-//createTopic('test-topic','sample message','video')
+createTopic('','','video')
 async function createTopic(token,msg,type) {
     try {
         const kafka = new Kafka({

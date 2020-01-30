@@ -10,7 +10,7 @@ import { getCookieType } from './userAction';
 // 4) given description
 // 5) user's username
 // to the server
-export const createVideos = (files,title,desc,username) => {
+export const createVideos = (files,title,desc,username,setSuccess) => {
     let token = getCookieType('token');
     let formData = new FormData();
     formData.append('file', files[0]);
@@ -29,6 +29,7 @@ export const createVideos = (files,title,desc,username) => {
     })
     .then(res => {
         console.log('successfully uploaded video')
+        setSuccess(true);
     })
     .catch(err => console.log(err))
 }
