@@ -4,15 +4,19 @@ import SignUp from './pages/SignUp'
 import VideoForm from './pages/VideoForm'
 import Result from './pages/Result'
 import HomePage from './pages/HomePage'
+import io from 'socket.io-client';
 import Video from './pages/Video'
 import {Switch, Route} from 'react-router-dom'
 import './App.css';
 
 function App() {
-  const ws = new WebSocket('ws://localhost:8000');
-  ws.onmessage = (message) => {
-    console.log(message);
-  }
+  const socketIo = io('/');
+  socketIo.on('me', data => {
+    console.log(data);
+  })
+  socketIo.on('feed', data => {
+    console.log(data);
+  })
   return (
       <>
       <head>

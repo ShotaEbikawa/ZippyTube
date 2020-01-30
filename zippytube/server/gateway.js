@@ -2,8 +2,11 @@ const express = require('express');
 const server = require('http');
 const httpProxy = require('http-proxy');
 const cors = require('cors');
+const consumeMessage = require('./pubSub/consumer');
+const socket = require('socket.io');
 const app = express();
 const appServer = server.createServer(app);
+const io = socket(appServer);
 const apiProxy = httpProxy.createProxyServer(app);
 
 const GATEWAY_PORT = 4000;
@@ -60,5 +63,13 @@ app.all('/*', (req,res) => {
     });
 })
 
+io.on('connection',socketIo=> {
+    console.log('user connected')
+    socketIo.emit('me','Hello World')
+    consumeMessage(socketIo);
+    socketIo.on('disconnect', () => {
+        console.log('user disconnected');
+    })
+})
 appServer.listen(GATEWAY_PORT);
 console.log('Gateway started\n\n');
