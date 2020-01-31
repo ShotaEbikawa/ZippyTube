@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center'
     }
 }))
-const SignInModal = ({username,dispatch}) => {
+const SignInModal = ({username,dispatch,socketIo}) => {
     const classes = useStyles();
     const [toggle, setToggle] = React.useState(false);
     const [userName, setUserName] = React.useState('');
@@ -95,7 +95,7 @@ const SignInModal = ({username,dispatch}) => {
     // to userAction, which sends a request to the serverside.
     const handleSubmit = () => {
         if (validate()) {
-            dispatch(loginUser(userName, md5(passWord),setToggle,setPassErr,setPassError,setUsrErr,setUserError));
+            dispatch(loginUser(userName, md5(passWord),setToggle,setPassErr,setPassError,setUsrErr,setUserError,socketIo));
         }
     }
 
@@ -165,6 +165,7 @@ const SignInModal = ({username,dispatch}) => {
 const mapStateToProps = (state,props) => ({
     username: state.user.username,
     dispatch: props.dispatch,
+    socketIo: props.socketIo,
 }) 
 
 export default withRouter(connect(mapStateToProps)(SignInModal));

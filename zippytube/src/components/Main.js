@@ -6,7 +6,7 @@ const Main = (props) => {
     if (props.location.pathname === '/signup') return null;
     return (
             <div>
-                <NavBar/>
+                <NavBar socketIo={props.socketIo}/>
             </div>
     )
 }

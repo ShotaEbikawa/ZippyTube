@@ -16,14 +16,14 @@ function App() {
   })
   socketIo.on('feed', data => {
     console.log(data);
-  })
+  });
   return (
       <>
       <head>
       <link href="https://vjs.zencdn.net/7.5.5/video-js.css" rel="stylesheet" />
       <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
       </head>
-      <Main/>
+      <Main socketIo={socketIo}/>
       <Switch>
         <Route exact path='/signup' component={SignUp}/>
         <Route exact path='/create-video' component={VideoForm}/>

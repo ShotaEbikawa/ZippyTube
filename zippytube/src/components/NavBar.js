@@ -79,7 +79,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const NavBar = ({username,dispatch}) => {
+const NavBar = ({username,dispatch,socketIo}) => {
     const classes = useStyles();
 
     return(
@@ -101,8 +101,8 @@ const NavBar = ({username,dispatch}) => {
                 <div className={classes.iconContainer}>
                     {dispatch(isAuthenticated()) ? <VideoButton/> : ''}
                     <AppsButton/>
-                    <NotificationButton/>
-                    {dispatch(isAuthenticated()) ? <Avatar/> : <SignInModal/>}
+                    <NotificationButton socketIo={socketIo}/>
+                    {dispatch(isAuthenticated()) ? <Avatar socketIo={socketIo}/> : <SignInModal socketIo={socketIo}/>}
                 </div>
             </Toolbar>
             <Divider />
@@ -121,6 +121,7 @@ const NavBar = ({username,dispatch}) => {
 const mapStateToProps = (state,props) => ({
     username: state.user.username,
     dispatch: props.dispatch,
+    socketIo: props.socketIo,
 })
 
 export default withRouter(connect(mapStateToProps)(NavBar))

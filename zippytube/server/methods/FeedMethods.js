@@ -33,6 +33,20 @@ class FeedMethods {
             return 1
         })
     }
+
+
+    // getFeed retrieves feed documents that matches to the given token.
+    // It will send 403 error if some error occurs during the process.
+    static getFeed(token,res) {
+        Feed.find({to: token}).then((feeds) => {
+            if (feeds) {
+                console.log(feeds);
+                res.json({data: feeds});
+                return;
+            }
+            res.status(403).send('error');
+        })
+    }
 }
 
 module.exports = FeedMethods;

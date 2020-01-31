@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const Avatar = ({username,dispatch}) => {
+const Avatar = ({username,dispatch,socketIo}) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [isLogged, setIsLogged] = React.useState(false);
@@ -23,7 +23,7 @@ const Avatar = ({username,dispatch}) => {
     // check whether the user is authenticated
     // before all components are rendered
     React.useEffect(()=> {
-        setIsLogged(dispatch(isAuthenticated()))
+        setIsLogged(dispatch(isAuthenticated(socketIo)))
         console.log(isLogged);
     },[username])
 
@@ -46,7 +46,7 @@ const Avatar = ({username,dispatch}) => {
     const handleLogOut = () => {
         console.log('is it working')
         setAnchorEl(null);
-        dispatch(signOut());
+        dispatch(signOut(socketIo));
         console.log(username);
     }
 
@@ -82,6 +82,7 @@ const Avatar = ({username,dispatch}) => {
 const mapStateToProps = (state,props) => ({
     username: state.user.username,
     dispatch: props.dispatch,
+    socketIo: props.socketIo,
 })
 
 export default withRouter(connect(mapStateToProps)(Avatar))

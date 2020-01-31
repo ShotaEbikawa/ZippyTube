@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const HomePage = ({media,dispatch,history}) => {
+const HomePage = ({media,dispatch,history,socketIo}) => {
     const classes = useStyles();
     const [flag,setFlag] = React.useState(false);
 
@@ -83,6 +83,7 @@ const mapStateToProps = (state,props) => ({
     media: state.media.results.data,
     dispatch: props.dispatch,
     history: props.history,
+    socketIo: props.socketIo,
 })
 
 export default withRouter(connect(mapStateToProps)(HomePage))
