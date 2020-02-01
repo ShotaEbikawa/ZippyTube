@@ -7,7 +7,7 @@ async function consumeMessage() {
     try {
         const kafka = new Kafka({
             "clientId": "feed",
-            "brokers": ["shotaebikawa.local:9092"]
+            "brokers": ["ip-172-31-9-106:9092"]
         });
         const consumer = kafka.consumer({"groupId": "test"});
         console.log("Connecting...")

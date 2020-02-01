@@ -3,7 +3,7 @@ async function produceMessage(token,msg) {
     try {
         const kafka = new Kafka({
             "clientId": "feed",
-            "brokers": ["shotaebikawa.local:9092"]
+            "brokers": ["ip-172-31-9-106:9092"]
         });
         const producer = kafka.producer();
         console.log("Connecting...")
