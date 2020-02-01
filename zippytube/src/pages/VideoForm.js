@@ -46,6 +46,17 @@ const useStyle = makeStyles(theme => ({
         width: '8rem',
         height: '8rem',
     },
+    loadingStyle: {
+        width: '10rem',
+        height: '10rem',
+        marginTop: '5%',
+        display:'inline-flex',
+        justifyContent:'center'
+    },
+    circularStyle: {
+        width: '100%',
+        height:'100%',
+    },
     publishStyle: {
         width: '80%',
         height:'80%',
@@ -56,12 +67,13 @@ const useStyle = makeStyles(theme => ({
     }
 }))
 
-const VideoForm = ({username}) => {
+const VideoForm = ({username, socketIo}) => {
     const classes = useStyle();
     const [video,setVideo] = React.useState('');
     const [title, setTitle] = React.useState('');
     const [titleErr,setTitleErr] = React.useState(false);
     const [desc, setDesc] = React.useState('')
+    const [isLoading,setIsLoading] = React.useState(false);
     const [descErr,setDescErr] = React.useState(false);
     const [success,setSuccess] = React.useState(false);
     const [next, setNext] = React.useState(false);
@@ -94,7 +106,9 @@ const VideoForm = ({username}) => {
     const submitVideos = () => {
         if (validate()) {
             console.log(video,title,desc,username);
-            createVideos(video, title, desc,username,setSuccess);
+            setIsLoading(true);
+            createVideos(video, title, desc,username,setSuccess,);
+            socketIo.emit('feed', 'upload the video')
         }
     }
 
@@ -102,10 +116,20 @@ const VideoForm = ({username}) => {
     // via the presentation layer of the application (FEATURE POST-PONED)
     const LoadingComponent = ()=> {
         return (
-            <div>
-                <CircularProgress />
-                <p>Uploading videos...</p>
-            </div>
+            <>
+                <div className={classes.loadingStyle}>
+                    <CircularProgress size={'70%'}/>
+                </div>
+                <br/>
+                <div>
+                    <Typography vairant='p'>
+                        Sending the data to the serverside...
+                    </Typography>
+                    <Typography vairant='p'>
+                        Please be patiant....
+                    </Typography>
+                </div>
+            </>
         )
     }
 
@@ -123,7 +147,8 @@ const VideoForm = ({username}) => {
                                                     </Grow> 
                                                 </div>
                                              :
-                                                <Grow in={next}>
+                                               isLoading ? <LoadingComponent/>
+                                               : <Grow in={next}>
                                                         <FormControl>
                                                             <br/>
                                                             <Typography variant='h5'>
@@ -208,7 +233,8 @@ const VideoForm = ({username}) => {
 }
 
 const mapStateToProps = (state,props) => ({
-    username: state.user.username
+    username: state.user.username,
+    socketIo: props.socketIo,
 })
 
 export default withRouter(connect(mapStateToProps)(VideoForm))

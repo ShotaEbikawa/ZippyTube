@@ -71,8 +71,12 @@ const SignInModal = ({username,dispatch,socketIo}) => {
     // validate function handles all of the cornercase
     // existing in SignInModal
     const validate = () => {
+        let userFlag = false;
+        let passFlag = false;
+
         if (userName == '') {
             setUsrErr(true);
+            userFlag = true;
             setUserError('Please fill in your username')
         }
         else {
@@ -81,13 +85,15 @@ const SignInModal = ({username,dispatch,socketIo}) => {
         }
         if (passWord == '') {
             setPassErr(true)
+            passFlag = true;
             setPassError('Please fill in your password')
         }
         else {
             setPassErr(false);
             setPassError('')
         }
-        return userErr == false && passErr == false;
+        console.log(userErr, passErr)
+        return userFlag == false && passFlag == false;
     }
 
 
@@ -95,7 +101,12 @@ const SignInModal = ({username,dispatch,socketIo}) => {
     // to userAction, which sends a request to the serverside.
     const handleSubmit = () => {
         if (validate()) {
-            dispatch(loginUser(userName, md5(passWord),setToggle,setPassErr,setPassError,setUsrErr,setUserError,socketIo));
+            dispatch(
+                loginUser(
+                userName, md5(passWord),setToggle,
+                setPassErr,setPassError,setUsrErr,
+                setUserError,socketIo)
+                );
         }
     }
 

@@ -1,5 +1,4 @@
 const {Kafka} = require('kafkajs');
-//produceMessage('lol','ok')
 async function produceMessage(token,msg) {
     try {
         const kafka = new Kafka({

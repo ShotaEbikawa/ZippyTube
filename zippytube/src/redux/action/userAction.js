@@ -32,7 +32,7 @@ export const loginUser = (userName, passWord, setToggle,setPassErr,setPassError,
             type: 'CACHE_USERNAME',
             payload: userName,
         })
-        socketIo.emit('sign-in', 'signed in')
+        socketIo.emit('sign-in', 'signed in');
     })
     .catch(err => {
         console.log('cannot find username');

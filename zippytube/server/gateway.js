@@ -82,10 +82,11 @@ io.on('connection',socketIo=> {
     socketIo.on('sign-in',()=>{
         socketIo.emit('sign-in','signed in')
     })
-    consumeMessage(socketIo);
     socketIo.on('disconnect', () => {
         console.log('user disconnected');
     })
 })
+
+
 appServer.listen(GATEWAY_PORT);
 console.log('Gateway started\n\n');

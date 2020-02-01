@@ -1,9 +1,6 @@
 import React from 'react'
-import SearchIcon from '@material-ui/icons/Search';
-import {inputDiv} from '../media.js'
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
-import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import {fetchResults} from '../../redux/action/mediaAction';
 import {withRouter} from 'react-router-dom'
@@ -39,12 +36,21 @@ const SearchBar = ({dispatch,history}) => {
         }
         e.preventDefault();
     }
+
+
+    // handleKeyPress validates whether a user entered the 'Enter' key
+    // If the 'Enter' key was pressed, the handleClick function will activate
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter')
+            handleClick(e);
+    }
+
     return (
         <>
-            <form onSubmit={(e)=>handleClick(e)}>
                 <InputBase 
                     placeholder=' Search for videos' 
                     className={classes.inputStyle}
+                    onKeyDown={handleKeyPress}
                     value = {values}
                     onChange = {e => {setValues(e.target.value)}}
                 />
@@ -52,11 +58,11 @@ const SearchBar = ({dispatch,history}) => {
                     type="submit"
                     variant='contained' 
                     color='primary' 
+                    onClick={e => handleClick(e)}
                     className={classes.inputButton}
                 >
                     Submit
                 </Button>
-            </form>
         </>
     )
 }

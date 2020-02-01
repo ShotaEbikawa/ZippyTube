@@ -14,9 +14,6 @@ function App() {
   socketIo.on('me', data => {
     console.log(data);
   })
-  socketIo.on('feed', data => {
-    console.log(data);
-  });
   return (
       <>
       <head>
@@ -26,7 +23,7 @@ function App() {
       <Main socketIo={socketIo}/>
       <Switch>
         <Route exact path='/signup' component={SignUp}/>
-        <Route exact path='/create-video' component={VideoForm}/>
+        <Route exact path='/create-video'><VideoForm socketIo={socketIo}/></Route>
         <Route exact path='/results/:query' component={Result}/>
         <Route exact path='/video/:id' component={Video}/>
         <Route exact path='/' component={HomePage}/>

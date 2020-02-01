@@ -2,7 +2,8 @@ const {Kafka} = require('kafkajs');
 const URL = 'ws://localhost:4000/websocket';
 const FeedMethods = require('../methods/FeedMethods');
 
-async function consumeMessage(socketIo) {
+consumeMessage();
+async function consumeMessage() {
     try {
         const kafka = new Kafka({
             "clientId": "feed",
@@ -20,7 +21,6 @@ async function consumeMessage(socketIo) {
         await consumer.run({
             "eachMessage": async result => {
                 let feedObj = JSON.parse(result.message.value)
-                socketIo.emit('feed',`${feedObj.token} ${feedObj.msg} is sent`);
                 console.log(`${feedObj.token} ${feedObj.msg} is sent`);
                 FeedMethods.addFeed(`${feedObj.token}`,`${feedObj.msg}`);
             }
@@ -30,5 +30,6 @@ async function consumeMessage(socketIo) {
         console.log('it is working');
     }
 }
+
 
 module.exports = consumeMessage;

@@ -23,11 +23,15 @@ const NotificationButton = ({feeds,dispatch,history,socketIo}) => {
         socketIo.on('sign-out', (message)=>{
             console.log(message);
             dispatch(getFeed(setFeedNum,setFlag));
-        })
+        });
         socketIo.on('sign-in', (message)=>{
-            console.log(message)
+            console.log(message);
             dispatch(getFeed(setFeedNum,setFlag));
-        })
+        });
+        socketIo.on('feed', (message) => {
+            console.log(message);
+            dispatch(getFeed(setFeedNum,setFlag));
+        });
         },[])
 
     const handleClick = event => {
@@ -55,14 +59,14 @@ const NotificationButton = ({feeds,dispatch,history,socketIo}) => {
                 </Badge>
             </IconButton>
             <Menu                 
-                    id='avatar-drop'
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                >
-                    {feedList}
-                </Menu>
+                id='avatar-drop'
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                {feedList}
+            </Menu>
         </>
     )
 }

@@ -1,5 +1,6 @@
 const {Kafka} = require('kafkajs');
-const producer  = require('./producer');
+const produceMessage  = require('./producer');
+createTopic('s','s','video')
 async function createTopic(token,msg,type) {
     try {
         const kafka = new Kafka({
@@ -19,7 +20,7 @@ async function createTopic(token,msg,type) {
         console.log("Created Successfully!!!");
         switch(type) {
             case 'video':
-                producer(token,msg);
+                produceMessage(token,msg);
         }
         await admin.disconnect();
     } catch(ex) {
