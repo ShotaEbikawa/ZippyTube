@@ -5,7 +5,7 @@ async function createTopic(token,msg,type) {
     try {
         const kafka = new Kafka({
             "clientId": "feed",
-            "brokers": ["shotaebikawa.local:9092"]
+            "brokers": ["ip-172-31-9-106:9092"]
         });
         const admin = kafka.admin();
         console.log("Connecting...")
