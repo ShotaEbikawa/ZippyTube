@@ -18,15 +18,21 @@ module.exports = {
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
         },
-/*         {
+        {
             name: 'media-server-write',
             script: './mediaWrite.js',
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
-        }, */
+        },
         {
             name:'consumer',
             script: './pubSub/consumer.js',
+            ignore_watch: ["../node_modules","./uploads"],
+            watch: true,
+        },
+        {
+            name: 'commentWrite',
+            script: './commentWrite.js',
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
         },
