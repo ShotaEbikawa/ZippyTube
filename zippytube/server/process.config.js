@@ -37,6 +37,12 @@ module.exports = {
             watch: true,
         },
         {
+            name: 'commentWrite',
+            script: './feedServer.js',
+            ignore_watch: ["../node_modules","./uploads"],
+            watch: true,
+        },
+        {
             name: 'media-server-read',
             script: './mediaRead.js',
             ignore_watch: ["../node_modules","./uploads"],
