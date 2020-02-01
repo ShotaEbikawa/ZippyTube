@@ -37,7 +37,7 @@ module.exports = {
             watch: true,
         },
         {
-            name: 'commentWrite',
+            name: 'feedServer',
             script: './feedServer.js',
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
