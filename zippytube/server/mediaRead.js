@@ -32,7 +32,8 @@ app.get('/media-read/get-all-videos', (req,res) => {
 app.get('/media-read/fetch-video', (req,res) => {
     console.log('connecting to the server');
     console.log(req.query.search);
-    MediaMethods.fetchVideo(req.query.search, res);
+    console.log(req.query.type)
+    MediaMethods.fetchVideo(req.query.search, res,req.query.type);
 })
 
 app.get('/media-read/video', (req,res) => {

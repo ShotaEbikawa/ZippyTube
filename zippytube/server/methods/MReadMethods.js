@@ -19,13 +19,20 @@ class MReadMethods {
     // Notice that the function is performing full-text search,
     // meaning any word that matches in the values of title or 
     // description will be considered as a document to be returned
-    static fetchVideo(query,res) {
+    static fetchVideo(query,res,type) {
         Media.find({$text: {$search: query}}).then((videos) => {
             if (videos) {
+                if (type == 'related') {
+                    if (videos.length == 1) {
+                        this.getAllVideo(res);
+                        return;
+                    }
+                }               
                 console.log(videos);
                 res.json({data: videos});
                 return;
             }
+            
             res.status(403).send('error');
         })
     }

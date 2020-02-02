@@ -28,7 +28,7 @@ app.all('/auth*', (req, res)=>{
     console.log("Routing to Auth: ", req.url);
     apiProxy.web(req, res, {target: USER_URL});
     apiProxy.on('error', (req,res) => {
-        res.send('auth endpoint is not connecting');
+        console.log('auth endpoint is not connecting');
     });
 })
 
@@ -36,7 +36,7 @@ app.all('/media-write*', (req,res) => {
     console.log("Routing to Media (write): ", req.url);
     apiProxy.web(req,res, {target: MEDIA_WRITE_URL});
     apiProxy.on('error', (req,res) => {
-        res.send('media-write endpoint is not connecting');
+        console.log('media-write endpoint is not connecting');
     });
 })
 
@@ -44,7 +44,7 @@ app.all('/media-read*', (req,res) => {
     console.log("Routing to Media (read): ", req.url);
     apiProxy.web(req,res, {target: MEDIA_READ_URL});
     apiProxy.on('error', (req,res) => {
-        res.send('media-read endpoint is not connecting');
+        console.log('media-read endpoint is not connecting');
     });
 })
 
@@ -52,7 +52,7 @@ app.all('/comment-write*', (req,res) => {
     console.log("Routing to Comment (write): ", req.url);
     apiProxy.web(req,res, {target: COMMENT_WRITE_URL});
     apiProxy.on('error', (req,res) => {
-        res.send('comment-write endpoint is not connecting');
+        console.log('comment-write endpoint is not connecting');
     });
 })
 
@@ -60,7 +60,7 @@ app.all('/feed*', (req,res) => {
     console.log("Routing to Feed (read): ", req.url);
     apiProxy.web(req,res, {target: FEED_READ_URL});
     apiProxy.on('error', (req,res) => {
-        res.send('feed-read endpoint is not connecting')
+        console.log('feed-read endpoint is not connecting');
     })
 })
 
@@ -68,7 +68,7 @@ app.all('/*', (req,res) => {
     console.log("Routing to the Presentation layer of the app")
     apiProxy.web(req,res, {target: FRONTEND_URL});
     apiProxy.on('error', (req,res) => {
-        res.send('main endpoint is not connecting');
+        console.log('main endpoint is not connecting');
     });
 })
 
