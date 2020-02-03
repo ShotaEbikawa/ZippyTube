@@ -22,7 +22,7 @@ const NotificationButton = ({feeds,dispatch,history,socketIo}) => {
     React.useEffect(() => {
         socketIo.on('sign-out', (message)=>{
             console.log(message);
-            dispatch(getFeed(setFeedNum,setFlag));
+            setFeedNum(0);
         });
         socketIo.on('sign-in', (message)=>{
             console.log(message);

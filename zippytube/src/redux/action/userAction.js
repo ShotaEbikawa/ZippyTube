@@ -52,20 +52,19 @@ export const isAuthenticated = (socketIo) => (dispatch) => {
     const token = getCookieType('token');
     const id = getCookieType('id');
     if (!cookieIsEmpty(token,id)) {
-        axios.post('/auth/get-username', {token:token})
-        .then(res=>res.data)
-        .then(result => {
+        axios.post('/auth/check-account', {token:token})
+        .then(res => {
+            console.log(res.data);
             dispatch({
                 type: 'CACHE_USERNAME',
-                payload: result.data[0].username,
+                payload: res.data.username,
             });
             socketIo.emit('sign-in','signed in');
             return true;
         })
-        .catch(err =>{
-            console.log('cannot find username'); 
+        .catch(err=>{
             return false;
-        });
+        })
         return true;
     }
     else {
@@ -94,14 +93,19 @@ export const getCookieType = (type) => {
 // signOut clears user's cookie assigned in
 // all of the path that exists in the app
 export const signOut = (socketIo) => (dispatch) => {
-    const type = ['id','first','token']
-    for (var i = 0; i < 3; i++) {
-        document.cookie = `${type[i]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
-        document.cookie = `${type[i]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/results`;
-    }
-    socketIo.emit('sign-out', 'signed out');
-    dispatch({
-        type: 'SIGN_OUT',
-        payload: ''
+    axios.post('auth/sign-out',{token:getCookieType('token')})
+    .then(res=>{
+        const type = ['id','first','token']
+        for (var i = 0; i < 3; i++) {
+            document.cookie = `${type[i]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+            document.cookie = `${type[i]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/results`;
+        }
+        socketIo.emit('sign-out', 'signed out');
+    })
+    .then(result => {
+        dispatch({
+            type: 'SIGN_OUT',
+            payload: ''
+        })
     })
 }
