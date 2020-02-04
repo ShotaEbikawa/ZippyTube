@@ -32,7 +32,7 @@ const CommentModel = mongoose.Schema({
         default: new Date()
     },
     replies: {
-        type: [CommentModel],
+        type: Array,
         required: false,
         default: [],
     },

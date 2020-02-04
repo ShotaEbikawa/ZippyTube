@@ -81,7 +81,13 @@ const useStyles = makeStyles(theme => ({
 
 const NavBar = ({username,dispatch,socketIo}) => {
     const classes = useStyles();
+    const [isAuth, setIsAuth] = React.useState(false);
+    const [flag, setFlag] = React.useState(false);
 
+    React.useEffect(() => {
+        setIsAuth(dispatch(isAuthenticated(socketIo)));
+        setFlag(true);
+    })
     return(
         <>
         <AppBar position='static' className={classes.grow}>
@@ -99,10 +105,10 @@ const NavBar = ({username,dispatch,socketIo}) => {
                     <SearchBar/>
                 </div>
                 <div className={classes.iconContainer}>
-                    {dispatch(isAuthenticated()) ? <VideoButton/> : ''}
+                    {isAuth && flag ? <VideoButton/> : ''}
                     <AppsButton/>
                     <NotificationButton socketIo={socketIo}/>
-                    {dispatch(isAuthenticated()) ? <Avatar socketIo={socketIo}/> : <SignInModal socketIo={socketIo}/>}
+                    {isAuth && flag ? <Avatar socketIo={socketIo}/> : <SignInModal socketIo={socketIo}/>}
                 </div>
             </Toolbar>
             <Divider />

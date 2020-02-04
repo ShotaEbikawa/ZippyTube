@@ -36,11 +36,12 @@ const NotificationButton = ({feeds,dispatch,history,socketIo}) => {
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
+        console.log(feedNum);
     }
     const handleClose = () => {
         setAnchorEl(null);
     };
-    let feedList = flag && feeds ? feeds.data.map(feed => 
+    let feedList = flag && feeds && feeds.length > 0 ? feeds.data.map(feed => 
                                 <MenuItem id = {feed._id} onClick={handleClose}>
                                     {feed.message}
                                 </MenuItem>) : <MenuItem>No new notification</MenuItem>;

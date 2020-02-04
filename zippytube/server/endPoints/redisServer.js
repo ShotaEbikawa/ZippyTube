@@ -23,6 +23,7 @@ async function checkToken(token,res) {
     await client.get(token,(err,data) => {
         if (err || data === undefined || data === null) {
             res.status(403).send('token does not match');
+            return;
         }
         res.json(JSON.parse(data));
     })

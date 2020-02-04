@@ -67,7 +67,8 @@ class UserMethods {
     static loginUser(username, password, res) {
         let token = new ObjectId();
         User.findOneAndUpdate({username: username, password: password}, {token:token}, (err, user) => {
-            if (err || user.length === 0) {
+            console.log(user);
+            if (err || user === null) {
                 res.status(404).send('err');
                 return;
             }

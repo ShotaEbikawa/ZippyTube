@@ -50,6 +50,7 @@ export const loginUser = (userName, passWord, setToggle,setPassErr,setPassError,
 // to any document in users collection if user's cookie exists
 export const isAuthenticated = (socketIo) => (dispatch) => {
     const token = getCookieType('token');
+    console.log(token);
     const id = getCookieType('id');
     if (!cookieIsEmpty(token,id)) {
         axios.post('/auth/check-account', {token:token})
@@ -63,6 +64,7 @@ export const isAuthenticated = (socketIo) => (dispatch) => {
             return true;
         })
         .catch(err=>{
+            console.log(err)
             return false;
         })
         return true;
@@ -93,19 +95,20 @@ export const getCookieType = (type) => {
 // signOut clears user's cookie assigned in
 // all of the path that exists in the app
 export const signOut = (socketIo) => (dispatch) => {
-    axios.post('auth/sign-out',{token:getCookieType('token')})
+    axios.post('/auth/sign-out',{token:getCookieType('token')})
     .then(res=>{
         const type = ['id','first','token']
         for (var i = 0; i < 3; i++) {
             document.cookie = `${type[i]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
             document.cookie = `${type[i]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/results`;
+            document.cookie = `${type[i]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/video`;
         }
-        socketIo.emit('sign-out', 'signed out');
     })
     .then(result => {
         dispatch({
             type: 'SIGN_OUT',
             payload: ''
         })
+        socketIo.emit('sign-out', 'signed out');
     })
 }

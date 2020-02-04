@@ -9,6 +9,11 @@ export const feedReducer = (state=initialState,action) => {
                 ...state,
                 feeds: action.payload,
             }
+        case 'SIGN_OUT':
+            return {
+                ...state,
+                feeds:[],
+            }
         default:
             return state;
     }
