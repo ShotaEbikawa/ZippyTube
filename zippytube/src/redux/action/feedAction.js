@@ -5,14 +5,20 @@ import { getCookieType } from './userAction';
 
 export const getFeed = (setFeedNum,setFlag) => (dispatch) => {
     const token = getCookieType('token');
-    axios.get(`/feed/get-feed?token=${token}`)
-    .then(res => res.data)
-    .then(result => {
-        dispatch({
-            type: 'GET_FEED',
-            payload: result
+    axios.post('/auth/check-account',{token:token})
+    .then(userObj => {
+        console.log(userObj.data)
+        axios.get(`/feed/get-feed?userId=${userObj.data._id}`)
+        .then(res => res.data)
+        .then(result => {
+            dispatch({
+                type: 'GET_FEED',
+                payload: result
+            })
+            // console.log(result.data)
+            setFeedNum(result.data.length);
+            setFlag(true);
         })
-        setFeedNum(result.data.length);
-        setFlag(true);
     })
+    .catch(err => {console.log(err)})
 } 

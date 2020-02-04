@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const port = process.env.PORT || 3006;
-const CommentMethods = require('./methods/CommentMethods')
+const CommentMethods = require('../methods/CommentMethods')
 const app = express();
 /* const MONGODB_URL = (process.env.MONGO_HOST && `${process.env.MONGO_HOST}/zippytube-database`) || 'mongodb://localhost:27017/zippytube-database'
 

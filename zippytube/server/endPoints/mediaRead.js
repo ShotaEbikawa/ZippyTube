@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const MediaMethods = require('./methods/MReadMethods')
+const MediaMethods = require('../methods/MReadMethods')
 const app = express();
 const port = process.env.PORT || 3005 ;
 /* const MONGODB_URL = (process.env.MONGO_HOST && `${process.env.MONGO_HOST}/zippytube-database`) || 'mongodb://localhost:27017/zippytube-database'
@@ -24,7 +24,7 @@ app.use(bodyParser());
 app.use(cookieParser());
 
 app.get('/media-read/get-all-videos', (req,res) => {
-    MediaMethods.getAllVideo(res);
+    MediaMethods.getAllVideo(res,20);
 })
 
 // fetch-video endpoint fetches videos with the given query

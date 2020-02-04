@@ -11,10 +11,10 @@ const multerS3 = require('multer-s3');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const fs = require('fs');
-const FeedMethods = require('./methods/FeedMethods');
-const MediaMethods = require('./methods/MediaMethods');
+const FeedMethods = require('../methods/FeedMethods');
+const MediaMethods = require('../methods/MediaMethods');
 const app = express();
-const awsCredendials = require('./secret/awsCredentials')
+const awsCredendials = require('../secret/awsCredentials')
 const ObjectId = mongoose.Types.ObjectId;
 const port = process.env.PORT || 3004;
 const ID = awsCredendials.id;
@@ -64,14 +64,14 @@ function uploadPhoto(req,url,fileInfo,filePath) {
     .setFfprobePath(ffprobeInstaller.path)
     .on('end', () => {
         console.log('screenshots processed');
-        filePath = `uploads/${fileInfo}.png`;
+        filePath = `../uploads/${fileInfo}.png`;
         fileUrl = `http://zippytube.s3.us-west-1.amazonaws.com/${fileInfo}.mp4`
         uploadScreenshots(filePath, `${fileInfo}.jpeg`, fileUrl,req.body.token);
     })
     .takeScreenshots({
         filename: fileInfo,
         count: 1,
-    }, `uploads/`);
+    }, `../uploads/`);
 }
 
 
@@ -169,7 +169,6 @@ function uploadFile(source,target,req,fileInfo,filePath) {
 // create a function that parses the period
 function parsePeriod(name,uniqueId) {
     let newName = []
-
     for (let i = 0; i < name.length; i++) {
         let c = name.charCodeAt(i);
         if ((c >= 97 && c <= 122) || (c >= 65 && c <= 90))
@@ -178,7 +177,6 @@ function parsePeriod(name,uniqueId) {
     for (let i = 0; i < uniqueId.length; i++) {
         newName.push(uniqueId[i]);
     };
-
     console.log(newName.join(''));
     return newName.join('');
 }
@@ -196,7 +194,7 @@ app.post('/media-write/create-video',upload.single('file'), (req,res,next) => {
     uniqueId = uniqueId.toString();
     fileInfo = parsePeriod(fileInfo.name,uniqueId);
     console.log(fileInfo)
-    let filePath = `uploads/${fileInfo}.mp4`;
+    let filePath = `../uploads/${fileInfo}.mp4`;
     convertVideo(req,fileInfo,filePath);
 })
 

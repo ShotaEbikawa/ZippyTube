@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const uploadPhoto = require('../mediaWrite')
+const uploadPhoto = require('../endPoints/mediaWrite')
 const Media = require('../model/MediaModel');
 const createTopic = require('../pubSub/admin')
 

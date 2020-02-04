@@ -24,12 +24,12 @@ class MReadMethods {
             if (videos) {
                 if (type == 'related') {
                     if (videos.length == 1) {
-                        this.getAllVideo(res);
+                        this.getAllVideo(res,10);
                         return;
                     }
                 }               
                 console.log(videos);
-                res.json({data: videos});
+                res.json({data: videos.splice(0,10)});
                 return;
             }
             
@@ -40,11 +40,11 @@ class MReadMethods {
 
     // getAllVideo returns all of the document that exists in 
     // media collection.
-    static getAllVideo(res) {
+    static getAllVideo(res,upperBound) {
         Media.find({}).then((videos) => {
             if (videos) {
                 console.log(videos);
-                res.json({data: videos})
+                res.json({data: videos.splice(0,upperBound)})
                 return;
             }
             res.status(403).send('error');
