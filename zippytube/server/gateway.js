@@ -2,7 +2,6 @@ const express = require('express');
 const server = require('http');
 const httpProxy = require('http-proxy');
 const cors = require('cors');
-const consumeMessage = require('./pubSub/consumer');
 const socket = require('socket.io');
 const app = express();
 const appServer = server.createServer(app);

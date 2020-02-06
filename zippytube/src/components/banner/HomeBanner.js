@@ -12,7 +12,8 @@ const useStyles = makeStyles(theme => ({
     quote: {
         backgroundSize: '100% 100%',
         background: `url(${Image}) no-repeat`,
-        width:'45%'
+        width:'45%',
+        height:'auto',
     },
     uniBanner: {
         width: '100%',
