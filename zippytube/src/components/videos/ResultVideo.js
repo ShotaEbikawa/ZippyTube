@@ -51,9 +51,9 @@ const useStyles = makeStyles(theme => ({
         }
     },
     islandContainer: {
-        width:'30%',
-        height:'30%',
-        marginLeft:'30%',
+        width:'20%',
+        height:'20%',
+        marginLeft:'35%',
     },
     islandStyle: {
         opacity: 0.75,

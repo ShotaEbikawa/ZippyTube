@@ -22,7 +22,7 @@ class FeedMethods {
             to: token,
             message:message,
         });
-        console.log(':///')
+
         newFeed.save((error,data) => {
             if (error) {
                 console.log('error');
