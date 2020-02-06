@@ -37,19 +37,23 @@ const Video = ({id,media,history,dispatch,video}) => {
         setFlag(false);
         dispatch(getVideo(id,setFlag,history,setCertainVideo,CertainVideo));
     }, [id,history,])
-    // <CommentList comment={video[0].comment[0]} setFlag={setFlag}/>
+
     return(
             <Container>
                 <br/><br/>
                 <Grid container spacing={3}>
                     <Grid item>
-                        {flag ? <div className={classes.videoContainer}>
+                        {(flag) 
+                            ? (
+                                <div className={classes.videoContainer}>
                                     {certainVideo}
                                     <br/>
                                     <CommentForm videoId={id}/>
                                     <br/>
-                                </div> : 
-                        ''}
+                                </div> 
+                              )
+                            : ('')
+                        }
                     </Grid>
                     <Grid item>
                         <Typography variant='h6'>
@@ -66,7 +70,6 @@ const Video = ({id,media,history,dispatch,video}) => {
 
 const mapStateToProps = (state,props) => ({
     video: state.media.video.data,
-    //comment: state.media.video.data ? state.media.video.data[0].comment[0] : '',
     media: state.media.results.data,
     history: props.history,
     id: props.match.params.id,

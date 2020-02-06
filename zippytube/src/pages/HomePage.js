@@ -45,36 +45,38 @@ const HomePage = ({media,dispatch,history,socketIo}) => {
         console.log(media)
     },[])
 
-    const medias = media && media.length > 0 && flag ? 
-                    media.map(result =>
-                        <GridListTile>
-                            <Card className={classes.cardStyle}>
-                                <CardMedia
-                                    key={result._id}
-                                    className={classes.imgContainer}
-                                    image={result.thumbnail}
-                                    onClick={() => handleClick(result._id)}
-                                />
-                                <CardContent>
-                                    <Typography variant='p'>
-                                        {result.title.length > 30 ? result.title.substring(0,30) + '...' : result.title}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </GridListTile>
-                    ) : ''
+    const medias = (media && media.length > 0 && flag) 
+                    ? (
+                        media.map(result =>
+                            <GridListTile>
+                                <Card className={classes.cardStyle}>
+                                    <CardMedia
+                                        key={result._id}
+                                        className={classes.imgContainer}
+                                        image={result.thumbnail}
+                                        onClick={() => handleClick(result._id)}
+                                    />
+                                    <CardContent>
+                                        <Typography variant='p'>
+                                            {result.title.length > 30 ? result.title.substring(0,30) + '...' : result.title}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </GridListTile>
+                        )) 
+                    : ('')
     return(
         <>
-        <Container>
-            <HomeBanner/>
-            <br/><br/>
-            <Typography variant="h5">
-                Recommended
-            </Typography>
-            <GridList cols={4} spacing={10}>
-                {medias}
-            </GridList>
-        </Container>
+            <Container>
+                <HomeBanner/>
+                <br/><br/>
+                <Typography variant="h5">
+                    Recommended
+                </Typography>
+                <GridList cols={4} spacing={10}>
+                    {medias}
+                </GridList>
+            </Container>
         </>
     )
 }

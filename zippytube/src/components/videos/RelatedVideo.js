@@ -38,35 +38,35 @@ const useStyles = makeStyles(theme => ({
 
 const RelatedVideo = ({media,history, handleClick}) => {
     const classes = useStyles();
-    let medias = media && media.length > 0 ? 
-        media.map(results => 
-            <div key={results._id}>
-                <Grid 
-                    className={classes.card}
-                    onClick={() => handleClick(results._id)}
-                    container 
-                    spacing={2}
-                >
-                    <Grid item>
-                        <CardMedia
-                            className = {classes.cover}
-                            image={results.thumbnail}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <CardContent className={classes.contentSize}>
-                            <Typography className={classes.relatedTitleStyle}variant='p'>{results.title.length > 40 ? results.title.substring(0,40) + '...' : results.title}</Typography>
-                            <Typography className={classes.relatedUserStyle}>{results.username}</Typography>
-                        </CardContent>
-                    </Grid>
-                </Grid>
-            </div>
-        ) : 
-        <div>
-            <Container className={classes.noResults}>
-                <Typography variant='p'>The query does not match any of the video...</Typography>
-            </Container>
-        </div>
+    let medias = (media && media.length > 0) 
+                ? (
+                    media.map(results => 
+                        <div key={results._id}>
+                            <Grid 
+                                className={classes.card}
+                                onClick={() => handleClick(results._id)}
+                                container 
+                                spacing={2}
+                            >
+                                <Grid item>
+                                    <CardMedia className = {classes.cover} image={results.thumbnail}/>
+                                </Grid>
+                                <Grid item>
+                                    <CardContent className={classes.contentSize}>
+                                        <Typography className={classes.relatedTitleStyle}variant='p'>{results.title.length > 40 ? results.title.substring(0,40) + '...' : results.title}</Typography>
+                                        <Typography className={classes.relatedUserStyle}>{results.username}</Typography>
+                                    </CardContent>
+                                </Grid>
+                            </Grid>
+                        </div>
+                    )) 
+                :   (
+                        <div>
+                            <Container className={classes.noResults}>
+                                <Typography variant='p'>The query does not match any of the video...</Typography>
+                            </Container>
+                        </div>
+                     )
 
 
 

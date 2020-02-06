@@ -105,13 +105,18 @@ const NavBar = ({username,dispatch,socketIo}) => {
                     <SearchBar/>
                 </div>
                 <div className={classes.iconContainer}>
-                    {isAuth && flag ? <>
-                                        <VideoButton/>
-                                        <AppsButton/>
-                                        <NotificationButton socketIo={socketIo}/>
-                                      </> :
-                     ''}
-                    {isAuth && flag ? <Avatar socketIo={socketIo}/> : <SignInModal socketIo={socketIo}/>}
+                    {(isAuth && flag) 
+                    ? (
+                        <>
+                            <VideoButton/>
+                            <AppsButton/>
+                            <NotificationButton socketIo={socketIo}/>
+                        </>) 
+                    : ('')}
+                    {(isAuth && flag) 
+                    ? (<Avatar socketIo={socketIo}/>) 
+                    : (<SignInModal socketIo={socketIo}/>)
+                    }
                 </div>
             </Toolbar>
             <Divider />

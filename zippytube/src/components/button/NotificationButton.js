@@ -22,16 +22,13 @@ const NotificationButton = ({feeds,dispatch,history,socketIo}) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     React.useEffect(() => {
         socketIo.on('sign-out', (message)=>{
-            console.log(message);
             setFeedNum(0);
             setFeedList('');
         });
         socketIo.on('sign-in', (message)=>{
-            console.log(message);
             dispatch(getFeed(setFeedNum,setFeedList,setAnchorEl,setFlag));
         });
         socketIo.on('feed', (message) => {
-            console.log(message);
             dispatch(getFeed(setFeedNum,setFeedList,setAnchorEl,setFlag));
         });
         history.listen((location,action) => {
@@ -41,7 +38,6 @@ const NotificationButton = ({feeds,dispatch,history,socketIo}) => {
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
-        console.log(feedNum);
     }
 
     return (

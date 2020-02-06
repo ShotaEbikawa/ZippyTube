@@ -73,53 +73,51 @@ const ResultVideo = ({dispatch,history,media,query}) => {
         history.push(`/video/${id}`)
     }
 
-    let results = media && media.length > 0 ?
-        media.map(results => 
-            <div key={results._id}>
-                <br/><br/><br/>
-                <Grid container 
-                    className={classes.card}
-                    onClick={() => handleClick(results._id)}
-                    spacing={2}
-                >
-                    <Grid item className={classes.imgContainer}>
-                        <CardMedia
-                            className = {classes.cover}
-                            image={results.thumbnail}
-                        />
+    let results = (media && media.length > 0) 
+        ? (
+            media.map(results => 
+                <div key={results._id}>
+                    <br/><br/><br/>
+                    <Grid container 
+                        className={classes.card}
+                        onClick={() => handleClick(results._id)}
+                        spacing={2}
+                    >
+                        <Grid item className={classes.imgContainer}>
+                            <CardMedia className = {classes.cover} image={results.thumbnail}/>
+                        </Grid>
+                        <Grid item className={classes.contentSize}>
+                            <CardContent>
+                                <Typography className={classes.titleStyle} variant='h6'>
+                                    {results.title.length > 40 ? results.title.substring(0,40)+'...' : results.title}
+                                </Typography>
+                                <Typography variant='p'>{results.username}</Typography><br/>
+                                <Typography variant='p'>
+                                    {results.desc.length > 50 ? results.desc.substring(0,50)+'...' : results.desc}
+                                </Typography>
+                            </CardContent>
+                        </Grid>
                     </Grid>
-                    <Grid item className={classes.contentSize}>
-                        <CardContent>
-                            <Typography className={classes.titleStyle} variant='h6'>
-                                {results.title.length > 40 ? results.title.substring(0,40)+'...' : results.title}
-                            </Typography>
-                            <Typography variant='p'>{results.username}</Typography><br/>
-                            <Typography variant='p'>
-                                {results.desc.length > 50 ? results.desc.substring(0,50)+'...' : results.desc}
-                            </Typography>
-                        </CardContent>
-                    </Grid>
-                </Grid>
-            </div>
-        ) :
-        <div>
-            <Container className={classes.noResults}>
-            
-            
-                <div className={classes.islandContainer}>
-                    <img src={Island} className={classes.islandStyle}/>
                 </div>
-                {
-                /* <Typography variant='p'>
-                        Icons made by 
-                        <a href="https://www.flaticon.com/authors/freepik">Freepik</a> from <a href="https://www.flaticon.com/"> www.flaticon.com</a>
-                    </Typography> */
-                }
-                <br/>
-                <Typography variant='h5'>The query does not match any of the video...</Typography>
-                <br/>
-            </Container>
-        </div>  
+            )) 
+        : (
+            <div>
+                <Container className={classes.noResults}>
+                    <div className={classes.islandContainer}>
+                        <img src={Island} className={classes.islandStyle}/>
+                    </div>
+                    {
+                    /* <Typography variant='p'>
+                            Icons made by 
+                            <a href="https://www.flaticon.com/authors/freepik">Freepik</a> from <a href="https://www.flaticon.com/"> www.flaticon.com</a>
+                        </Typography> */
+                    }
+                    <br/>
+                    <Typography variant='h5'>The query does not match any of the video...</Typography>
+                    <br/>
+                </Container>
+            </div> 
+        ) 
 
 
     return(
