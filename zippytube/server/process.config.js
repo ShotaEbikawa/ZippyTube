@@ -45,13 +45,13 @@ module.exports = {
         },
         {
             name: 'commentWrite',
-            script: './commentWrite.js',
+            script: './endPoints/commentWrite.js',
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
         },
         {
             name: 'feedServer',
-            script: './feedServer.js',
+            script: './endPoints/feedServer.js',
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
         },
