@@ -44,18 +44,6 @@ module.exports = {
             watch: true,
         },
         {
-            name: 'commentWrite',
-            script: './endPoints/commentWrite.js',
-            ignore_watch: ["../node_modules","./uploads"],
-            watch: true,
-        },
-        {
-            name: 'feedServer',
-            script: './endPoints/feedServer.js',
-            ignore_watch: ["../node_modules","./uploads"],
-            watch: true,
-        },
-        {
             name: 'media-server-read',
             script: './endPoints/mediaRead.js',
             ignore_watch: ["../node_modules","./uploads"],
@@ -67,11 +55,5 @@ module.exports = {
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
         },
-        {
-            name: 'redis-server',
-            script: './endPoints/redisServer.js',
-            ignore_watch: ["../node_modules","./uploads"],
-            watch: true,
-        }
     ]
 }
