@@ -20,17 +20,6 @@ const port = process.env.PORT || 3004;
 const ID = awsCredendials.id;
 const SECRET = awsCredendials.secretKey;
 const BUCKET_NAME = 'zippytube'
-/* const MONGODB_URL = (process.env.MONGO_HOST && `${process.env.MONGO_HOST}/zippytube-database`) || 'mongodb://localhost:27017/zippytube-database'
-
-
-// Block of codes that connects to the given DB.
-mongoose.connect(MONGODB_URL, {useNewUrlParser: true});
-mongoose.connection.on('connected', () => {
-    console.log("Connected to MongoDB");
-});
-mongoose.connection.on('error', (error) => {
-    console.log(`ERROR: ${error}`);
-}) */
 
 // Initializing the given S3 bucket for
 // storing medias (photo/videos)
@@ -80,6 +69,7 @@ function uploadPhoto(req,url,fileInfo,filePath) {
 // into mp4 file, upload them on S3 bucket, and create a 
 // new document in the DB.
 function convertVideo(req,fileInfo,filePath) {
+    console.log(fileInfo,filePath,req.file.location);
     ffmpeg(req.file.location)
     .setFfmpegPath(ffmpegInstaller.path)
     .output(filePath)
@@ -194,7 +184,7 @@ app.post('/media-write/create-video',upload.single('file'), (req,res,next) => {
     uniqueId = uniqueId.toString();
     fileInfo = parsePeriod(fileInfo.name,uniqueId);
     console.log(fileInfo)
-    let filePath = `../uploads/${fileInfo}.mp4`;
+    let filePath = `uploads/${fileInfo}.mp4`;
     convertVideo(req,fileInfo,filePath);
 })
 

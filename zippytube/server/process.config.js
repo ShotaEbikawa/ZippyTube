@@ -11,7 +11,14 @@ module.exports = {
             script: './endPoints/userServer.js',
             ignore_watch: ["../node_modules", "./uploads"],
             watch: true,
+        },        
+        {
+            name: 'redis-server',
+            script: './endPoints/redisServer.js',
+            ignore_watch: ["../node_modules", "./uploads"],
+            watch: true,
         },
+
         {
             name: 'presentation',
             script: './endPoints/fileServer.js',
@@ -21,6 +28,12 @@ module.exports = {
         {
             name: 'media-server-write',
             script: './endPoints/mediaWrite.js',
+            ignore_watch: ["../node_modules","./uploads"],
+            watch: true,
+        },
+        {
+            name: 'media-comment-write',
+            script: './endPoints/commentWrite.js',
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
         },

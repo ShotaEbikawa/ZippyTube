@@ -43,8 +43,6 @@ export const loginUser = (userName, passWord, setToggle,setPassErr,setPassError,
     });
 }
 
-
-
 // isAuthenticated sends a request to the server to 
 // validate whether a given id and token matches
 // to any document in users collection if user's cookie exists

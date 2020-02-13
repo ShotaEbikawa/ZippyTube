@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
         display:'flex',
         marginLeft: '3vw',
         marginRight: '6vw',
-        '@media only screen and (max-width: 1000px)': {
+        '@media only screen and (max-width: 1003px)': {
             display: 'none'
         }
     },
@@ -42,15 +42,12 @@ const useStyles = makeStyles(theme => ({
         color: 'gray',
     },
     secondSearch: {
-        display: 'flex',
+        display: 'none',
         backgroundColor: '#E8E8E8',
         justifyContent: 'center',
         padding:'1rem',
         '@media only screen and (max-width: 1003px)': {
             display: 'flex'
-        },
-        '@media only screen and (min-width: 1003px)': {
-            display: 'none'
         }
     },
     searchIcon: {
@@ -92,14 +89,21 @@ const NavBar = ({username,dispatch,socketIo}) => {
         <>
         <AppBar position='static' className={classes.grow}>
             <Toolbar className={classes.bar}>
-                <IconButton
-                    edge="start"
-                    className={classes.menuButton}
-                    color="inherit"
-                    aria-label="open drawer"
-                >
-                    <MenuIcon />
-                </IconButton>
+                {
+                    /*
+                        // This edge button is still under development,
+                        // and it will be integrated in the future development process
+
+                        <IconButton
+                            edge="start"
+                            className={classes.menuButton}
+                            color="inherit"
+                            aria-label="open drawer"
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    */
+                }
                 <LogoButton/>
                 <div className={classes.search}>
                     <SearchBar/>
@@ -109,7 +113,6 @@ const NavBar = ({username,dispatch,socketIo}) => {
                     ? (
                         <>
                             <VideoButton/>
-                            <AppsButton/>
                             <NotificationButton socketIo={socketIo}/>
                         </>) 
                     : ('')}
