@@ -158,9 +158,13 @@ const SignUp = (props) => {
                             label= {<span>I accept the <Link>Terms of Service </Link></span>}
                         />
 
-                        {checkErr ? <span className={classes.checkErrorMessage}>
-                                        Please fill in the checkbox 
-                                    </span> : ''
+                        {(checkErr) 
+                        ? (
+                            <span className={classes.checkErrorMessage}>
+                                Please fill in the checkbox 
+                            </span>
+                          ) 
+                        : ('')
                         }
                         
                         <br/>

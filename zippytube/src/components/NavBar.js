@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
         display:'flex',
         marginLeft: '3vw',
         marginRight: '6vw',
-        '@media only screen and (max-width: 1000px)': {
+        '@media only screen and (max-width: 1003px)': {
             display: 'none'
         }
     },
@@ -42,15 +42,12 @@ const useStyles = makeStyles(theme => ({
         color: 'gray',
     },
     secondSearch: {
-        display: 'flex',
+        display: 'none',
         backgroundColor: '#E8E8E8',
         justifyContent: 'center',
         padding:'1rem',
         '@media only screen and (max-width: 1003px)': {
             display: 'flex'
-        },
-        '@media only screen and (min-width: 1003px)': {
-            display: 'none'
         }
     },
     searchIcon: {
@@ -81,28 +78,48 @@ const useStyles = makeStyles(theme => ({
 
 const NavBar = ({username,dispatch,socketIo}) => {
     const classes = useStyles();
+    const [isAuth, setIsAuth] = React.useState(false);
+    const [flag, setFlag] = React.useState(false);
 
+    React.useEffect(() => {
+        setIsAuth(dispatch(isAuthenticated(socketIo)));
+        setFlag(true);
+    })
     return(
         <>
         <AppBar position='static' className={classes.grow}>
             <Toolbar className={classes.bar}>
-                <IconButton
-                    edge="start"
-                    className={classes.menuButton}
-                    color="inherit"
-                    aria-label="open drawer"
-                >
-                    <MenuIcon />
-                </IconButton>
+                {
+                    /*
+                        // This edge button is still under development,
+                        // and it will be integrated in the future development process
+
+                        <IconButton
+                            edge="start"
+                            className={classes.menuButton}
+                            color="inherit"
+                            aria-label="open drawer"
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    */
+                }
                 <LogoButton/>
                 <div className={classes.search}>
                     <SearchBar/>
                 </div>
                 <div className={classes.iconContainer}>
-                    {dispatch(isAuthenticated()) ? <VideoButton/> : ''}
-                    <AppsButton/>
-                    <NotificationButton socketIo={socketIo}/>
-                    {dispatch(isAuthenticated()) ? <Avatar socketIo={socketIo}/> : <SignInModal socketIo={socketIo}/>}
+                    {(isAuth && flag) 
+                    ? (
+                        <>
+                            <VideoButton/>
+                            <NotificationButton socketIo={socketIo}/>
+                        </>) 
+                    : ('')}
+                    {(isAuth && flag) 
+                    ? (<Avatar socketIo={socketIo}/>) 
+                    : (<SignInModal socketIo={socketIo}/>)
+                    }
                 </div>
             </Toolbar>
             <Divider />

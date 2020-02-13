@@ -54,19 +54,10 @@ const SignInModal = ({username,dispatch,socketIo}) => {
     const [toggle, setToggle] = React.useState(false);
     const [userName, setUserName] = React.useState('');
     const [passWord, setPassWord] = React.useState('');
-    const [isLogged, setIsLogged] = React.useState(false)
     const [userErr, setUsrErr] = React.useState(false);
     const [passErr, setPassErr] = React.useState(false);
     const [userError, setUserError] = React.useState('');
     const [passError, setPassError] = React.useState('');
-
-
-    // checks whether a user is signed in to one's account
-    // by checking whether a cookie's value matches to its 
-    // document's value
-    React.useEffect(() => {
-        setIsLogged(dispatch(isAuthenticated()))
-    })
 
     // validate function handles all of the cornercase
     // existing in SignInModal

@@ -42,7 +42,7 @@ const Results = ({dispatch,history,media,query}) => {
 
         return (
             <>
-            <Container>
+            <Container maxWidth={false}>
                 <br/>
                 <Paper>
                     <div className={classes.containerStyle}>

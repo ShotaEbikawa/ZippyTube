@@ -12,7 +12,10 @@ const useStyles = makeStyles(theme => ({
     quote: {
         backgroundSize: '100% 100%',
         background: `url(${Image}) no-repeat`,
-        width:'45%'
+        width:'30%',
+        '@media only screen and (max-width: 800px)': {
+            display: 'none',
+        }
     },
     uniBanner: {
         width: '100%',
@@ -21,8 +24,11 @@ const useStyles = makeStyles(theme => ({
     },
     videoContainer: {
         overflow: 'hidden',
-        width:'55%',
+        width:'70%',
         height:'250px',
+        '@media only screen and (max-width: 800px)': {
+            width: '100%',
+        }
     },
     videoStyle: {
         objectFit: 'cover',
