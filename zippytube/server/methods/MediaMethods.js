@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const uploadPhoto = require('../endPoints/mediaWrite')
 const Media = require('../model/MediaModel');
-const createTopic = require('../pubSub/admin')
+const Feed = require('./FeedMethods');
+// const createTopic = require('../pubSub/admin')
 
 
 const MONGODB_URL = (process.env.MONGO_HOST && `${process.env.MONGO_HOST}/zippytube-database`) || 'mongodb://localhost:27017/zippytube-database'
@@ -49,8 +50,9 @@ class MediaMethods {
             if (err) {
                 console.log(err);
             }
-            createTopic(token,'The video has been uploaded!!','video')
+            // createTopic(token,'The video has been uploaded!!','video')
             console.log(doc);
+            Feed.addFeed(token,'The video has been uploaded!!');
         })
     }
 
