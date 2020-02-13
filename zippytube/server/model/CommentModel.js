@@ -31,6 +31,11 @@ const CommentModel = mongoose.Schema({
         required: true,
         default: new Date()
     },
+    replies: {
+        type: Array,
+        required: false,
+        default: [],
+    },
     edited_at: {
         type: Date,
         required: true,

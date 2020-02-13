@@ -1,10 +1,8 @@
 import React from 'react'
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 import CircularProgress from '@material-ui/core/CircularProgress';
-import VideoInfo from '../components/form/VideoInfo'
 import VideoSuccess from '../components/VideoSuccess'
 import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
 import Grow from '@material-ui/core/Grow';
 import { connect } from 'react-redux'; 
 import Typography from '@material-ui/core/Typography';
@@ -82,7 +80,6 @@ const VideoForm = ({username, socketIo}) => {
     // the given video will be stored as the video state
     // and it will move forward to next form
     function handleChange(e) {
-        console.log(e.target.files)
         setVideo(e.target.files);
         setNext(true);
     }
@@ -105,7 +102,6 @@ const VideoForm = ({username, socketIo}) => {
     // if the validate function returns true
     const submitVideos = () => {
         if (validate()) {
-            console.log(video,title,desc,username);
             setIsLoading(true);
             createVideos(video, title, desc,username,setSuccess,);
             socketIo.emit('feed', 'upload the video')
@@ -136,96 +132,102 @@ const VideoForm = ({username, socketIo}) => {
     return(
         <>
           <Container maxWidth='md' className={classes.root}>
-                        {next ?
-                            <Paper className={classes.paperStyle}>
-                                    {success ? 
-                                                <div>
-                                                    <Grow in={true}>
-                                                        <div>
-                                                            <VideoSuccess/>
-                                                        </div>
-                                                    </Grow> 
-                                                </div>
-                                             :
-                                               isLoading ? <LoadingComponent/>
-                                               : <Grow in={next}>
-                                                        <FormControl>
-                                                            <br/>
-                                                            <Typography variant='h5'>
-                                                                Please Enter Given Information 
-                                                            </Typography>
-                                                            <Typography variant='h6'>
-                                                                for the chosen video
-                                                            </Typography>
-                                                            <br/><br/>
-                                                            <TextField
-                                                                error={titleErr}
-                                                                label='title'
-                                                                variant='outlined'
-                                                                value={title}
-                                                                onChange={e=>setTitle(e.target.value)}
-                                                                helperText={titleErr ? 'Please fill the given field' : ''}
-                                                            />
-                                                            <br/>
-                                                            <TextField 
-                                                                error={descErr}
-                                                                label='description'
-                                                                multiline={true}
-                                                                variant='outlined'
-                                                                rows={6}
-                                                                rowsMax={6}
-                                                                value = {desc}
-                                                                onChange = {e=>setDesc(e.target.value)}
-                                                                helperText={descErr ? 'Please fill the given field' : ''}
-                                                            />
-                                                            <br/><br/>
-                                                            <Button variant='contained' color='primary' onClick={submitVideos}>Publish Video</Button>        
-                                                        </FormControl>
-                                                </Grow> 
-                                    }
-                                </Paper>
-                                :
+                        {(next) 
+                            ? (  
                                 <Paper className={classes.paperStyle}>
-                                    <FormControl> 
-                                        <Typography variant='h5' className={classes.uploadText}>
-                                            Upload Video
-                                        </Typography>
-                                        <br/>
-                                        <input
-                                            accept="video/*"
-                                            className={classes.inputStyle}
-                                            id="contained-button-file"
-                                            multiple
-                                            files={video}
-                                            type="file"
-                                            onChange={e=> handleChange(e)}
-                                        />
-                                        <label htmlFor="contained-button-file">
-                                            <IconButton variant="contained" color="primary" className={classes.iconStyle} component="span">
-                                                <PublishIcon className={classes.publishStyle}/>
-                                            </IconButton>
-                                        </label>
-                                        <br/>
-                                        <Typography variant='p' className={classes.uploadText}>
-                                            Select a file you want to upload
-                                        </Typography>
-                                        <input
-                                            accept="video/*"
-                                            className={classes.inputStyle}
-                                            id="contained-button-file"
-                                            multiple
-                                            files={video}
-                                            type="file"
-                                            onChange={e=> handleChange(e)}
-                                        />
-                                        <br/><br/>
-                                        <label htmlFor="contained-button-file">
-                                            <Button variant="contained" color="primary" component="span">
-                                            Upload
-                                            </Button>  
-                                        </label>
-                                    </ FormControl>
-                                </Paper>
+                                        {(success) ? (
+                                                        <div>
+                                                            <Grow in={true}>
+                                                                <div>
+                                                                    <VideoSuccess/>
+                                                                </div>
+                                                            </Grow> 
+                                                        </div>
+                                                    )   
+                                                    : (isLoading) 
+                                                            ? (<LoadingComponent/>)
+                                                            : (
+                                                                <Grow in={next}>
+                                                                    <FormControl>
+                                                                        <br/>
+                                                                        <Typography variant='h5'>
+                                                                            Please Enter Given Information 
+                                                                        </Typography>
+                                                                        <Typography variant='h6'>
+                                                                            for the chosen video
+                                                                        </Typography>
+                                                                        <br/><br/>
+                                                                        <TextField
+                                                                            error={titleErr}
+                                                                            label='title'
+                                                                            variant='outlined'
+                                                                            value={title}
+                                                                            onChange={e=>setTitle(e.target.value)}
+                                                                            helperText={titleErr ? 'Please fill the given field' : ''}
+                                                                        />
+                                                                        <br/>
+                                                                        <TextField 
+                                                                            error={descErr}
+                                                                            label='description'
+                                                                            multiline={true}
+                                                                            variant='outlined'
+                                                                            rows={6}
+                                                                            rowsMax={6}
+                                                                            value = {desc}
+                                                                            onChange = {e=>setDesc(e.target.value)}
+                                                                            helperText={descErr ? 'Please fill the given field' : ''}
+                                                                        />
+                                                                        <br/><br/>
+                                                                        <Button variant='contained' color='primary' onClick={submitVideos}>Publish Video</Button>        
+                                                                    </FormControl>
+                                                                </Grow> 
+                                                             )
+                                        }
+                                    </Paper>
+                                 )
+                                : (
+                                    <Paper className={classes.paperStyle}>
+                                        <FormControl> 
+                                            <Typography variant='h5' className={classes.uploadText}>
+                                                Upload Video
+                                            </Typography>
+                                            <br/>
+                                            <input
+                                                accept="video/*"
+                                                className={classes.inputStyle}
+                                                id="contained-button-file"
+                                                multiple
+                                                files={video}
+                                                type="file"
+                                                onChange={e=> handleChange(e)}
+                                            />
+                                            <label htmlFor="contained-button-file">
+                                                <IconButton variant="contained" color="primary" className={classes.iconStyle} component="span">
+                                                    <PublishIcon className={classes.publishStyle}/>
+                                                </IconButton>
+                                            </label>
+                                            <br/>
+                                            <Typography variant='p' className={classes.uploadText}>
+                                                Select a file you want to upload
+                                            </Typography>
+                                            <input
+                                                accept="video/*"
+                                                className={classes.inputStyle}
+                                                id="contained-button-file"
+                                                multiple
+                                                files={video}
+                                                type="file"
+                                                onChange={e=> handleChange(e)}
+                                            />
+                                            <br/><br/>
+                                            <label htmlFor="contained-button-file">
+                                                <Button variant="contained" color="primary" component="span">
+                                                Upload
+                                                </Button>  
+                                            </label>
+                                        </FormControl>
+                                    </Paper>
+                                  )
                         }
                 </Container>
         </>

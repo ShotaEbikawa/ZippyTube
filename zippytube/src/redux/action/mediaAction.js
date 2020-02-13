@@ -12,26 +12,30 @@ import { getCookieType } from './userAction';
 // to the server
 export const createVideos = (files,title,desc,username,setSuccess) => {
     let token = getCookieType('token');
-    let formData = new FormData();
-    formData.append('file', files[0]);
-    formData.append('token',token);
-    formData.append('title',title);
-    formData.append('desc',desc);
-    formData.append('username',username);
-    console.log('connecting...')
-    console.log(files[0]);
-    
-    axios.post('/media-write/create-video', formData, {
-        headers: {
-            'content-type': 'multipart/form-data',
-            // onUploadProgress: progressEvent => console.log(progressEvent.loaded)
-        }
+    axios.post('/auth/check-account',{token:token})
+    .then(res=>{
+        console.log(res);
+        let formData = new FormData();
+        formData.append('file', files[0]);
+        formData.append('token',res.data._id);
+        formData.append('title',title);
+        formData.append('desc',desc);
+        formData.append('username',res.data.username);
+        console.log('connecting...')
+        console.log(files[0]);
+        axios.post('/media-write/create-video', formData, {
+            headers: {
+                'content-type': 'multipart/form-data',
+                // onUploadProgress: progressEvent => console.log(progressEvent.loaded)
+            }
+        })
+        .then(res => {
+            console.log('successfully uploaded video')
+            setSuccess(true);
+        })
+        .catch(err => console.log(err))
     })
-    .then(res => {
-        console.log('successfully uploaded video')
-        setSuccess(true);
-    })
-    .catch(err => console.log(err))
+    .catch(err => {console.log('token did not match')});
 }
 
 export const fetchAllVideos = (setFlag) => (dispatch) => {
@@ -51,7 +55,7 @@ export const fetchAllVideos = (setFlag) => (dispatch) => {
 // of the documents in the media collection that matches the 
 // given query that the user made
 export const fetchResults = (query,setFlag) => (dispatch) => {
-    axios.get(`/media-read/fetch-video?search=${query}`)
+    axios.get(`/media-read/fetch-video?search=${query}&type=''`)
     .then(res=>res.data)
     .then(results=>{
         dispatch({
@@ -66,7 +70,7 @@ export const fetchResults = (query,setFlag) => (dispatch) => {
 }
 
 export const fetchRelated = (setFlag,query,id) => (dispatch) => {
-    axios.get(`/media-read/fetch-video?search=${query}`)
+    axios.get(`/media-read/fetch-video?search=${query}&type=${'related'}`)
     .then(res=>res.data)
     .then(results=>{
         let temp = [];

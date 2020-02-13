@@ -18,32 +18,28 @@ const NotificationButton = ({feeds,dispatch,history,socketIo}) => {
     const classes = useStyles();
     const [feedNum,setFeedNum] = React.useState(0)
     const [flag, setFlag] = React.useState(false);
+    const [feedList, setFeedList] = React.useState('');
     const [anchorEl, setAnchorEl] = React.useState(null);
     React.useEffect(() => {
         socketIo.on('sign-out', (message)=>{
-            console.log(message);
-            dispatch(getFeed(setFeedNum,setFlag));
+            setFeedNum(0);
+            setFeedList('');
         });
         socketIo.on('sign-in', (message)=>{
-            console.log(message);
-            dispatch(getFeed(setFeedNum,setFlag));
+            dispatch(getFeed(setFeedNum,setFeedList,setAnchorEl,setFlag));
         });
         socketIo.on('feed', (message) => {
-            console.log(message);
-            dispatch(getFeed(setFeedNum,setFlag));
+            dispatch(getFeed(setFeedNum,setFeedList,setAnchorEl,setFlag));
         });
-        },[])
+        history.listen((location,action) => {
+            socketIo.emit('feed', 'update feed');
+        });
+        },[history])
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
     }
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-    let feedList = flag && feeds ? feeds.data.map(feed => 
-                                <MenuItem id = {feed._id} onClick={handleClose}>
-                                    {feed.message}
-                                </MenuItem>) : <MenuItem>No new notification</MenuItem>;
+
     return (
         <>
             <IconButton
@@ -63,7 +59,7 @@ const NotificationButton = ({feeds,dispatch,history,socketIo}) => {
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
-                onClose={handleClose}
+                onClose={()=> {setAnchorEl(null)}}
             >
                 {feedList}
             </Menu>

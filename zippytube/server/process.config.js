@@ -8,19 +8,32 @@ module.exports = {
         },
         {
             name: 'user-server',
-            script: './user-server.js',
+            script: './endPoints/userServer.js',
+            ignore_watch: ["../node_modules", "./uploads"],
+            watch: true,
+        },        
+        {
+            name: 'redis-server',
+            script: './endPoints/redisServer.js',
             ignore_watch: ["../node_modules", "./uploads"],
             watch: true,
         },
+
         {
             name: 'presentation',
-            script: './fileServer.js',
+            script: './endPoints/fileServer.js',
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
         },
         {
             name: 'media-server-write',
-            script: './mediaWrite.js',
+            script: './endPoints/mediaWrite.js',
+            ignore_watch: ["../node_modules","./uploads"],
+            watch: true,
+        },
+        {
+            name: 'media-comment-write',
+            script: './endPoints/commentWrite.js',
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
         },
@@ -44,7 +57,19 @@ module.exports = {
         },
         {
             name: 'media-server-read',
-            script: './mediaRead.js',
+            script: './endPoints/mediaRead.js',
+            ignore_watch: ["../node_modules","./uploads"],
+            watch: true,
+        },
+        {
+            name: 'feed-server',
+            script: './endPoints/feedServer.js',
+            ignore_watch: ["../node_modules","./uploads"],
+            watch: true,
+        },
+        {
+            name: 'redis-server',
+            script: './endPoints/redisServer.js',
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
         }

@@ -19,32 +19,33 @@ const CertainVideo = (props) => {
     const classes = useStyles();
     return(
         <>
-        {
-            props.video ?
-            <div>
-                <div key={props.video.id}>
-                    <video className={classes.videoSize} controls autoPlay> 
-                        <source src={props.video.url} type="video/mp4">
-                        </source>
-                    </video>
-                </div> <br/>         
-                <div className={classes.titleContainer}>
-                    <Typography variant='h5' >
-                            {props.video.title}
-                    </Typography>
-                    <hr/>
-                    <Typography variant='h6' >
-                            {props.video.username}
-                    </Typography>
-                    <br/>
-                    <Typography variant='p'>
-                        {props.video.desc}
-                    </Typography>
-                    <br/>
-                </div> 
-            </div> 
-        : ''
-        }
+            {
+                (props.video) 
+                ? (
+                    <div>
+                        <div key={props.video.id}>
+                            <video className={classes.videoSize} controls autoPlay> 
+                                <source src={props.video.url} type="video/mp4">
+                                </source>
+                            </video>
+                        </div> <br/>         
+                        <div className={classes.titleContainer}>
+                            <Typography variant='h5' >
+                                    {props.video.title}
+                            </Typography>
+                            <hr/>
+                            <Typography variant='h6' >
+                                    {props.video.username}
+                            </Typography>
+                            <br/>
+                            <Typography variant='p'>
+                                {props.video.desc}
+                            </Typography>
+                            <br/>
+                        </div> 
+                    </div> 
+                )
+                :   ('')}
         </>
     )
 }

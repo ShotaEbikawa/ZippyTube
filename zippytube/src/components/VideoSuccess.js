@@ -1,22 +1,9 @@
 import React from 'react'
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
-import CircularProgress from '@material-ui/core/CircularProgress';
-import VideoInfo from './form/VideoInfo'
 import Link from '@material-ui/core/Link'
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import Grow from '@material-ui/core/Grow';
 import Typography from '@material-ui/core/Typography';
-import FormControl from '@material-ui/core/FormControl';
-import { createVideos } from '../redux/action/mediaAction';
-import IconButton from '@material-ui/core/IconButton'
-import PublishIcon from '@material-ui/icons/Publish';
-import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 import {withRouter} from 'react-router-dom';
-import { green } from '@material-ui/core/colors';
 
 const useStyle = makeStyles(theme => ({
     root: {

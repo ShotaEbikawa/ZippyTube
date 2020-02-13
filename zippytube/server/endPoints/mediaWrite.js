@@ -11,26 +11,15 @@ const multerS3 = require('multer-s3');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const fs = require('fs');
-const FeedMethods = require('./methods/FeedMethods');
-const MediaMethods = require('./methods/MediaMethods');
+const FeedMethods = require('../methods/FeedMethods');
+const MediaMethods = require('../methods/MediaMethods');
 const app = express();
-const awsCredendials = require('./secret/awsCredentials')
+const awsCredendials = require('../secret/awsCredentials')
 const ObjectId = mongoose.Types.ObjectId;
 const port = process.env.PORT || 3004;
 const ID = awsCredendials.id;
 const SECRET = awsCredendials.secretKey;
 const BUCKET_NAME = 'zippytube'
-/* const MONGODB_URL = (process.env.MONGO_HOST && `${process.env.MONGO_HOST}/zippytube-database`) || 'mongodb://localhost:27017/zippytube-database'
-
-
-// Block of codes that connects to the given DB.
-mongoose.connect(MONGODB_URL, {useNewUrlParser: true});
-mongoose.connection.on('connected', () => {
-    console.log("Connected to MongoDB");
-});
-mongoose.connection.on('error', (error) => {
-    console.log(`ERROR: ${error}`);
-}) */
 
 // Initializing the given S3 bucket for
 // storing medias (photo/videos)
@@ -64,14 +53,14 @@ function uploadPhoto(req,url,fileInfo,filePath) {
     .setFfprobePath(ffprobeInstaller.path)
     .on('end', () => {
         console.log('screenshots processed');
-        filePath = `uploads/${fileInfo}.png`;
+        filePath = `../uploads/${fileInfo}.png`;
         fileUrl = `http://zippytube.s3.us-west-1.amazonaws.com/${fileInfo}.mp4`
         uploadScreenshots(filePath, `${fileInfo}.jpeg`, fileUrl,req.body.token);
     })
     .takeScreenshots({
         filename: fileInfo,
         count: 1,
-    }, `uploads/`);
+    }, `../uploads/`);
 }
 
 
@@ -80,6 +69,7 @@ function uploadPhoto(req,url,fileInfo,filePath) {
 // into mp4 file, upload them on S3 bucket, and create a 
 // new document in the DB.
 function convertVideo(req,fileInfo,filePath) {
+    console.log(fileInfo,filePath,req.file.location);
     ffmpeg(req.file.location)
     .setFfmpegPath(ffmpegInstaller.path)
     .output(filePath)
@@ -169,7 +159,6 @@ function uploadFile(source,target,req,fileInfo,filePath) {
 // create a function that parses the period
 function parsePeriod(name,uniqueId) {
     let newName = []
-
     for (let i = 0; i < name.length; i++) {
         let c = name.charCodeAt(i);
         if ((c >= 97 && c <= 122) || (c >= 65 && c <= 90))
@@ -178,7 +167,6 @@ function parsePeriod(name,uniqueId) {
     for (let i = 0; i < uniqueId.length; i++) {
         newName.push(uniqueId[i]);
     };
-
     console.log(newName.join(''));
     return newName.join('');
 }

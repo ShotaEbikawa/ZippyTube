@@ -22,7 +22,7 @@ class FeedMethods {
             to: token,
             message:message,
         });
-        console.log(':///')
+
         newFeed.save((error,data) => {
             if (error) {
                 console.log('error');
@@ -37,8 +37,8 @@ class FeedMethods {
 
     // getFeed retrieves feed documents that matches to the given token.
     // It will send 403 error if some error occurs during the process.
-    static getFeed(token,res) {
-        Feed.find({to: token}).then((feeds) => {
+    static getFeed(userId,res) {
+        Feed.find({to: userId, seen:false}).then((feeds) => {
             if (feeds) {
                 console.log(feeds);
                 res.json({data: feeds});
@@ -46,6 +46,18 @@ class FeedMethods {
             }
             res.status(403).send('error');
         })
+    }
+
+    // setFeedToRead sets the feed document with a given feed id's 
+    // seen attribute to False
+    static setFeedToRead(userId,feedId,res) {
+        const query = {_id: mongoose.Types.ObjectId(feedId)}
+        Feed.findOneAndUpdate(query, {$set: {seen:true}}, (err, data) => {
+            if (err)
+                res.send(err);
+            console.log(data,'success');
+            res.json({data:data});
+        });
     }
 }
 

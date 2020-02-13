@@ -2,20 +2,12 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const mongoose = require('mongoose');
-const UserMethods = require('./methods/UserMethods')
+const {checkToken,deleteToken} = require('./redisServer')
+const UserMethods = require('../methods/UserMethods')
 const cors = require('cors');
 const app = express();
 //const MONGODB_URL = (process.env.MONGO_HOST && `${process.env.MONGO_HOST}/zippytube-database`) || 'mongodb://localhost:27017/zippytube-database',
 port = 3003;
-
-/* // Blocks of code that connects to the given DB
-mongoose.connect(MONGODB_URL, {useNewUrlParser: true});
-mongoose.connection.on('connected', () => {
-    console.log("Connected to MongoDB");
-});
-mongoose.connection.on('error', (error) => {
-    console.log(`ERROR: ${error}`);
-}) */
 
 // Initializing required middleware
 app.use(cookieParser());
@@ -51,6 +43,16 @@ app.post('/auth/login-account', (req,res)=> {
 // get-username endpoint retrieves a user's username
 app.post('/auth/get-username', (req,res) => {
     UserMethods.getUser(req.body.token, res);
+})
+
+app.post('/auth/check-account', (req,res) => {
+    checkToken(req.body.token,res);
+})
+
+// deletes key-value pair matching the given token from redis
+app.post('/auth/sign-out',(req,res) => {
+    deleteToken(req.body.token);
+    res.send('success');
 })
 
 // Listens to port 3003

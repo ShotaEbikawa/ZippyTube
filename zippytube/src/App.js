@@ -1,12 +1,13 @@
 import React from 'react';
-import Main from './components/Main'
-import SignUp from './pages/SignUp'
-import VideoForm from './pages/VideoForm'
-import Result from './pages/Result'
-import HomePage from './pages/HomePage'
+import Main from './components/Main';
+import SignUp from './pages/SignUp';
+import VideoForm from './pages/VideoForm';
+import Result from './pages/Result';
+import HomePage from './pages/HomePage';
+import ProfilePage from './pages/ProfilePage';
 import io from 'socket.io-client';
-import Video from './pages/Video'
-import {Switch, Route} from 'react-router-dom'
+import Video from './pages/Video';
+import {Switch, Route} from 'react-router-dom';
 import './App.css';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route exact path='/create-video'><VideoForm socketIo={socketIo}/></Route>
         <Route exact path='/results/:query' component={Result}/>
         <Route exact path='/video/:id' component={Video}/>
+        <Route exact path='/profile/:username' component={ProfilePage}/>
         <Route exact path='/' component={HomePage}/>
       </Switch>
       </>
