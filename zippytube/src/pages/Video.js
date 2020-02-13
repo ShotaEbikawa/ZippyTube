@@ -14,6 +14,9 @@ import { withRouter } from 'react-router-dom'
 
 
 const useStyles = makeStyles(theme => ({
+    mediaWrapper: {
+        width: '100%'
+    },
     videoContainer: videoSize,
 }))
 
@@ -39,9 +42,9 @@ const Video = ({id,media,history,dispatch,video}) => {
     }, [id,history,])
 
     return(
-            <Container>
+            <Container maxWidth={false}>
                 <br/><br/>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} className={classes.mediaWrapper}>
                     <Grid item>
                         {(flag) 
                             ? (
