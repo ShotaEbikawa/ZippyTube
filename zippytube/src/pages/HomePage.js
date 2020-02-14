@@ -38,6 +38,9 @@ const useStyles = makeStyles(theme => ({
     mediaListStyle: {
         padding:'0.7rem',
     },
+    paperStyle: {
+        backgroundColor:'#f9f9f9'
+    },
     titleStyle: {
         fontWeight:'530',
     }
@@ -99,7 +102,7 @@ const HomePage = ({media,dispatch,history,width,socketIo}) => {
                     Recommended
                 </Typography>
                 <br/>
-                <Paper>
+                <Paper className={classes.paperStyle}>
                 <GridList cols={getColVal()} spacing={10} className={classes.mediaListStyle}>
                     {medias}
                 </GridList>
