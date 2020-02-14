@@ -67,8 +67,10 @@ class MediaMethods {
         let setQuery = `comment.0.${commentId}`;
         let query = {_id: queryId};
         Media.findOneAndUpdate(query, {$set: {[setQuery]:comment}}, (err, data) => {
-            if (err)
+            if (err) {
                 res.send(err);
+                return;
+            }
             console.log(data,'success');
             res.json({data:data});
         });
