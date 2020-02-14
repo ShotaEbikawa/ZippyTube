@@ -13,7 +13,7 @@ app.use(bodyParser());
 app.use(cookieParser());
 
 app.get('/media-read/get-all-videos', (req,res) => {
-    MediaMethods.getAllVideo(res,20);
+    MediaMethods.getAllVideo(res,8);
 })
 
 // fetch-video endpoint fetches videos with the given query
