@@ -74,7 +74,7 @@ const Video = ({id,media,history,dispatch,video}) => {
 }
 
 const mapStateToProps = (state,props) => ({
-    video: state.media.video.data,
+    video: state.media.video.data ? state.media.video.data : '',
     media: state.media.results.data,
     history: props.history,
     id: props.match.params.id,
