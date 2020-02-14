@@ -8,6 +8,7 @@ import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Card from '@material-ui/core/Card';
+import Paper from '@material-ui/core/Paper';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import HomeBanner from '../components/banner/HomeBanner';
@@ -34,7 +35,11 @@ const useStyles = makeStyles(theme => ({
         width:'100%',
         height:'120px',
     },
-    recommendedStyle: {
+    mediaListStyle: {
+        padding:'0.7rem',
+    },
+    titleStyle: {
+        fontWeight:'530',
     }
 }))
 
@@ -77,7 +82,7 @@ const HomePage = ({media,dispatch,history,width,socketIo}) => {
                                         onClick={() => handleClick(result._id)}
                                     />
                                     <CardContent>
-                                        <Typography variant='p'>
+                                        <Typography variant='p' className={classes.titleStyle}>
                                             {result.title.length > 30 ? result.title.substring(0,30) + '...' : result.title}
                                         </Typography>
                                     </CardContent>
@@ -94,9 +99,11 @@ const HomePage = ({media,dispatch,history,width,socketIo}) => {
                     Recommended
                 </Typography>
                 <br/>
-                <GridList cols={getColVal()} spacing={10}>
+                <Paper>
+                <GridList cols={getColVal()} spacing={10} className={classes.mediaListStyle}>
                     {medias}
                 </GridList>
+                </Paper>
             </Container>
         </>
     )
