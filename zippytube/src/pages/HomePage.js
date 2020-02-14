@@ -34,6 +34,8 @@ const useStyles = makeStyles(theme => ({
         width:'100%',
         height:'120px',
     },
+    recommendedStyle: {
+    }
 }))
 
 const HomePage = ({media,dispatch,history,width,socketIo}) => {
@@ -88,9 +90,10 @@ const HomePage = ({media,dispatch,history,width,socketIo}) => {
             <Container maxWidth={false}>
                 <HomeBanner/>
                 <br/><br/>
-                <Typography variant="h5">
+                <Typography variant="h5" className={classes.recommendedStyle}>
                     Recommended
                 </Typography>
+                <br/>
                 <GridList cols={getColVal()} spacing={10}>
                     {medias}
                 </GridList>

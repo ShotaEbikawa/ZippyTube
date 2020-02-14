@@ -59,10 +59,12 @@ const Video = ({id,media,history,dispatch,video}) => {
                         }
                     </Grid>
                     <Grid item>
+                        {flag ?
+                        <>
                         <Typography variant='h6'>
                             Related Videos
                         </Typography>
-                        <br/>
+                        <br/></> : ''}
                         {flag ? <RelatedVideo media={media} handleClick={handleClick}/> : ''}
                     </Grid>
                 </Grid>

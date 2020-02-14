@@ -30,6 +30,9 @@ const useStyle = makeStyles(theme => ({
         display: 'inline-flex',
         fontSize: '0.8rem',
         color: 'red',
+    },
+    logoStyle: {
+        fontWeight:'550'
     }
 }))
 
@@ -105,7 +108,7 @@ const SignUp = (props) => {
             <Container maxWidth='sm' className={classes.containerStyle}>
                 <Paper className={classes.paperStyle}>
                     <FormControl color='primary'> 
-                        <Typography variant='h6'>
+                        <Typography variant='h6' color='primary' className={classes.logoStyle}>
                             ZippyTube
                         </Typography>
                         <br/>
