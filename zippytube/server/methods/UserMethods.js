@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('../model/UserModel.js');
+const Media = require('../model/MediaModel');
 const {addToken} = require('../endPoints/redisServer')
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -77,6 +78,19 @@ class UserMethods {
             let userToken = user.token;
             let tokenObj = {id: userId, token: userToken};
             res.send(tokenObj);
+        })
+    }
+
+
+    static retrieveUserMedia(username,res) {
+        User.findOne({username:username}).populate('media').exec((err,media) => {
+            if (err) {
+                res.status(404).send(err);
+                return;
+            }
+            console.log(media.media);
+            console.log(typeof(media.media));
+            res.send(media.media);  
         })
     }
 }

@@ -10,6 +10,7 @@ import { makeStyles, withTheme } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
     avatar: {
         margin: '0.0rem 0.4rem',
+        color: '#3f50b5',
     },
     avatarContainer: {
     }
@@ -25,7 +26,8 @@ const Avatar = ({username,dispatch,history,socketIo}) => {
     React.useEffect(()=> {
         setIsLogged(dispatch(isAuthenticated(socketIo)))
         console.log(isLogged);
-    },[username])
+    },[//username
+    ])
 
     // displays the dropdown if a user clicks on
     // the Avatar component
@@ -40,6 +42,11 @@ const Avatar = ({username,dispatch,history,socketIo}) => {
       history.push('/create-video')
     };
 
+
+    const redirectToProfile = () => {
+        setAnchorEl(false);
+        history.push(`/user-profile/${username}`);
+    }
     // If a user clicks on a Logout button,
     // the app closes the dropdown, deletes the
     // the existing cookie and the existing 
@@ -72,6 +79,7 @@ const Avatar = ({username,dispatch,history,socketIo}) => {
                     onClose={handleClose}
                 >
                     <MenuItem onClick={handleClose}>Upload Video</MenuItem>
+                    <MenuItem onClick={redirectToProfile}>Your Profile</MenuItem>
                     <MenuItem onClick={handleLogOut}>Sign Out</MenuItem>
                 </Menu>
             </div>

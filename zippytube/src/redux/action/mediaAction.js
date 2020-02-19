@@ -14,14 +14,16 @@ export const createVideos = (files,title,desc,username,setSuccess) => {
     let token = getCookieType('token');
     axios.post('/auth/check-account',{token:token})
     .then(res=>{
-        console.log(res);
+        // console.log(res.data);
+        // console.log(res.data._id);
         let formData = new FormData();
         formData.append('file', files[0]);
         formData.append('token',res.data._id);
         formData.append('title',title);
         formData.append('desc',desc);
         formData.append('username',res.data.username);
-        console.log('connecting...')
+        formData.append('userId',res.data._id);
+        console.log('connecting...');
         console.log(files[0]);
         axios.post('/media-write/create-video', formData, {
             headers: {

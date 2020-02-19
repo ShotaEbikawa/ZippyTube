@@ -27,7 +27,7 @@ function App() {
         <Route exact path='/create-video'><VideoForm socketIo={socketIo}/></Route>
         <Route exact path='/results/:query' component={Result}/>
         <Route exact path='/video/:id' component={Video}/>
-        <Route exact path='/profile/:username' component={ProfilePage}/>
+        <Route exact path='/user-profile/:username' component={ProfilePage}/>
         <Route exact path='/' component={HomePage}/>
       </Switch>
       </>

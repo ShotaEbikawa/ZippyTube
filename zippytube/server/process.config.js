@@ -55,5 +55,11 @@ module.exports = {
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
         },
+        {
+            name: 'profile-server',
+            script: './endPoints/profileServer.js',
+            ignore_watch: ["../node_modules", "./uploads"],
+            watch: true,
+        }, 
     ]
 }

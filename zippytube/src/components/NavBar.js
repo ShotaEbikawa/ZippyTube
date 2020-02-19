@@ -84,7 +84,7 @@ const NavBar = ({username,dispatch,socketIo}) => {
     React.useEffect(() => {
         setIsAuth(dispatch(isAuthenticated(socketIo)));
         setFlag(true);
-    })
+    }, [username])
     return(
         <>
         <AppBar position='static' className={classes.grow}>

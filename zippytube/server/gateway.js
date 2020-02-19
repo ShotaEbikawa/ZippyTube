@@ -11,6 +11,7 @@ const apiProxy = httpProxy.createProxyServer(app);
 const GATEWAY_PORT = 4000;
 const FEED_READ_URL = process.env.FEED_URL || 'http://localhost:3007';
 const USER_URL = process.env.USER_URL || 'http://localhost:3003';
+const PROFILE_URL = process.env.PROFILE_URL || 'http://localhost:3010';
 const COMMENT_WRITE_URL = process.env.COMMENT_WRITE_URL || 'http://localhost:3006';
 const MEDIA_WRITE_URL = process.env.MEDIA_WRITE_URL || 'http://localhost:3004';
 const MEDIA_READ_URL = process.env.MEDIA_READ_URL || 'http://localhost:3005';
@@ -53,6 +54,14 @@ app.all('/comment-write*', (req,res) => {
     apiProxy.on('error', (req,res) => {
         console.log('comment-write endpoint is not connecting');
     });
+})
+
+app.all('/profile*', (req,res) => {
+    console.log("Routing to Profile: ", req.url);
+    apiProxy.web(req,res, {target: PROFILE_URL});
+    apiProxy.on('error', (req,res) => {
+        console.log('profile endpoint is not connecting');
+    })
 })
 
 app.all('/feed*', (req,res) => {

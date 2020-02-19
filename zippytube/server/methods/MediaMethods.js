@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const uploadPhoto = require('../endPoints/mediaWrite')
 const Media = require('../model/MediaModel');
+const User = require('../model/UserModel');
 const Feed = require('./FeedMethods');
 // const createTopic = require('../pubSub/admin')
 
@@ -29,6 +30,7 @@ class MediaMethods {
             token: req.body.token,
             comment: [{}],
             username: req.body.username,
+            user: req.body.userId,
         });
         newVideo.save((error) => {
             if (error) {
@@ -51,8 +53,23 @@ class MediaMethods {
                 console.log(err);
             }
             // createTopic(token,'The video has been uploaded!!','video')
-            console.log(doc);
-            Feed.addFeed(token,'The video has been uploaded!!');
+            this.addMediaToUser(token,doc._id,doc.user._id);
+        })
+    }
+
+
+    static addMediaToUser(token,mediaId,userId) {
+        User.findOne({_id:userId}, (err,doc) => {
+            if (err)
+                console.log(err);
+            doc.media.push(mediaId);
+            doc.save((error) => {
+                if (error) {
+                    console.log(error);
+                    return -1;
+                }
+                Feed.addFeed(token,'The video has been uploaded!!');
+            });
         })
     }
 
