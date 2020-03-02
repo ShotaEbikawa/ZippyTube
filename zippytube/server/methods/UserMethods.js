@@ -25,7 +25,7 @@ class UserMethods {
     // and res (for returning a response)
     static registerUser(username, password, email, res) {
         let current_date = new Date();
-
+        console.log("I'm here");
         const newUser = new User({
             username: username,
             password: password,
@@ -37,6 +37,7 @@ class UserMethods {
 
         newUser.save((error) => {
             if (error) {
+                console.log(error);
                 res.send({error:error});
                 return
             }
@@ -81,17 +82,39 @@ class UserMethods {
         })
     }
 
+    static getUserByUserName(username,res) {
+        User.findOne({username:username}, (err,user) => {
+            if (err) {
+                res.status(404).send(err);
+                return;
+            }
+            
+            this.retrieveUserMedia(username,user,res);
+        })
+    }
 
-    static retrieveUserMedia(username,res) {
+    static retrieveUserMedia(username,user,res) {
         User.findOne({username:username}).populate('media').exec((err,media) => {
             if (err) {
                 res.status(404).send(err);
                 return;
             }
-            console.log(media.media);
-            console.log(typeof(media.media));
-            res.send(media.media);  
+            const obj = {
+                media: media.media,
+                user: user,
+            }
+            res.send(obj);  
         })
+    }
+
+    static storeNewProfile(req,res,fileInfo) {
+        User.findOneAndUpdate({_id: req.body.userId}, {profile_url: `${req.file.location}`}, (err,user) => {
+            if (err || user == null) {
+                res.status(404).send('err');
+                return
+            }
+            res.send({url: user.url});
+        } )
     }
 }
 

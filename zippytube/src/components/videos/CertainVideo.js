@@ -1,6 +1,7 @@
 import React from 'react'
 import {videoSize, relatedSize, contentContainer} from '../media'
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
+import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
 
@@ -36,7 +37,7 @@ const CertainVideo = (props) => {
                             </Typography>
                             <hr/>
                             <Typography variant='h6' >
-                                    {props.video.username}
+                                    <Link><a href= {'/user-profile/' + props.video.username} >{props.video.username}</a></Link>
                             </Typography>
                             <br/>
                             <Typography variant='p'>

@@ -17,6 +17,10 @@ const UserModel = mongoose.Schema({
     token: {
         type: mongoose.Schema.Types.ObjectId,
     },
+    profile_url: {
+        type: String,
+        default: '',
+    },
     created_at: {
         type: Date,
         required: true,

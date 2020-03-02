@@ -87,6 +87,9 @@ io.on('connection',socketIo=> {
     socketIo.on('sign-out',()=>{
         socketIo.emit('sign-out','signed out');
     })
+    socketIo.on('uploaded',()=>{
+        socketIo.emit('uploaded','profile pic uploaded');
+    })
     socketIo.on('sign-in',()=>{
         socketIo.emit('sign-in','signed in')
     })

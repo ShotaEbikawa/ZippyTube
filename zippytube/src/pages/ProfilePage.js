@@ -26,26 +26,35 @@ const useStyles = makeStyles(theme => ({
     },
     userStyle: {
         marginTop: '1.3rem',
-        marginLeft: '3rem'
+        marginLeft: '3rem',
+        fontFamily: 'Hind Guntur',
     }
   }));
 
-const ProfilePage = ({username, history, dispatch, width}) => {
+const ProfilePage = ({username, history, dispatch, width, socketIo}) => {
     const classes = useStyles();
     const [content,setContent] = React.useState('');
+    const [userUrl, setUserUrl] = React.useState('');
+    const [isUploaded,setIsUploaded] = React.useState(false);
+    const [isUser,setIsUser] = React.useState(false);
     const [flag, setFlag] = React.useState(false);
     const [medias, setMedias] = React.useState('');
+    
     React.useEffect(()=> {
+        setFlag(false);
         console.log(username);
-        getProfileInfo(username,setMedias,setFlag);
-    },[])
+        getProfileInfo(username,setMedias,setFlag,setIsUser,setUserUrl);
+        socketIo.on('uploaded', (message) => {
+            setIsUploaded(!isUploaded)
+        });
+    },[username,history, isUploaded])
 
     return (
         <>
             <Container maxWidth={false}>
                 <div className={classes.headerStyle}>
                     <div className={classes.headerContent}>
-                        <ProfileButton username={username}/>
+                        {(flag) ? <ProfileButton username={username} isUser={isUser} userProfile={userUrl} socketIo={socketIo}/> : ''}
                         <Typography className={classes.userStyle} variant='h4'>
                             {username}
                         </Typography>
@@ -67,6 +76,7 @@ const mapStateToProps = (state,props) => ({
     history: props.history,
     username: props.match.params.username,
     width: props.width,
+    socketIo: props.socketIo,
 });
 export default withWidth()(withRouter(connect(mapStateToProps)(ProfilePage)));
 
