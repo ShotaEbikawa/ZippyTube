@@ -76,9 +76,7 @@ const ProfileButton = ({history,username,dispatch,isUser,userUrl,socketIo}) => {
     }, []);
 
     const handleSubmit = (e) => {
-        // not sure if I really need to store the files via photo state
         setPhoto(e.target.files);
-        // console.log(photo);
         uploadProfile(e.target.files,socketIo)
     }
     return (

@@ -2,6 +2,19 @@ import axios from 'axios';
 import { getCookieType } from './userAction';
 
 
+// fetchProfile sends the request to the get-profile-info endpoint
+// to retrieve the given user's profile info.
+const fetchProfile = (username,setMedias,setUserUrl,setFlag) => {
+    axios.get(`/profile/get-profile-info?username=${username}`)
+    .then(res => {
+        setMedias(res.data.media);
+        setUserUrl(res.data.user.profile_url);
+        setFlag(true);
+    })
+    .catch(err=> console.log(err));
+}
+
+
 
 // getProfileInfo retrieves all of the relevant data (media and user info)
 // to display them on the given user's profile page.
@@ -12,20 +25,21 @@ import { getCookieType } from './userAction';
 // Otherwise, it will send a request to the /profile endpoint to retrieve the data.
 export const getProfileInfo = (username, setMedias, setFlag,setIsUser,setUserUrl) => {
     const token = getCookieType('token');
-    axios.post('/auth/check-account',{token:token})
-    .then(userObj =>  {
-        if (userObj.data.username == username) setIsUser(true);
-        else setIsUser(false);
-        axios.get(`/profile/get-profile-info?username=${username}`)
-        .then(res => {
-            setMedias(res.data.media);
-            setUserUrl(res.data.user.profile_url);
-            setFlag(true);
+    if (token != "") {
+        axios.post('/auth/check-account',{token:token})
+        .then(userObj =>  {
+            if (userObj.data.username == username) setIsUser(true);
+            else setIsUser(false);
+            fetchProfile(username,setMedias,setUserUrl,setFlag);
         })
-        .catch(err=> console.log(err));
-    })
-    .catch(err => console.log(err));
+        .catch(err => console.log(err));
+    }
+    else {
+        setIsUser(false);
+        fetchProfile(username,setMedias,setUserUrl,setFlag);
+    }
 }
+
 
 
 

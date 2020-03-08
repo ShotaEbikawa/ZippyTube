@@ -42,11 +42,10 @@ const ProfilePage = ({username, history, dispatch, width, socketIo}) => {
     
     React.useEffect(()=> {
         setFlag(false);
-        console.log(username);
         getProfileInfo(username,setMedias,setFlag,setIsUser,setUserUrl);
-        socketIo.on('uploaded', (message) => {
-            setIsUploaded(!isUploaded)
-        });
+        socketIo.on('uploaded', (message) => {setIsUploaded(!isUploaded);});
+        socketIo.on('sign-out', (message) => {setIsUploaded(!isUploaded);})
+        socketIo.on('sign-in', (message) => {setIsUploaded(!isUploaded);})
     },[username,history, isUploaded])
 
     return (
