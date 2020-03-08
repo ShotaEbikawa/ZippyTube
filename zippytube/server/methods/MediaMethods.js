@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const uploadPhoto = require('../endPoints/mediaWrite')
 const Media = require('../model/MediaModel');
-const createTopic = require('../pubSub/admin')
+const User = require('../model/UserModel');
+const Feed = require('./FeedMethods');
+// const createTopic = require('../pubSub/admin')
 
 
 const MONGODB_URL = (process.env.MONGO_HOST && `${process.env.MONGO_HOST}/zippytube-database`) || 'mongodb://localhost:27017/zippytube-database'
@@ -28,6 +30,7 @@ class MediaMethods {
             token: req.body.token,
             comment: [{}],
             username: req.body.username,
+            user: req.body.userId,
         });
         newVideo.save((error) => {
             if (error) {
@@ -49,8 +52,24 @@ class MediaMethods {
             if (err) {
                 console.log(err);
             }
-            createTopic(token,'The video has been uploaded!!','video')
-            console.log(doc);
+            // createTopic(token,'The video has been uploaded!!','video')
+            this.addMediaToUser(token,doc._id,doc.user._id);
+        })
+    }
+
+
+    static addMediaToUser(token,mediaId,userId) {
+        User.findOne({_id:userId}, (err,doc) => {
+            if (err)
+                console.log(err);
+            doc.media.push(mediaId);
+            doc.save((error) => {
+                if (error) {
+                    console.log(error);
+                    return -1;
+                }
+                Feed.addFeed(token,'The video has been uploaded!!');
+            });
         })
     }
 
@@ -65,8 +84,10 @@ class MediaMethods {
         let setQuery = `comment.0.${commentId}`;
         let query = {_id: queryId};
         Media.findOneAndUpdate(query, {$set: {[setQuery]:comment}}, (err, data) => {
-            if (err)
+            if (err) {
                 res.send(err);
+                return;
+            }
             console.log(data,'success');
             res.json({data:data});
         });

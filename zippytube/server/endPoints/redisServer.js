@@ -10,10 +10,10 @@ client.on('error', err => {
 const addToken = (token,user) => {
     console.log(token)
     console.log('!!!!!!!!!ok')
-    console.log(token.toString());
+    // console.log(token.toString());
     client.set(token.toString(),JSON.stringify(user).toString(),(err,res) => {
         if (err)
-            console.log(err)
+            console.log(err);
         console.log(res);
     });
 }

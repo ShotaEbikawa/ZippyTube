@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
         borderWidth: '0.05rem',
         padding: '0.1rem',
         borderColor: 'gray',
-        width: '30vw',
+        width: '42vw',
         borderRadius: '0.2rem'
     },
     inputButton: {

@@ -59,10 +59,12 @@ const Video = ({id,media,history,dispatch,video}) => {
                         }
                     </Grid>
                     <Grid item>
+                        {flag ?
+                        <>
                         <Typography variant='h6'>
                             Related Videos
                         </Typography>
-                        <br/>
+                        <br/></> : ''}
                         {flag ? <RelatedVideo media={media} handleClick={handleClick}/> : ''}
                     </Grid>
                 </Grid>
@@ -72,7 +74,7 @@ const Video = ({id,media,history,dispatch,video}) => {
 }
 
 const mapStateToProps = (state,props) => ({
-    video: state.media.video.data,
+    video: state.media.video.data ? state.media.video.data : '',
     media: state.media.results.data,
     history: props.history,
     id: props.match.params.id,

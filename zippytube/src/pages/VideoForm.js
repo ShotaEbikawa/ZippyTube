@@ -37,9 +37,7 @@ const useStyle = makeStyles(theme => ({
         fontSize: '0.8rem',
         color: 'red',
     },
-    inputStyle: {
-        display: 'none'
-    },
+    inputStyle: {display: 'none'},
     iconStyle: {
         width: '8rem',
         height: '8rem',
@@ -222,7 +220,7 @@ const VideoForm = ({username, socketIo}) => {
                                             <br/><br/>
                                             <label htmlFor="contained-button-file">
                                                 <Button variant="contained" color="primary" component="span">
-                                                Upload
+                                                    Upload
                                                 </Button>  
                                             </label>
                                         </FormControl>

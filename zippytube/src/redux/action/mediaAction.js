@@ -3,34 +3,27 @@ import axios from 'axios'
 import { getCookieType } from './userAction';
 
 
-// createVideos sends the required data: 
-// 1) video file
-// 2) user token
-// 3) given title
-// 4) given description
-// 5) user's username
-// to the server
+
+// createVideos sends the required data regarding the submitted videos
+// to the /media-write endpoint. Before it sends to that endpoint, it will
+// first check whether the user's token exists in Redis. Once the validation
+// is successful, it will send the request to /media-write endpoint.
 export const createVideos = (files,title,desc,username,setSuccess) => {
     let token = getCookieType('token');
     axios.post('/auth/check-account',{token:token})
     .then(res=>{
-        console.log(res);
+        // console.log(res.data);
+        // console.log(res.data._id);
         let formData = new FormData();
+        let headers = { 'content-type': 'multipart/form-data', }
         formData.append('file', files[0]);
         formData.append('token',res.data._id);
         formData.append('title',title);
         formData.append('desc',desc);
         formData.append('username',res.data.username);
-        console.log('connecting...')
-        console.log(files[0]);
-        axios.post('/media-write/create-video', formData, {
-            headers: {
-                'content-type': 'multipart/form-data',
-                // onUploadProgress: progressEvent => console.log(progressEvent.loaded)
-            }
-        })
+        formData.append('userId',res.data._id);
+        axios.post('/media-write/create-video', formData, { headers: headers })
         .then(res => {
-            console.log('successfully uploaded video')
             setSuccess(true);
         })
         .catch(err => console.log(err))
@@ -38,6 +31,9 @@ export const createVideos = (files,title,desc,username,setSuccess) => {
     .catch(err => {console.log('token did not match')});
 }
 
+
+// fetchAllVideos retrieves all of the existing media documents (video)
+// in the media collection.
 export const fetchAllVideos = (setFlag) => (dispatch) => {
     axios.get('/media-read/get-all-videos')
     .then(res=>res.data)
@@ -50,6 +46,8 @@ export const fetchAllVideos = (setFlag) => (dispatch) => {
     })
     .catch(err => console.log(err));
 }
+
+
 
 // fetchResults sends the request to the server to retrieve all 
 // of the documents in the media collection that matches the 
@@ -65,21 +63,22 @@ export const fetchResults = (query,setFlag) => (dispatch) => {
         setFlag(true);
     })
     .catch(err=>console.log(err));
-    
-    //.catch(err=> console.log(err));
 }
 
+
+
+// fetchRelated sends a request to media-read endpoint, where it 
+// fetches all of the media documents (videos) that matches to the
+// selected media (video)'s title and description.
 export const fetchRelated = (setFlag,query,id) => (dispatch) => {
     axios.get(`/media-read/fetch-video?search=${query}&type=${'related'}`)
     .then(res=>res.data)
     .then(results=>{
         let temp = [];
-        console.log(results)
         results.data.map(result => {
             if (result._id != id)
                 temp.push(result);
         })
-        console.log(temp)
         dispatch({
             type:'GET_QUERY',
             payload: {data:temp}
@@ -87,6 +86,7 @@ export const fetchRelated = (setFlag,query,id) => (dispatch) => {
         setFlag(true);
     })
 }
+
 
 
 // getVideo sends the request to the server to retrieve the 
@@ -108,6 +108,11 @@ export const getVideo = (id,setFlag,history,setCertainVideo, CertainVideo) => (d
     )
 }
 
+
+
+// updateComment sends a request to media-write endpoint, where it
+// appends the newly submitted comment to the given media document (video)'s
+// comment list. Afterward, it will update the given redux store to stay up-to-date.
 export const updateComment = (req,setIsOpen,history) => (dispatch) => {
     console.log(req)
     let body = {
@@ -118,7 +123,6 @@ export const updateComment = (req,setIsOpen,history) => (dispatch) => {
     axios.post('/media-write/update-comment',body)
     .then(res=>res.data)
     .then(result=>{
-        console.log(result);
         dispatch({
             type: 'GET_VIDEO',
             payload:result.data

@@ -11,10 +11,10 @@ const multerS3 = require('multer-s3');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const fs = require('fs');
-const FeedMethods = require('../methods/FeedMethods');
+// const FeedMethods = require('../methods/FeedMethods');
 const MediaMethods = require('../methods/MediaMethods');
 const app = express();
-const awsCredendials = require('../secret/awsCredentials')
+const awsCredendials = require('../secret/awsCredentials');
 const ObjectId = mongoose.Types.ObjectId;
 const port = process.env.PORT || 3004;
 const ID = awsCredendials.id;
@@ -179,6 +179,7 @@ app.use(cookieParser());
 // create-video endpoint handles logic regarding video uploads
 app.post('/media-write/create-video',upload.single('file'), (req,res,next) => {
     res.json({downloaded: true})
+    // console.log(`${req.body.username} ${req.body.userId}`);
     let fileInfo = path.parse(req.file.originalname);
     let uniqueId = new ObjectId();
     uniqueId = uniqueId.toString();

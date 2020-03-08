@@ -63,6 +63,10 @@ class MReadMethods {
             res.status(403).send('error');
         })
     }
+
+    static getUserVideo(userId,res) {
+        Media.find({})
+    }
 }
 
 module.exports = MReadMethods;

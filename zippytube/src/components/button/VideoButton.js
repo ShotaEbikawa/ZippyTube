@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 import { withRouter } from 'react-router-dom'
 const useStyles = makeStyles(theme => ({
-    icon: {color: 'gray',},
+    icon: {color: '#3f50b5',},
 }))
 
 const VideoButton = (props) => {

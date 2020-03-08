@@ -17,6 +17,10 @@ const UserModel = mongoose.Schema({
     token: {
         type: mongoose.Schema.Types.ObjectId,
     },
+    profile_url: {
+        type: String,
+        default: '',
+    },
     created_at: {
         type: Date,
         required: true,
@@ -26,7 +30,11 @@ const UserModel = mongoose.Schema({
         type: Date,
         required: true,
         default: new Date()
-    }
+    },
+    media: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Media'
+    }],
 });
 
 const User = mongoose.model('User', UserModel);

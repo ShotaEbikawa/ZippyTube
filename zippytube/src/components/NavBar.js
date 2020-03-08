@@ -2,6 +2,7 @@ import React from 'react';
 import SearchBar from './searchbar/SearchBar';
 import SignInModal from './form/SignInModal';
 import '../App.css';
+
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar';
 import VideoButton from './button/VideoButton';
@@ -36,7 +37,6 @@ const useStyles = makeStyles(theme => ({
         }
     },
     sTwo: {
-        width: '60vw'
     },
     icon: {
         color: 'gray',
@@ -84,7 +84,7 @@ const NavBar = ({username,dispatch,socketIo}) => {
     React.useEffect(() => {
         setIsAuth(dispatch(isAuthenticated(socketIo)));
         setFlag(true);
-    })
+    }, [username])
     return(
         <>
         <AppBar position='static' className={classes.grow}>

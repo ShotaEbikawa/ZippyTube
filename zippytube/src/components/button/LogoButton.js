@@ -17,6 +17,11 @@ const useStyles = makeStyles(theme => ({
 
 const LogoButton = (props) => {
     const classes = useStyles();
+    const linkStyle = {
+        textDecoration:'none',
+        fontWeight:'550',
+        fontSize:'1.6rem',
+    }
     const handleClick = () => {
         props.history.push('/');
     }
@@ -24,7 +29,7 @@ const LogoButton = (props) => {
     return (
         <>
             <Typography variant='h5' className={classes.logo}>
-                <Link style={{textDecoration:'none'}} onClick={handleClick}>
+                <Link style={linkStyle} onClick={handleClick}>
                     ZippyTube
                 </Link>
             </Typography>

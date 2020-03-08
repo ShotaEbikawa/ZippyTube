@@ -1,4 +1,4 @@
-const {Kafka} = require('kafkajs');
+/* const {Kafka} = require('kafkajs');
 const produceMessage  = require('./producer');
 createTopic('s','s','video')
 async function createTopic(token,msg,type) {
@@ -28,4 +28,4 @@ async function createTopic(token,msg,type) {
     }
 }
 
-module.exports = createTopic;
+module.exports = createTopic; */

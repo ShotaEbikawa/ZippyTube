@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { getFeed } from './feedAction';
 
+
+
 // registerUser sends a request to the server to 
 // use an entered data to create an account
 export const registerUser = (newUser, history) => {
@@ -8,6 +10,7 @@ export const registerUser = (newUser, history) => {
     .then(res => { history.push('/'); })
     .catch(err => { console.log('err'); })
 }
+
 
 
 // loginUser sends a request to the server to check whether
@@ -20,11 +23,9 @@ export const loginUser = (userName, passWord, setToggle,setPassErr,setPassError,
     };
     axios.post('/auth/login-account', userObj)
     .then(res => { 
-        console.log(`id=${res.data.id};token=${res.data.token};`);
         document.cookie = `id=${res.data.id};`;
         document.cookie = `token=${res.data.token};`;
         document.cookie = `first=${userName.substring(0,1).toUpperCase()}`
-        console.log('redirecting...');
         setToggle(false);
     })
     .then(result => {
@@ -35,7 +36,6 @@ export const loginUser = (userName, passWord, setToggle,setPassErr,setPassError,
         socketIo.emit('sign-in', 'signed in');
     })
     .catch(err => {
-        console.log('cannot find username');
         setPassErr(true);
         setUsrErr(true);
         setPassError('username/password is incorrect');
@@ -43,17 +43,17 @@ export const loginUser = (userName, passWord, setToggle,setPassErr,setPassError,
     });
 }
 
+
+
 // isAuthenticated sends a request to the server to 
 // validate whether a given id and token matches
 // to any document in users collection if user's cookie exists
 export const isAuthenticated = (socketIo) => (dispatch) => {
     const token = getCookieType('token');
-    console.log(token);
     const id = getCookieType('id');
     if (!cookieIsEmpty(token,id)) {
         axios.post('/auth/check-account', {token:token})
         .then(res => {
-            console.log(res.data);
             dispatch({
                 type: 'CACHE_USERNAME',
                 payload: res.data.username,
@@ -73,12 +73,13 @@ export const isAuthenticated = (socketIo) => (dispatch) => {
 }
 
 
+
 // checks whether the cookie is empty
 export const cookieIsEmpty = (token,id) => {
-    if (id == '' || id == undefined || token == '' || token == undefined)
-        return true;
+    if (id == '' || id == undefined || token == '' || token == undefined) return true;
     return false;
 }
+
 
 
 // Credit goes to this user Mac
@@ -99,6 +100,7 @@ export const signOut = (socketIo) => (dispatch) => {
         for (var i = 0; i < 3; i++) {
             document.cookie = `${type[i]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
             document.cookie = `${type[i]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/results`;
+            document.cookie = `${type[i]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/user-profile`;
             document.cookie = `${type[i]}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/video`;
         }
     })

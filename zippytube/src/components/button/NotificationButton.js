@@ -11,7 +11,7 @@ import { getFeed } from '../../redux/action/feedAction';
 import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
-    icon: {color: 'gray',},
+    icon: {color: '#3f50b5',},
 }))
 
 const NotificationButton = ({feeds,dispatch,history,socketIo}) => {
