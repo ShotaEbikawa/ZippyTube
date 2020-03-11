@@ -57,7 +57,7 @@ const SearchBar = ({dispatch,history}) => {
                 <Button
                     type="submit"
                     variant='contained' 
-                    color='primary' 
+                    color="primary"
                     onClick={e => handleClick(e)}
                     className={classes.inputButton}
                 >

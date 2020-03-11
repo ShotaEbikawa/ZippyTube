@@ -10,9 +10,10 @@ const useStyles = makeStyles(theme => ({
         height:'250px',
     },
     quote: {
-        backgroundSize: '100% 100%',
-        background: `url(${Image}) no-repeat`,
+        backgroundSize: 'cover',
+        background: `url(${Image}) no-repeat center center`,
         width:'30%',
+        height: 'auto',
         '@media only screen and (max-width: 800px)': {
             display: 'none',
         }

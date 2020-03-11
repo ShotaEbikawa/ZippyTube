@@ -3,9 +3,11 @@ import Button from '@material-ui/core/Button'
 import Modal from '@material-ui/core/Modal';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Link from '@material-ui/core/Link';
 import md5 from 'md5';
-import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
@@ -15,14 +17,6 @@ import Avatar from '../button/Avatar';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 
 const useStyles = makeStyles(theme => ({
-    signin: {
-        display: 'flex',
-        justifyContent: 'flex-end',
-        padding: '0 1.5rem',
-        marginTop: '0.2rem',
-        height: '2.5rem',
-        marginLeft: '1rem',
-    },
     root: {
         display: 'flex',
         width: 'auto',
@@ -49,7 +43,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center'
     }
 }))
-const SignInModal = ({username,dispatch,socketIo}) => {
+const SignInModal = ({username,dispatch,socketIo,variants,isLink}) => {
     const classes = useStyles();
     const [toggle, setToggle] = React.useState(false);
     const [userName, setUserName] = React.useState('');
@@ -58,7 +52,15 @@ const SignInModal = ({username,dispatch,socketIo}) => {
     const [passErr, setPassErr] = React.useState(false);
     const [userError, setUserError] = React.useState('');
     const [passError, setPassError] = React.useState('');
-
+    const signIn =  {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        padding: '0 1.5rem',
+        marginTop: '0.2rem',
+        height: '2.5rem',
+        marginLeft: '1rem',
+        backgroundColor:'white'
+    }
     // validate function handles all of the cornercase
     // existing in SignInModal
     const validate = () => {
@@ -105,14 +107,33 @@ const SignInModal = ({username,dispatch,socketIo}) => {
     return(
         <>
             <div>
-                <Button
-                    variant='outlined'
-                    color='primary' 
-                    className={classes.signin}
-                    onClick = {()=>setToggle(!toggle)}
-                >
-                    Sign in
-                </Button>
+                {
+                    (isLink) ? (
+                                <>
+                                    <IconButton
+                                        variant='outlined'
+                                        color= 'primary'
+                                        onClick = {()=>setToggle(!toggle)}
+                                        disableRipple={variants==true ? true : false}
+                                    >
+                                        <LockOpenIcon />
+                                    </IconButton>
+                                        Sign In &nbsp;
+                                </>
+                                ) 
+                             : (
+
+                                    <Button
+                                    variant='outlined'
+                                    color= 'primary'
+                                    style={signIn}
+                                    onClick = {()=>setToggle(!toggle)}
+                                    disableRipple={variants==true ? true : false}
+                                >
+                                    Sign in
+                                </Button>
+                             )
+                }
                 <Modal
                     open={toggle}
                     onClose={()=>setToggle(!toggle)}
@@ -168,6 +189,8 @@ const mapStateToProps = (state,props) => ({
     username: state.user.username,
     dispatch: props.dispatch,
     socketIo: props.socketIo,
+    variants: props.variant,
+    isLink: props.isLink,
 }) 
 
 export default withRouter(connect(mapStateToProps)(SignInModal));

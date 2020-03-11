@@ -4,9 +4,7 @@ import VideoCallIcon from '@material-ui/icons/VideoCall';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 import { withRouter } from 'react-router-dom'
-const useStyles = makeStyles(theme => ({
-    icon: {color: '#3f50b5',},
-}))
+const useStyles = makeStyles(theme => ({}))
 
 const VideoButton = (props) => {
     const classes = useStyles();
@@ -17,7 +15,7 @@ const VideoButton = (props) => {
     return (
         <>
             <IconButton onClick={handleClick}>
-                <VideoCallIcon className={classes.icon}/>
+                <VideoCallIcon style={{color: props.color == "white" ? "white" : "#3f50b5"}}/>
             </IconButton>
         </>
     )

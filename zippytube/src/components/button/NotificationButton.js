@@ -10,11 +10,9 @@ import { connect } from 'react-redux';
 import { getFeed } from '../../redux/action/feedAction';
 import { withRouter } from 'react-router-dom';
 
-const useStyles = makeStyles(theme => ({
-    icon: {color: '#3f50b5',},
-}))
+const useStyles = makeStyles(theme => ({}))
 
-const NotificationButton = ({feeds,dispatch,history,socketIo}) => {
+const NotificationButton = ({color,dispatch,history,socketIo,state}) => {
     const classes = useStyles();
     const [feedNum,setFeedNum] = React.useState(0)
     const [flag, setFlag] = React.useState(false);
@@ -31,10 +29,13 @@ const NotificationButton = ({feeds,dispatch,history,socketIo}) => {
         socketIo.on('feed', (message) => {
             dispatch(getFeed(setFeedNum,setFeedList,setAnchorEl,setFlag));
         });
+        socketIo.on('mobile-nav', (message) => {
+            dispatch(getFeed(setFeedNum,setFeedList,setAnchorEl,setFlag));
+        })
         history.listen((location,action) => {
             socketIo.emit('feed', 'update feed');
         });
-        },[history])
+        },[history,state])
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -49,7 +50,7 @@ const NotificationButton = ({feeds,dispatch,history,socketIo}) => {
             >
                 <Badge badgeContent={feedNum} >
                     <NotificationsIcon 
-                        className={classes.icon}  
+                        style={{color: color == "white" ? "white" : "#3f50b5"}}
                         onClick={handleClick}
                     />
                 </Badge>
@@ -72,6 +73,8 @@ const mapStateToProps = (state,props) => ({
     dispatch: props.dispatch,
     history: props.history,
     socketIo: props.socketIo,
+    color: props.color,
+    state: props.state,
 })
 
-export default withRouter(connect(mapStateToProps)(NotificationButton))
+export default withRouter(connect(mapStateToProps)(NotificationButton));

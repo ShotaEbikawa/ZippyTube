@@ -28,6 +28,12 @@ const useStyles = makeStyles(theme => ({
         marginTop: '1.3rem',
         marginLeft: '3rem',
         fontFamily: 'Hind Guntur',
+        '@media only screen and (max-width: 450px)': {
+            fontSize: '1.5rem',
+        },
+        '@media only screen and (max-width: 350px)': {
+            fontSize: '1rem',
+        }
     }
   }));
 

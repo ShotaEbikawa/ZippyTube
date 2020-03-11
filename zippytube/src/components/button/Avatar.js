@@ -8,19 +8,18 @@ import { connect } from 'react-redux';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 
 const useStyles = makeStyles(theme => ({
-    avatar: {
-        margin: '0.0rem 0.4rem',
-        color: '#3f50b5',
-    },
-    avatarContainer: {
-    }
+    avatarContainer: {}
 }))
 
-const Avatar = ({username,dispatch,history,socketIo}) => {
+const Avatar = ({username,color,dispatch,history,socketIo}) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [isLogged, setIsLogged] = React.useState(false);
-
+    const avatarStyle = {
+        margin: '0.0rem 0.4rem',
+        color: color == "white" ? "white" : "#3f50b5",
+        width: '3rem',
+    }
     // check whether the user is authenticated
     // before all components are rendered
     React.useEffect(()=> {
@@ -62,7 +61,7 @@ const Avatar = ({username,dispatch,history,socketIo}) => {
         <>
             <div>
                 <IconButton 
-                    className={classes.avatarContainer} 
+                    style={avatarStyle}
                     aria-controls='avatar-drop' 
                     aria-haspopup='true'
                     onClick={handleClick}  
@@ -92,6 +91,7 @@ const mapStateToProps = (state,props) => ({
     dispatch: props.dispatch,
     socketIo: props.socketIo,
     history: props.history,
+    color: props.color,
 })
 
 export default withRouter(connect(mapStateToProps)(Avatar))

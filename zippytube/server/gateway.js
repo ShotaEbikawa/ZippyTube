@@ -90,8 +90,11 @@ io.on('connection',socketIo=> {
     socketIo.on('uploaded',()=>{
         socketIo.emit('uploaded','profile pic uploaded');
     })
+    socketIo.on('mobile-nav',()=>{
+        socketIo.emit('mobile-nav','mobile-nav activated');
+    })
     socketIo.on('sign-in',()=>{
-        socketIo.emit('sign-in','signed in')
+        socketIo.emit('sign-in','signed in');
     })
     socketIo.on('disconnect', () => {
         console.log('user disconnected');

@@ -59,9 +59,8 @@ const VideoList = ({history, medias, username, width}) => {
     }
 
     const getColVal = () => {
-            
             if (isWidthDown('xs',width))
-                return 2;
+                return 1;
             else if (isWidthDown('sm',width))
                 return 3;
             else if (isWidthDown('md',width))

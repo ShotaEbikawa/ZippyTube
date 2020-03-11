@@ -1,24 +1,31 @@
 import React from 'react';
-import SearchBar from './searchbar/SearchBar';
-import SignInModal from './form/SignInModal';
 import '../App.css';
-
-import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar';
 import VideoButton from './button/VideoButton';
-import AppsButton from './button/AppsButton';
-import IconButton from '@material-ui/core/IconButton';
 import Avatar from './button/Avatar';
+import MobileNav from '../components/button/MobileNav';
 import LogoButton from './button/LogoButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Divider from '@material-ui/core/Divider';
+import SearchBar from './searchbar/SearchBar';
+import SignInModal from './form/SignInModal';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import {isAuthenticated} from '../redux/action/userAction';
 import NotificationButton from './button/NotificationButton';
+import { withRouter } from 'react-router-dom';
+import Divider from '@material-ui/core/Divider';
+import SearchIcon from '@material-ui/icons/Search';
+import AppBar from '@material-ui/core/AppBar'
+import IconButton from '@material-ui/core/IconButton';
+import {isAuthenticated, signOut} from '../redux/action/userAction';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 
 const useStyles = makeStyles(theme => ({
+    mobileNavBar: {
+        display: 'none',
+        marginLeft: 'auto',
+        color: '#3f50b5',
+        '@media only screen and (max-width: 450px)': {
+            display: 'flex',
+        }
+    },
     bar: {
         backgroundColor: 'white',
         display:'inline-flex',
@@ -28,7 +35,7 @@ const useStyles = makeStyles(theme => ({
         color: 'black',
         backgroundColor: 'white',
     },
-    search: {
+    searchBar: {
         display:'flex',
         marginLeft: '3vw',
         marginRight: '6vw',
@@ -36,102 +43,113 @@ const useStyles = makeStyles(theme => ({
             display: 'none'
         }
     },
-    sTwo: {
+    mobileSearchButton: {
+        display:'none',
+        color: '#3f50b5',
+        '@media only screen and (max-width: 1003px)': {
+            display: 'flex'
+        }
     },
-    icon: {
-        color: 'gray',
-    },
-    secondSearch: {
+    mobileContainer: {
         display: 'none',
-        backgroundColor: '#E8E8E8',
         justifyContent: 'center',
         padding:'1rem',
         '@media only screen and (max-width: 1003px)': {
             display: 'flex'
         }
     },
-    searchIcon: {
-        color: 'gray',
-        display:'none',
-        '@media only screen and (max-width: 1003px)': {
-            display: 'block'
-        }
-    },
     iconContainer: {
         display: 'flex',
         marginLeft: 'auto',
-        justifyContent: 'flex-end'
-    },
-    signin: {
-        display: 'flex',
         justifyContent: 'flex-end',
-        padding: '0 1.5rem',
-        marginTop: '0.2rem',
-        height: '2.5rem',
-        marginLeft: '1rem',
-    },
-    avatar: {
-        margin: '0.0rem 0.4rem',
+        '@media only screen and (max-width: 450px)': {
+            display: 'none'
+        }
     },
 }))
 
 
-const NavBar = ({username,dispatch,socketIo}) => {
+const NavBar = ({username,dispatch,socketIo, history}) => {
     const classes = useStyles();
     const [isAuth, setIsAuth] = React.useState(false);
+    const [searchFlag, setSearchFlag] = React.useState(false);
     const [flag, setFlag] = React.useState(false);
 
     React.useEffect(() => {
         setIsAuth(dispatch(isAuthenticated(socketIo)));
         setFlag(true);
     }, [username])
+
     return(
-        <>
         <AppBar position='static' className={classes.grow}>
             <Toolbar className={classes.bar}>
-                {
-                    /*
-                        // This edge button is still under development,
-                        // and it will be integrated in the future development process
-
-                        <IconButton
-                            edge="start"
-                            className={classes.menuButton}
-                            color="inherit"
-                            aria-label="open drawer"
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                    */
-                }
                 <LogoButton/>
-                <div className={classes.search}>
-                    <SearchBar/>
-                </div>
-                <div className={classes.iconContainer}>
-                    {(isAuth && flag) 
-                    ? (
-                        <>
-                            <VideoButton/>
-                            <NotificationButton socketIo={socketIo}/>
-                        </>) 
-                    : ('')}
-                    {(isAuth && flag) 
-                    ? (<Avatar socketIo={socketIo}/>) 
-                    : (<SignInModal socketIo={socketIo}/>)
-                    }
-                </div>
+                    <div className={classes.mobileNavBar}>
+                        {
+                            /**
+                             * the ternary operator below
+                             * displays the mobile-friendly
+                             * navbar depending on the given 
+                             * resolution sizes
+                             */
+                        }
+                        {flag ? (
+                            <MobileNav 
+                                isAuth={isAuth}
+                                socketIo={socketIo} 
+                                searchFlag={searchFlag}
+                                setSearchFlag={setSearchFlag}
+                            />
+                        ) : ('')}
+                    </div>
+                    <div className={classes.searchBar}>
+                        <SearchBar/>
+                    </div>
+                    <div className={classes.iconContainer}>
+                        <IconButton 
+                            className={classes.mobileSearchButton} 
+                            onClick={()=>{setSearchFlag(!searchFlag);}}
+                        >
+                            <SearchIcon/>
+                        </IconButton>
+                        {
+                            /**
+                             * If the user is authenticated and the flag is set 
+                             * to true (fully rendered), then IconButton, VideoButton,
+                             * and NotificationButton will appear.
+                             * 
+                             * Otherwise, only SignInModal will appear
+                             * in the NavBar
+                             */
+                        }
+                        {(isAuth && flag) ? (
+                            <>
+                                <VideoButton/>
+                                <NotificationButton socketIo={socketIo}/>
+                                <Avatar socketIo={socketIo}/>
+                            </>) : (
+                                <SignInModal socketIo={socketIo} variant={true}/>)
+                        } 
+                    </div>  
             </Toolbar>
-            <Divider />
-            <div className={classes.secondSearch}>
-                <br/>
-                <div className={classes.sTwo}>
-                    <SearchBar/>
-                </div>
-            </div>
-            
+                {
+                    /**
+                     * Displays a mobile-friendly search bar
+                     * when user presses the SearchIcon
+                     */
+                }
+                {(searchFlag) ? (
+                    <>
+                        <Divider />
+                        <div className={classes.mobileContainer}>
+                            <br/>
+                            <div>
+                                <SearchBar/>
+                            </div>
+                        </div>
+                    </>
+                ) : ('')}
         </AppBar>
-        </>
     )
 }
 
@@ -139,6 +157,7 @@ const mapStateToProps = (state,props) => ({
     username: state.user.username,
     dispatch: props.dispatch,
     socketIo: props.socketIo,
+    history: props.history,
 })
 
 export default withRouter(connect(mapStateToProps)(NavBar))
