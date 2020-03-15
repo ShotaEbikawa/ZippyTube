@@ -107,27 +107,3 @@ export const getVideo = (id,setFlag,history,setCertainVideo, CertainVideo) => (d
         }
     )
 }
-
-
-/* 
-// updateComment sends a request to media-write endpoint, where it
-// appends the newly submitted comment to the given media document (video)'s
-// comment list. Afterward, it will update the given redux store to stay up-to-date.
-export const updateComment = (req,setIsOpen,history) => (dispatch) => {
-    console.log(req)
-    let body = {
-        comment: req,
-        commentId: req._id,
-        videoId: req.videoId,
-    }
-    axios.post('/media-write/update-comment',body)
-    .then(res=>res.data)
-    .then(result=>{
-        dispatch({
-            type: 'GET_VIDEO',
-            payload:result.data
-        }) 
-        setIsOpen(false);
-    })
-    .catch(err => console.log(err));
-} */

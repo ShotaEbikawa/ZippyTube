@@ -14,7 +14,7 @@ export const registerUser = (newUser, history) => {
 /* loginUser sends a request to the server to check whether
 the given username and password matches in any of the 
 document in the users collecion */
-export const loginUser = (userName, passWord, setToggle,setPassErr,setPassError,setUsrErr,setUserError,socketIo) => (dispatch) => {
+export const loginUser = (userName,passWord,setToggle,setPassErr,setPassError,setUsrErr,setUserError,socketIo) => (dispatch) => {
     let userObj = {
         username: userName, 
         password: passWord

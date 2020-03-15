@@ -16,5 +16,8 @@ app.get('/feed/get-feed', (req,res) => {
     FeedMethods.getFeed(userId,res);
 })
 
+app.post('/feed/set-feed-to-read', (req,res) => {
+    FeedMethods.setFeedToRead(req.body.feeds,res);
+})
 
 app.listen(port, () => {console.log(`feed-read endpoint listening to port ${3007}`)})

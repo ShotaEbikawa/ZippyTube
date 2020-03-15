@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
 const FeedModel = mongoose.Schema({
-    to: {
-        type: String,
-        unique: false,
-        required: true,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     message: {
         type: String,
