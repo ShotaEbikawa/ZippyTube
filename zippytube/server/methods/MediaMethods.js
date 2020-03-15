@@ -19,7 +19,7 @@ mongoose.connection.on('error', (error) => {
 
 
 class MediaMethods {
-    
+
     /* createVideo creates a new document in the media collection.
     It accepts four attributes: url, title, description, and the 
     user's token. */
@@ -29,7 +29,6 @@ class MediaMethods {
             title: req.body.title,
             desc: req.body.desc,
             token: req.body.token,
-            comment: [{}],
             username: req.body.username,
             user: req.body.userId,
         });

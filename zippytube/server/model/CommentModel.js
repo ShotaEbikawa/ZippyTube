@@ -10,6 +10,11 @@ const CommentModel = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    username: {
+        type: String,
+        unique: false,
+        required: true,
+    },
     media: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Media'
@@ -26,6 +31,6 @@ const CommentModel = mongoose.Schema({
     },
 })
 
-CommentModel.index({desc: 'text', username: 'text'});
+// CommentModel.index({desc: 'text', username: 'text'});
 const Comment = mongoose.model('Comment', CommentModel);
 module.exports = Comment;

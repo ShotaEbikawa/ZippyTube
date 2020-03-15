@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Menu from '@material-ui/core/Menu';
 import CommentList from '../CommentList';
 import { withRouter } from 'react-router-dom';
-import { createComment } from '../../redux/action/commentAction';
+import { createComment, fetchComments } from '../../redux/action/commentAction';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const CommentForm = ({dispatch,username, videoId,history, setFlag,comment}) => {
+const CommentForm = ({dispatch,username, videoId,history, setFlag}) => {
     const [desc, setDesc] = React.useState('');
     const [isOpen,setIsOpen] = React.useState(false);
     const [commentObj, setCommentObj] = React.useState('');
@@ -39,7 +39,7 @@ const CommentForm = ({dispatch,username, videoId,history, setFlag,comment}) => {
     /* onClick handler that sends the given object to
     the commentAction.js */
     const handleSubmit = () => {
-        const obj = {
+/*         const obj = {
             desc: desc,
             username:username,
             videoId: videoId,
@@ -51,15 +51,24 @@ const CommentForm = ({dispatch,username, videoId,history, setFlag,comment}) => {
             setCommentObj: setCommentObj,
         };
         dispatch(createComment(obj,CommentList));
+        setDesc(''); */
+        const obj = {
+            desc: desc,
+            videoId: videoId,
+            commentObj: commentObj,
+            comments: comments,
+            setIsOpen: setIsOpen,
+            setComments: setComments,
+            setCommentObj: setCommentObj,
+        }
+        createComment(obj);
         setDesc('');
     }
 
     React.useEffect(() => {
-        const commentsObj = comment ? Object.values(comment).reverse() : '';
-        const comments = (comment) ? Object.values(comment).reverse().map(
-                                    (result,i) => <CommentList comment={result}/>) : '';
-        setComments(comments);
-        setCommentObj(commentsObj);
+        // fetch media's comments
+        setIsOpen(false);
+        fetchComments(videoId,setComments,setIsOpen);
     },[]);
 
     return(
@@ -100,7 +109,6 @@ const CommentForm = ({dispatch,username, videoId,history, setFlag,comment}) => {
 const mapStateToProps = (state,props) => ({
     dispatch: props.dispatch,
     username: state.user.username,
-    comment: state.media.video.data ? state.media.video.data[0].comment[0] : '',
     videoId: props.videoId,
     setFlag: props.setFlag,
     history: props.history,

@@ -109,7 +109,7 @@ export const getVideo = (id,setFlag,history,setCertainVideo, CertainVideo) => (d
 }
 
 
-
+/* 
 // updateComment sends a request to media-write endpoint, where it
 // appends the newly submitted comment to the given media document (video)'s
 // comment list. Afterward, it will update the given redux store to stay up-to-date.
@@ -130,4 +130,4 @@ export const updateComment = (req,setIsOpen,history) => (dispatch) => {
         setIsOpen(false);
     })
     .catch(err => console.log(err));
-}
+} */
