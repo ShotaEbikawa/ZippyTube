@@ -48,7 +48,7 @@ app.all('/media-read*', (req,res) => {
     });
 })
 
-app.all('/comment-write*', (req,res) => {
+app.all('/comment*', (req,res) => {
     console.log("Routing to Comment (write): ", req.url);
     apiProxy.web(req,res, {target: COMMENT_WRITE_URL});
     apiProxy.on('error', (req,res) => {

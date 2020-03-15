@@ -16,8 +16,8 @@ app.get('/media-read/get-all-videos', (req,res) => {
     MediaMethods.getAllVideo(res,12);
 })
 
-// fetch-video endpoint fetches videos with the given query
-// that the user entered from the client-side
+/* fetch-video endpoint fetches videos with the given query
+that the user entered from the client-side */
 app.get('/media-read/fetch-video', (req,res) => {
     console.log('connecting to the server');
     console.log(req.query.search);

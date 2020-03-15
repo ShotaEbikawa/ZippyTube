@@ -2,15 +2,15 @@ const redis = require('redis');
 const mongoose = require('mongoose')
 const client = redis.createClient();
 
-
+// prints error message if the redis connection fails
 client.on('error', err => {
     console.log("Error " + err);
 });
 
+/* stringifies the token (key)
+and stringifies user object (value) */
 const addToken = (token,user) => {
     console.log(token)
-    console.log('!!!!!!!!!ok')
-    // console.log(token.toString());
     client.set(token.toString(),JSON.stringify(user).toString(),(err,res) => {
         if (err)
             console.log(err);
@@ -18,6 +18,7 @@ const addToken = (token,user) => {
     });
 }
 
+// check if the given token exists in redis
 async function checkToken(token,res) {
     console.log(token);
     await client.get(token,(err,data) => {
@@ -29,6 +30,7 @@ async function checkToken(token,res) {
     })
 }
 
+// delete given token in the redis
 const deleteToken = (token) => {
     console.log(token);
     client.del(token,(err,res) => {

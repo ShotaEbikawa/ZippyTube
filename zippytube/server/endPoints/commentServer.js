@@ -13,10 +13,13 @@ app.use(cookieParser());
 app.use(cors());
 
 // creates a new document in the Comment collection
-app.post('/comment-write/create-comment', (req,res) => {
+app.post('/comment/create-comment', (req,res) => {
     console.log(req.body)
-    CommentMethods.CreateComment(req,res);
+    CommentMethods.createComment(req,res);
 })
 
+app.get('/comment/fetch-comments', (req,res) => {
+    CommentMethods.fetchComments(req.query.id,res);
+})
 
 app.listen(port, () => console.log(`Example app listening on port ${port}`))

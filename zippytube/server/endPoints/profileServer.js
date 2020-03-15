@@ -12,7 +12,6 @@ const multerS3 = require('multer-s3');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const fs = require('fs');
-// const FeedMethods = require('../methods/FeedMethods');
 const awsCredendials = require('../secret/awsCredentials');
 const ObjectId = mongoose.Types.ObjectId;
 const ID = awsCredendials.id;
@@ -21,16 +20,16 @@ const BUCKET_NAME = 'zippytube'
 const app = express();
 const PORT = 3010;
 
-// Initializing the given S3 bucket for
-// storing medias (photo/videos)
-const s3 = new AWS.S3({
+/* Initializing the given S3 bucket for
+storing medias (photo/videos) */
+const s3 = new AWS.S3({ 
     accessKeyId: ID,
     secretAccessKey: SECRET
 })
 
-// initializing multer designed
-// specifically for executing logic
-// in the S3 bucket
+/* initializing multer designed
+specifically for executing logic
+in the S3 bucket */
 const upload = multer({
     storage: multerS3({
         s3: s3,
@@ -70,12 +69,6 @@ app.get('/profile/get-profile-info', (req,res) => {
 })
 
 app.post('/profile/upload-profile', upload.single('file'), (req,res) => {
-    // let fileInfo = path.parse(req.file.originalname);
-/*     let uniqueId = new ObjectId();
-    uniqueId = uniqueId.toString();
-    fileInfo = parsePeriod(fileInfo.name,uniqueId);
-    console.log(req.file);
-    fileInfo += path.extname(req.file.filename); */
     User.storeNewProfile(req,res);
 })
 

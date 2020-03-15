@@ -32,8 +32,8 @@ module.exports = {
             watch: true,
         },
         {
-            name: 'media-comment-write',
-            script: './endPoints/commentWrite.js',
+            name: 'comment-server',
+            script: './endPoints/commentServer.js',
             ignore_watch: ["../node_modules","./uploads"],
             watch: true,
         },

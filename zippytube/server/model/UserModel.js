@@ -31,6 +31,10 @@ const UserModel = mongoose.Schema({
         required: true,
         default: new Date()
     },
+    comment: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+    }],
     media: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Media'

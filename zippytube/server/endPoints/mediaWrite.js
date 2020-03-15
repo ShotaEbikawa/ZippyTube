@@ -21,16 +21,16 @@ const ID = awsCredendials.id;
 const SECRET = awsCredendials.secretKey;
 const BUCKET_NAME = 'zippytube'
 
-// Initializing the given S3 bucket for
-// storing medias (photo/videos)
+/* Initializing the given S3 bucket for
+storing medias (photo/videos) */
 const s3 = new AWS.S3({
     accessKeyId: ID,
     secretAccessKey: SECRET
 })
 
-// initializing multer designed
-// specifically for executing logic
-// in the S3 bucket
+/* initializing multer designed
+specifically for executing logic
+in the S3 bucket */
 const upload = multer({
     storage: multerS3({
         s3: s3,
@@ -43,9 +43,9 @@ const upload = multer({
 })
 
 
-// A wrapper function that handles logic for
-// generating thumbnail from the video and uploading
-// them on the given document in the DB
+/* A wrapper function that handles logic for
+generating thumbnail from the video and uploading
+them on the given document in the DB */
 function uploadPhoto(req,url,fileInfo,filePath) {
     console.log(url);
     ffmpeg(url)
@@ -65,9 +65,9 @@ function uploadPhoto(req,url,fileInfo,filePath) {
 
 
 
-// wrapper function that converts the given video file
-// into mp4 file, upload them on S3 bucket, and create a 
-// new document in the DB.
+/* wrapper function that converts the given video file
+into mp4 file, upload them on S3 bucket, and create a 
+new document in the DB. */
 function convertVideo(req,fileInfo,filePath) {
     console.log(fileInfo,filePath,req.file.location);
     ffmpeg(req.file.location)
@@ -85,10 +85,10 @@ function convertVideo(req,fileInfo,filePath) {
 
 
 
-// function that uploads the given thumbnail (.png) file 
-// into S3 bucket. After the file was successfully uploaded into
-// S3 bucket, it will call MediaMethods.updateVideo function
-// to update the given document's thumbnail attributes.
+/* function that uploads the given thumbnail (.png) file 
+into S3 bucket. After the file was successfully uploaded into
+S3 bucket, it will call MediaMethods.updateVideo function
+to update the given document's thumbnail attributes. */
 function uploadScreenshots(source,target,video_url,token) {
     fs.readFile(source, (err,data) => {
         if (!err) {
@@ -122,9 +122,9 @@ function uploadScreenshots(source,target,video_url,token) {
 
 
 
-// Uploads the converted video file into the S3 bucket.
-// After it was successfully uploaded in the S3 bucket,
-// it will create a new document in the DB.
+/* Uploads the converted video file into the S3 bucket.
+After it was successfully uploaded in the S3 bucket,
+it will create a new document in the DB. */
 function uploadFile(source,target,req,fileInfo,filePath) {
     fs.readFile(source, (err,data) => {
         if (!err) {

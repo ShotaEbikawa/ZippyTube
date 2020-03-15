@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const Feed = require('../model/FeedModel');
 
-const MONGODB_URL = (process.env.MONGO_HOST && `${process.env.MONGO_HOST}/zippytube-database`) || 'mongodb://localhost:27017/zippytube-database'
+const MONGODB_URL = (process.env.MONGO_HOST && 
+    `${process.env.MONGO_HOST}/zippytube-database`) || 
+    'mongodb://localhost:27017/zippytube-database';
 
 // Block of codes that connects to the given DB.
 mongoose.connect(MONGODB_URL, {useNewUrlParser: true});
@@ -35,8 +37,8 @@ class FeedMethods {
     }
 
 
-    // getFeed retrieves feed documents that matches to the given token.
-    // It will send 403 error if some error occurs during the process.
+    /* getFeed retrieves feed documents that matches to the given token.
+    It will send 403 error if some error occurs during the process. */
     static getFeed(userId,res) {
         Feed.find({to: userId, seen:false}).then((feeds) => {
             if (feeds) {
@@ -48,8 +50,8 @@ class FeedMethods {
         })
     }
 
-    // setFeedToRead sets the feed document with a given feed id's 
-    // seen attribute to False
+    /* setFeedToRead sets the feed document with a given feed id's 
+    seen attribute to False */
     static setFeedToRead(userId,feedId,res) {
         const query = {_id: mongoose.Types.ObjectId(feedId)}
         Feed.findOneAndUpdate(query, {$set: {seen:true}}, (err, data) => {
