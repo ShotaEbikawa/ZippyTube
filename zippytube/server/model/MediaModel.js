@@ -25,12 +25,10 @@ const MediaModel = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    comment: {
-        type: Object,
-        unique: false,
-        required: true,
-        default: {},
-    },
+    comment: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+    }],
     token: {
         type: String,
         unique: false,

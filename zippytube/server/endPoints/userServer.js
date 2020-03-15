@@ -6,7 +6,6 @@ const {checkToken,deleteToken} = require('./redisServer')
 const UserMethods = require('../methods/UserMethods')
 const cors = require('cors');
 const app = express();
-//const MONGODB_URL = (process.env.MONGO_HOST && `${process.env.MONGO_HOST}/zippytube-database`) || 'mongodb://localhost:27017/zippytube-database',
 port = 3003;
 
 // Initializing required middleware
@@ -45,6 +44,7 @@ app.post('/auth/get-username', (req,res) => {
     UserMethods.getUser(req.body.token, res);
 })
 
+// check if the given token exists in redis
 app.post('/auth/check-account', (req,res) => {
     checkToken(req.body.token,res);
 })

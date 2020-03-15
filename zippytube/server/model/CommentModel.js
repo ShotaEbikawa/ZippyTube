@@ -6,35 +6,18 @@ const CommentModel = mongoose.Schema({
         unique: false,
         required: true,
     },
-    videoId: {
-        type: String,
-        unique: false,
-        required: true,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
-    username: {
-        type: String,
-        unique: false,
-        required: true,
-    },
-    token: {
-        type: String,
-        unique: false,
-        required: true,
-    },
-    comment: {
-        type: Array,
-        unique: false,
-        default: {}
+    media: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Media'
     },
     created_at: {
         type: Date,
         required: true,
         default: new Date()
-    },
-    replies: {
-        type: Array,
-        required: false,
-        default: [],
     },
     edited_at: {
         type: Date,

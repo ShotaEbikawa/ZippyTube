@@ -14,11 +14,12 @@ mongoose.connection.on('error', (error) => {
 
 
 class MReadMethods {
-    // fetchVideo returns document that matches to the given
-    // query that the user has made from the client-side.
-    // Notice that the function is performing full-text search,
-    // meaning any word that matches in the values of title or 
-    // description will be considered as a document to be returned
+
+    /* fetchVideo returns document that matches to the given
+    query that the user has made from the client-side.
+    Notice that the function is performing full-text search,
+    meaning any word that matches in the values of title or 
+    description will be considered as a document to be returned */
     static fetchVideo(query,res,type) {
         Media.find({$text: {$search: query}}).then((videos) => {
             if (videos) {
@@ -38,8 +39,8 @@ class MReadMethods {
     }
 
 
-    // getAllVideo returns all of the document that exists in 
-    // media collection.
+    /* getAllVideo returns all of the document that exists in 
+    media collection. */
     static getAllVideo(res,upperBound) {
         Media.find({}).then((videos) => {
             if (videos) {
@@ -64,6 +65,7 @@ class MReadMethods {
         })
     }
 
+    // fetch user's uploaded video
     static getUserVideo(userId,res) {
         Media.find({})
     }

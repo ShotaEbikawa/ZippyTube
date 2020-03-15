@@ -19,9 +19,10 @@ mongoose.connection.on('error', (error) => {
 
 
 class MediaMethods {
-    // createVideo creates a new document in the media collection.
-    // It accepts four attributes: url, title, description, and the 
-    // user's token.
+    
+    /* createVideo creates a new document in the media collection.
+    It accepts four attributes: url, title, description, and the 
+    user's token. */
     static createVideo(url,req,fileInfo,filePath) {
         const newVideo = new Media({
             url: url,
@@ -44,8 +45,8 @@ class MediaMethods {
         })
     }
 
-    // updateVideo adds the given video's thumbnail's url to 
-    // its document in media collection.
+    /* updateVideo adds the given video's thumbnail's url to 
+    its document in media collection. */
     static updateVideo(url,token,video_url) {
         let query = {url:video_url,token:token};
         Media.findOneAndUpdate(query, {thumbnail:url}, (err,doc) => {
@@ -57,7 +58,9 @@ class MediaMethods {
         })
     }
 
-
+    /* addMediaToUser method appends finds the user document
+    with the matching user id, and appends the given media
+    document id to its media attribute */
     static addMediaToUser(token,mediaId,userId) {
         User.findOne({_id:userId}, (err,doc) => {
             if (err)
@@ -73,8 +76,8 @@ class MediaMethods {
         })
     }
 
-    // updateComment adds a new comment document to the media
-    // document's comment array.
+    /* updateComment adds a new comment document to the media
+    document's comment array. */
     static updateComment(req,res) {
         let comment = req.body.comment.comment;
         let videoId = comment.videoId;
