@@ -1,16 +1,16 @@
-import React from 'react'
-import {videoSize, relatedSize, contentContainer} from '../media'
+import React from 'react';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
 
 const useStyles = makeStyles(theme => ({
-    titleContainer: contentContainer,
-    card: {
-        cursor: 'pointer',
+    // parent element that holds the video's title
+    titleContainer: {
+        width: '100%',
     },
-    videoSize: {
+    // parent element that holds the video itself
+    videoContainer: {
         width:'100%',
         height:'100%',
         '&:focus': {outline:'none'},
@@ -21,23 +21,26 @@ const CertainVideo = (props) => {
     const classes = useStyles();
     return(
         <>
-            {
-                (props.video) 
-                ? (
+            { (props.video) ? (
                     <div>
                         <div key={props.video.id}>
-                            <video className={classes.videoSize} controls autoPlay> 
+                            <video className={classes.videoContainer} controls autoPlay> 
                                 <source src={props.video.url} type="video/mp4">
                                 </source>
                             </video>
-                        </div> <br/>         
+                        </div> 
+                        <br/>         
                         <div className={classes.titleContainer}>
                             <Typography variant='h5' >
-                                    {props.video.title}
+                                {props.video.title}
                             </Typography>
                             <hr/>
                             <Typography variant='h6' >
-                                    <Link><a href= {'/user-profile/' + props.video.username} >{props.video.username}</a></Link>
+                                    <Link>
+                                        <a href={'/user-profile/' + props.video.username}>
+                                            {props.video.username}
+                                        </a>
+                                    </Link>
                             </Typography>
                             <br/>
                             <Typography variant='p'>
@@ -45,9 +48,9 @@ const CertainVideo = (props) => {
                             </Typography>
                             <br/>
                         </div> 
-                    </div> 
-                )
-                :   ('')}
+                    </div>) : 
+                    ('')
+            }
         </>
     )
 }

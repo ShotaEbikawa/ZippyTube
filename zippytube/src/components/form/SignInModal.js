@@ -1,29 +1,23 @@
-import React from 'react'
-import Button from '@material-ui/core/Button'
+import React from 'react';
 import Modal from '@material-ui/core/Modal';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
 import md5 from 'md5';
-import Typography from '@material-ui/core/Typography'
-import FormControl from '@material-ui/core/FormControl';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
-import { loginUser, isAuthenticated } from '../../redux/action/userAction.js';
 import { withRouter } from 'react-router-dom';
-import Avatar from '../button/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import FormControl from '@material-ui/core/FormControl';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button'
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
+import { loginUser, isAuthenticated } from '../../redux/action/userAction.js';
 
 const useStyles = makeStyles(theme => ({
-    signin: {
-        display: 'flex',
-        justifyContent: 'flex-end',
-        padding: '0 1.5rem',
-        marginTop: '0.2rem',
-        height: '2.5rem',
-        marginLeft: '1rem',
-    },
-    root: {
+    // parent element of the sign in modal
+    ModalContainer: {
         display: 'flex',
         width: 'auto',
         heigh: 'auto',
@@ -33,23 +27,29 @@ const useStyles = makeStyles(theme => ({
             outline: 'none',
         }
     },
-    containerStyle: {
-        display: 'flex',
-        width: 'auto',
-        heigh: 'auto',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    paperStyle: {
+    /* parent element that holds child elements 
+    regarding form */
+    formContainer: {
         padding: '3rem',
     },
+    // the sign-in text
     signInText: {
         display: 'flex',
         textAlign: 'center',
         justifyContent: 'center'
+    },
+    // the sign-in button
+    signInButton: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        padding: '0 1.5rem',
+        marginTop: '0.2rem',
+        height: '2.5rem',
+        marginLeft: '1rem',
+        backgroundColor:'white'
     }
 }))
-const SignInModal = ({username,dispatch,socketIo}) => {
+const SignInModal = ({username,dispatch,socketIo,variants,isLink}) => {
     const classes = useStyles();
     const [toggle, setToggle] = React.useState(false);
     const [userName, setUserName] = React.useState('');
@@ -59,32 +59,43 @@ const SignInModal = ({username,dispatch,socketIo}) => {
     const [userError, setUserError] = React.useState('');
     const [passError, setPassError] = React.useState('');
 
-    // validate function handles all of the cornercase
-    // existing in SignInModal
-    const validate = () => {
-        let userFlag = false;
-        let passFlag = false;
 
-        if (userName == '') {
-            setUsrErr(true);
-            userFlag = true;
-            setUserError('Please fill in your username')
+    /* checkField is a helper function that runs 
+    validation check for all possible corner cases.*/
+    const checkField = (type) => {
+        let flag = false;
+        switch (type) {
+            case 'username': {
+                if (userName == '') {
+                    setUsrErr(true);
+                    flag = true;
+                    setUserError('Please fill in your username')
+                }
+                else {
+                    setUsrErr(false);
+                    setUserError('')
+                }  
+                return flag;              
+            }
+            case 'password': {
+                if (passWord == '') {
+                    setPassErr(true)
+                    flag = true;
+                    setPassError('Please fill in your password')
+                }
+                else {
+                    setPassErr(false);
+                    setPassError('')
+                }
+                return flag;
+            }
         }
-        else {
-            setUsrErr(false);
-            setUserError('')
-        }
-        if (passWord == '') {
-            setPassErr(true)
-            passFlag = true;
-            setPassError('Please fill in your password')
-        }
-        else {
-            setPassErr(false);
-            setPassError('')
-        }
-        console.log(userErr, passErr)
-        return userFlag == false && passFlag == false;
+    }
+    
+    /* validate function handles all of the cornercase
+    existing in SignInModal */
+    const validate = () => {
+        return checkField('username') == false && checkField('password') == false;
     }
 
 
@@ -97,7 +108,7 @@ const SignInModal = ({username,dispatch,socketIo}) => {
                 userName, md5(passWord),setToggle,
                 setPassErr,setPassError,setUsrErr,
                 setUserError,socketIo)
-                );
+            );
         }
     }
 
@@ -105,21 +116,36 @@ const SignInModal = ({username,dispatch,socketIo}) => {
     return(
         <>
             <div>
-                <Button
-                    variant='outlined'
-                    color='primary' 
-                    className={classes.signin}
-                    onClick = {()=>setToggle(!toggle)}
-                >
-                    Sign in
-                </Button>
+                {(isLink) ? (
+                <>
+                    <IconButton
+                        variant='outlined'
+                        color= 'primary'
+                        onClick = {()=>setToggle(!toggle)}
+                        disableRipple={variants==true ? true : false}
+                    >
+                        <LockOpenIcon />
+                    </IconButton>
+                    Sign In &nbsp;
+                </>
+                ) : (
+                    <Button
+                        variant='outlined'
+                        color= 'primary'
+                        className={classes.signInButton}
+                        onClick = {()=>setToggle(!toggle)}
+                        disableRipple={variants==true ? true : false}
+                    >
+                        Sign in
+                    </Button>)
+                }
                 <Modal
                     open={toggle}
                     onClose={()=>setToggle(!toggle)}
-                    className={classes.root}
+                    className={classes.ModalContainer}
                 >
-                    <Container maxWidth='sm' className={classes.root}>
-                        <Paper className={classes.paperStyle}>
+                    <Container maxWidth='sm' className={classes.ModalContainer}>
+                        <Paper className={classes.formContainer}>
                             <FormControl>
                                 <Typography variant='h4' className={classes.signInText}>
                                     Sign In
@@ -147,7 +173,8 @@ const SignInModal = ({username,dispatch,socketIo}) => {
                                     helperText={passError}
                                     fullWidth
                                 />
-                                <br/><br/>
+                                <br/>
+                                <br/>
                                 <Link href='/signup'>
                                 Create account
                                 </Link>
@@ -168,6 +195,8 @@ const mapStateToProps = (state,props) => ({
     username: state.user.username,
     dispatch: props.dispatch,
     socketIo: props.socketIo,
-}) 
+    variants: props.variant,
+    isLink: props.isLink,
+});
 
 export default withRouter(connect(mapStateToProps)(SignInModal));

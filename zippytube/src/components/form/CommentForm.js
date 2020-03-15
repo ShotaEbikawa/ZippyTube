@@ -2,22 +2,28 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
 import CommentList from '../CommentList';
 import { withRouter } from 'react-router-dom';
-import {videoSize, relatedSize, contentContainer} from '../media';
 import { createComment } from '../../redux/action/commentAction';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
+import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
-    commentStyle: contentContainer,
+    // the comment input field
+    commentStyle: {
+        width: '100%',
+    },
+    /* parent element that holds the
+    submit button and the canel button */
     buttonStyle: {
         marginTop:'0.2rem',
     },
+    // the submit button
     submitStyle: {
         marginLeft:'0.2rem',
     },
+    // parent element that holds the CommentList component
     commentListStyle: {
         marginTop: '1rem',
     }
@@ -30,26 +36,28 @@ const CommentForm = ({dispatch,username, videoId,history, setFlag,comment}) => {
     const [comments,setComments] = React.useState('');
     const classes = useStyles(); 
 
+    /* onClick handler that sends the given object to
+    the commentAction.js */
     const handleSubmit = () => {
-        //setComments(comments.concat([<p>{desc}</p>]))
         const obj = {
             desc: desc,
             username:username,
             videoId: videoId,
-            setIsOpen: setIsOpen,
             commentObj: commentObj,
             comments: comments,
+            history:history,
+            setIsOpen: setIsOpen,
             setComments: setComments,
             setCommentObj: setCommentObj,
-            history:history
-        }
-        dispatch(createComment(obj,CommentList))
+        };
+        dispatch(createComment(obj,CommentList));
         setDesc('');
     }
+
     React.useEffect(() => {
-        const commentsObj = comment? Object.values(comment).reverse() : ''
-        const comments = comment ? Object.values(comment).reverse().map((result,i) => <CommentList comment={result}/>) : ''
-        console.log(commentsObj, comments);
+        const commentsObj = comment ? Object.values(comment).reverse() : '';
+        const comments = (comment) ? Object.values(comment).reverse().map(
+                                    (result,i) => <CommentList comment={result}/>) : '';
         setComments(comments);
         setCommentObj(commentsObj);
     },[]);
@@ -96,5 +104,6 @@ const mapStateToProps = (state,props) => ({
     videoId: props.videoId,
     setFlag: props.setFlag,
     history: props.history,
-})
-export default withRouter(connect(mapStateToProps)(CommentForm))
+});
+
+export default withRouter(connect(mapStateToProps)(CommentForm));
