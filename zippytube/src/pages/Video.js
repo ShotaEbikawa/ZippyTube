@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {videoSize, relatedSize, contentContainer} from '../components/media'
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 import Container from '@material-ui/core/Container';
 import CommentList from '../components/CommentList';
@@ -14,10 +13,24 @@ import { withRouter } from 'react-router-dom'
 
 
 const useStyles = makeStyles(theme => ({
+    // wrapper element
     mediaWrapper: {
         width: '100%'
     },
-    videoContainer: videoSize,
+    // col of the video
+    videoCol: {
+        width: '60%',
+        '@media only screen and (max-width:800px)': {
+            width: '100%',
+        }
+    },
+    // col of related videos
+    relatedCol: {
+        width: '40%',
+        '@media only screen and (max-width:800px)': {
+            width: '100%',
+        }
+    },
 }))
 
 const Video = ({id,media,history,dispatch,video}) => {
@@ -42,13 +55,13 @@ const Video = ({id,media,history,dispatch,video}) => {
     }, [id,history,])
 
     return(
-            <Container maxWidth={false}>
+            <Container>
                 <br/><br/>
                 <Grid container spacing={3} className={classes.mediaWrapper}>
-                    <Grid item>
+                    <Grid className={classes.videoCol} item>
                         {(flag) 
                             ? (
-                                <div className={classes.videoContainer}>
+                                <div>
                                     {certainVideo}
                                     <br/>
                                     <CommentForm videoId={id}/>
@@ -58,7 +71,7 @@ const Video = ({id,media,history,dispatch,video}) => {
                             : ('')
                         }
                     </Grid>
-                    <Grid item>
+                    <Grid className={classes.relatedCol} item>
                         {flag ?
                         <>
                         <Typography variant='h6'>

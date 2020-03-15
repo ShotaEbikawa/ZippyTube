@@ -4,10 +4,10 @@ import { getCookieType } from './userAction';
 
 
 
-// createVideos sends the required data regarding the submitted videos
-// to the /media-write endpoint. Before it sends to that endpoint, it will
-// first check whether the user's token exists in Redis. Once the validation
-// is successful, it will send the request to /media-write endpoint.
+/* createVideos sends the required data regarding the submitted videos
+to the /media-write endpoint. Before it sends to that endpoint, it will
+first check whether the user's token exists in Redis. Once the validation
+is successful, it will send the request to /media-write endpoint. */
 export const createVideos = (files,title,desc,username,setSuccess) => {
     let token = getCookieType('token');
     axios.post('/auth/check-account',{token:token})
@@ -32,8 +32,8 @@ export const createVideos = (files,title,desc,username,setSuccess) => {
 }
 
 
-// fetchAllVideos retrieves all of the existing media documents (video)
-// in the media collection.
+/* fetchAllVideos retrieves all of the existing media documents (video)
+in the media collection. */
 export const fetchAllVideos = (setFlag) => (dispatch) => {
     axios.get('/media-read/get-all-videos')
     .then(res=>res.data)
@@ -49,9 +49,9 @@ export const fetchAllVideos = (setFlag) => (dispatch) => {
 
 
 
-// fetchResults sends the request to the server to retrieve all 
-// of the documents in the media collection that matches the 
-// given query that the user made
+/* fetchResults sends the request to the server to retrieve all 
+of the documents in the media collection that matches the 
+given query that the user made */
 export const fetchResults = (query,setFlag) => (dispatch) => {
     axios.get(`/media-read/fetch-video?search=${query}&type=''`)
     .then(res=>res.data)
@@ -67,9 +67,9 @@ export const fetchResults = (query,setFlag) => (dispatch) => {
 
 
 
-// fetchRelated sends a request to media-read endpoint, where it 
-// fetches all of the media documents (videos) that matches to the
-// selected media (video)'s title and description.
+/* fetchRelated sends a request to media-read endpoint, where it 
+fetches all of the media documents (videos) that matches to the
+selected media (video)'s title and description. */
 export const fetchRelated = (setFlag,query,id) => (dispatch) => {
     axios.get(`/media-read/fetch-video?search=${query}&type=${'related'}`)
     .then(res=>res.data)

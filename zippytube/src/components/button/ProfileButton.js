@@ -1,11 +1,11 @@
 import React from 'react';
-import { uploadProfile } from '../../redux/action/profileAction';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import FormControl from '@material-ui/core/FormControl';
 import IconButton from '@material-ui/core/IconButton';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import {createMuiTheme, makeStyles, withTheme, ThemeProvider} from '@material-ui/core/styles'; 
+import { uploadProfile } from '../../redux/action/profileAction';
 
 const iconButtonTheme = createMuiTheme({
     props: {
@@ -18,6 +18,7 @@ const iconButtonTheme = createMuiTheme({
 })
 
 const useStyles = makeStyles(theme => ({
+    // the profile icon
     iconStyle: {
         backgroundColor: '#e0e0e0',
         width:'100%',
@@ -26,6 +27,7 @@ const useStyles = makeStyles(theme => ({
         zIndex:1,
         '&:hover': { backgroundColor: '#e0e0e0', },
     },
+    // the camera icon
     cameraStyle: {
         display:'none',
         width:'70%',
@@ -35,6 +37,8 @@ const useStyles = makeStyles(theme => ({
         backgroundColor:'transparent',
         zIndex:2,
     },
+    /* parent element that holds the label 
+    of the profile button */
     labelContainer: {
         width:'3rem',
         height:'3rem',
@@ -46,11 +50,14 @@ const useStyles = makeStyles(theme => ({
             position: 'absolute',
         }
     },
+    /* parent container that holds the child 
+    elements regarding the icons */
     themeContainer: {
         width:'4.5rem',
         height:'4.5rem',
         borderRadius:'50%',
     },
+    // the input field
     inputStyle: {display: 'none'},
   }));
 
@@ -58,11 +65,10 @@ const useStyles = makeStyles(theme => ({
 
 const ProfileButton = ({history,username,dispatch,isUser,userUrl,socketIo}) => {
     const classes = useStyles();
-    const [isUploaded, setIsUploaded] = React.useState(false);
     const [photo, setPhoto] = React.useState('');
-    const [validate,setValidate] = React.useState(false);
-    const [url, setUrl] = React.useState('');
-    console.log(userUrl);
+
+    /* object that stores the user's uploaded image as 
+    the background */
     const iconProfile = {
         backgroundImage: `url(${userUrl})`,
         backgroundSize: 'cover',
@@ -75,6 +81,8 @@ const ProfileButton = ({history,username,dispatch,isUser,userUrl,socketIo}) => {
     React.useEffect(() => {
     }, []);
 
+    /* onSubmit handler that sends the selected image object
+    to the profileAction.js */
     const handleSubmit = (e) => {
         setPhoto(e.target.files);
         uploadProfile(e.target.files,socketIo)
@@ -98,15 +106,12 @@ const ProfileButton = ({history,username,dispatch,isUser,userUrl,socketIo}) => {
                             <label className={classes.labelContainer} htmlFor="profile-submit">
                                 <CameraAltIcon className={classes.cameraStyle}/>
                                 {
-                                    (userUrl == '') ? (
-                                                        <IconButton className={classes.iconStyle} component="span">
-                                                            {username[0].toUpperCase()}
-                                                        </IconButton>
-                                                      )
-                                                    : (
-                                                        <IconButton style={iconProfile} component="span">
-                                                        </IconButton>
-                                                      )
+                                    (userUrl == '') ?
+                                    <IconButton className={classes.iconStyle} component="span">
+                                        {username[0].toUpperCase()}
+                                    </IconButton>  :
+                                    <IconButton style={iconProfile} component="span">
+                                    </IconButton>                
                                 }
                             </label>
                         </>
@@ -114,15 +119,12 @@ const ProfileButton = ({history,username,dispatch,isUser,userUrl,socketIo}) => {
                         <ThemeProvider theme={iconButtonTheme}>
                             <div className={classes.themeContainer}>
                                 {
-                                    (userUrl == '') ? (
-                                                        <IconButton className={classes.iconStyle}>
-                                                            {username[0].toUpperCase()}
-                                                        </IconButton>
-                                                      )
-                                                    : (
-                                                        <IconButton style={iconProfile}>
-                                                        </IconButton>
-                                                      )
+                                    (userUrl == '') ? 
+                                    <IconButton className={classes.iconStyle}>
+                                        {username[0].toUpperCase()}
+                                    </IconButton> : 
+                                    <IconButton style={iconProfile}>
+                                    </IconButton>                
                                 }
                             </div>
                         </ThemeProvider>                       

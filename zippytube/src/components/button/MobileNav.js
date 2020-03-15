@@ -1,27 +1,26 @@
 import React from 'react';
-import SignInModal from '../form/SignInModal';
 import '../../App.css';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import SignInModal from '../form/SignInModal';
 import VideoButton from './VideoButton';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import MenuIcon from '@material-ui/icons/Menu';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import IconButton from '@material-ui/core/IconButton';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import {signOut} from '../../redux/action/userAction';
 import NotificationButton from './NotificationButton';
+import {signOut} from '../../redux/action/userAction';
+import IconButton from '@material-ui/core/IconButton';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 
 const useStyles = makeStyles(theme => ({
+    // the swipeable drawer
     drawerStyle: {
         display:'none',
-        '@media only screen and (max-width: 450px)': {
-            display: 'block',
-        }
+        '@media only screen and (max-width: 450px)': {display: 'block'}
     }, 
-}))
+}));
 
 
 const MobileNav = ({username,dispatch,socketIo,history,setSearchFlag,searchFlag,isAuth}) => {
@@ -30,11 +29,18 @@ const MobileNav = ({username,dispatch,socketIo,history,setSearchFlag,searchFlag,
     const [state, setState] = React.useState({right: false,});
     const colorStyle = {color:'#3f50b5' };
 
+    /* re-renders the component if the serverside sends a 
+    websocket response regarding mobile-nav, so that the
+    notification feed will be updated */
     React.useEffect(() => {
         setFlag(true);
         socketIo.emit('mobile-nav','mobile-nav activated');
     }, [username,state,flag]);
 
+    /* onClick event that handles situation for each icon existing in the
+    MobileNav component. If a user presses search icon, the mobile search bar
+    will expand/hide. If a user presses other icons, it will redirect a user
+    to a designated url */
     const toggleIcon = (side,open,type='') => event => {
         if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return;
             setState({ ...state, [side]: open });
@@ -123,6 +129,6 @@ const mapStateToProps = (state,props) => ({
     isAuth: props.isAuth,
     setSearchFlag: props.setSearchFlag,
     searchFlag: props.searchFlag,
-})
+});
 
 export default withRouter(connect(mapStateToProps)(MobileNav));

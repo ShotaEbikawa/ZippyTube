@@ -1,10 +1,8 @@
 import axios from 'axios'
 import { getFeed } from './feedAction';
 
-
-
-// registerUser sends a request to the server to 
-// use an entered data to create an account
+/* registerUser sends a request to the server to 
+use an entered data to create an account */
 export const registerUser = (newUser, history) => {
     axios.post('/auth/register-account', newUser)
     .then(res => { history.push('/'); })
@@ -13,9 +11,9 @@ export const registerUser = (newUser, history) => {
 
 
 
-// loginUser sends a request to the server to check whether
-// the given username and password matches in any of the 
-// document in the users collecion
+/* loginUser sends a request to the server to check whether
+the given username and password matches in any of the 
+document in the users collecion */
 export const loginUser = (userName, passWord, setToggle,setPassErr,setPassError,setUsrErr,setUserError,socketIo) => (dispatch) => {
     let userObj = {
         username: userName, 
@@ -45,9 +43,9 @@ export const loginUser = (userName, passWord, setToggle,setPassErr,setPassError,
 
 
 
-// isAuthenticated sends a request to the server to 
-// validate whether a given id and token matches
-// to any document in users collection if user's cookie exists
+/* isAuthenticated sends a request to the server to 
+validate whether a given id and token matches
+to any document in users collection if user's cookie exists */
 export const isAuthenticated = (socketIo) => (dispatch) => {
     const token = getCookieType('token');
     const id = getCookieType('id');
@@ -82,8 +80,10 @@ export const cookieIsEmpty = (token,id) => {
 
 
 
-// Credit goes to this user Mac
-// https://stackoverflow.com/questions/5639346/what-is-the-shortest-function-for-reading-a-cookie-by-name-in-javascript
+/** 
+ * Credit goes to this user Mac:
+ * https://stackoverflow.com/questions/5639346/what-is-the-shortest-function-for-reading-a-cookie-by-name-in-javascript 
+ */
 export const getCookieType = (type) => {
     var b = document.cookie.match('(^|[^;]+)\\s*' + type + '\\s*=\\s*([^;]+)');
     return b ? b.pop() : '';
@@ -91,8 +91,8 @@ export const getCookieType = (type) => {
 
 
 
-// signOut clears user's cookie assigned in
-// all of the path that exists in the app
+/* signOut clears user's cookie assigned in
+all of the path that exists in the app */
 export const signOut = (socketIo) => (dispatch) => {
     axios.post('/auth/sign-out',{token:getCookieType('token')})
     .then(res=>{

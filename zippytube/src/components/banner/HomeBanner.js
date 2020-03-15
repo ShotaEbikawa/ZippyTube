@@ -1,14 +1,16 @@
-import React from 'react'
-import Container from '@material-ui/core/Container'
-import { makeStyles, withTheme } from '@material-ui/core/styles'; 
-import Grid from '@material-ui/core/Grid'
-import Image from './siu.jpg'
+import React from 'react';
+import Container from '@material-ui/core/Container';
+import Image from './siu.jpg';
 import { Typography } from '@material-ui/core';
+import { makeStyles, withTheme } from '@material-ui/core/styles'; 
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
-    bannerImage: {
+    // parent element that holds the existing grid items
+    bannerContainer: {
         height:'250px',
     },
+    // the written advertisement of SIU
     quote: {
         backgroundSize: 'cover',
         background: `url(${Image}) no-repeat center center`,
@@ -18,11 +20,7 @@ const useStyles = makeStyles(theme => ({
             display: 'none',
         }
     },
-    uniBanner: {
-        width: '100%',
-        height: '100%',
-        objectFit:'cover'
-    },
+    // parent element that holds the SIU video
     videoContainer: {
         overflow: 'hidden',
         width:'70%',
@@ -31,10 +29,11 @@ const useStyles = makeStyles(theme => ({
             width: '100%',
         }
     },
+    // the SIU video
     videoStyle: {
         objectFit: 'cover',
     }
-}))
+}));
 
 
 const HomeBanner = () => {
@@ -42,9 +41,16 @@ const HomeBanner = () => {
     return (
         <>
         <br/>
-        <Grid className={classes.bannerImage} container>
+        <Grid className={classes.bannerContainer} container>
             <Grid item className={classes.videoContainer}>
-                <video className={classes.videoStyle} width={'100%'} height={'100%'} controls muted autoPlay>
+                <video 
+                    className={classes.videoStyle} 
+                    width={'100%'} 
+                    height={'100%'} 
+                    controls 
+                    muted 
+                    autoPlay
+                >
                     <source
                         src='http://zippytube.s3.us-west-1.amazonaws.com/Southern Illinois University Commercial - Experience SIU.mp4'
                         type='video/mp4'
@@ -59,4 +65,4 @@ const HomeBanner = () => {
     )
 }
 
-export default HomeBanner
+export default HomeBanner;

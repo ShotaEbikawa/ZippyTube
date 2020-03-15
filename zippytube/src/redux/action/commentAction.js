@@ -5,14 +5,14 @@ import axios from 'axios';
 
 
 
-// createComment sends a request to the /comment-write endpoint to
-// create a new comment document in the comment collection. Before
-// it fulfills a given functionality, it sends a request to the /auth
-// endpoint to see whether the user's token is valid. Once the validation
-// is successful, it will send the request to the /comment-write endpoint
-// to fullfill its desired functionality. the endpoint returns response status 200,
-// it will call updateComment function to add the submitted comment to the given
-// media document's comment list.
+/* createComment sends a request to the /comment-write endpoint to
+create a new comment document in the comment collection. Before
+it fulfills a given functionality, it sends a request to the /auth
+endpoint to see whether the user's token is valid. Once the validation
+is successful, it will send the request to the /comment-write endpoint
+to fullfill its desired functionality. the endpoint returns response status 200,
+it will call updateComment function to add the submitted comment to the given
+media document's comment list. */
 export const createComment = (obj,CommentList) => (dispatch) => {
     const token = getCookieType('token')
     axios.post('/auth/check-account',{token: token})
