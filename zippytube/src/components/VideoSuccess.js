@@ -1,49 +1,19 @@
-import React from 'react'
+import React from 'react';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
-import Link from '@material-ui/core/Link'
+import Link from '@material-ui/core/Link';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Typography from '@material-ui/core/Typography';
 import {withRouter} from 'react-router-dom';
 
 const useStyle = makeStyles(theme => ({
-    root: {
-        marginTop: '4%',
-    },
-    containerStyle: {
-        display: 'flex',
-        width: 'auto',
-        height: 'auto',
-        justifyContent:'center',
-        marginTop: '7vh',
-    },
-    paperStyle: {
-        paddingTop: '1rem',
-        width:'100%',
-        paddingBottom: '5rem',
-        textAlign: 'center'
-    },
-    checkErrorMessage: {
-        display: 'inline-flex',
-        fontSize: '0.8rem',
-        color: 'red',
-    },
-    inputStyle: {
-        display: 'none'
-    },
-    iconStyle: {
+    // parent element that holds the success icon
+    iconContainer: {
         width: '10rem',
         height: '10rem',
         display:'inline-flex',
         justifyContent:'center'
     },
-    publishStyle: {
-        width: '80%',
-        height:'80%',
-        opacity: 0.8,
-    },
-    uploadText: {
-        width: 'auto'
-    },
+    // the success icon
     successIcon: {
         width: '100%',
         height: '100%',
@@ -53,8 +23,11 @@ const useStyle = makeStyles(theme => ({
 
 const VideoSuccess = (props) => {
     const classes = useStyle();
+
+    /* redirects user back to the homepage
+    when clicked on the "Go to Homepage" link */
     const handleClick = () => {
-        props.history.push('/')
+        props.history.push('/');
     }
     return (
         <>
@@ -64,14 +37,17 @@ const VideoSuccess = (props) => {
             <Typography  variant='h6'>
                 Your video should be published soon.
             </Typography>
-            <br/><br/>
-            <div className={classes.iconStyle}>
+            <br/>
+            <br/>
+            <div className={classes.iconContainer}>
                 <CheckCircleIcon className={classes.successIcon}/>
             </div>
-            <br/><br/><br/>
+            <br/>
+            <br/>
+            <br/>
             <Link onClick={handleClick}>Go to Homepage</Link>
         </>
     )
 }
 
-export default withRouter(VideoSuccess)
+export default withRouter(VideoSuccess);

@@ -1,11 +1,14 @@
 import React from 'react';
-import '../../App.css'
+import '../../App.css';
 import AppsIcon from '@material-ui/icons/Apps';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 
 const useStyles = makeStyles(theme => ({
-    icon: {color: 'gray',},
+    // the apps icon
+    icon: {
+        color: 'gray'
+    },
 }))
 
 
@@ -21,4 +24,4 @@ const AppsButton = () => {
     )
 }
 
-export default AppsButton
+export default AppsButton;

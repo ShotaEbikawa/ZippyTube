@@ -1,16 +1,18 @@
 import React from 'react';
-import '../../App.css'
+import '../../App.css';
+import Menu from '@material-ui/core/Menu';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import MenuItem from '@material-ui/core/MenuItem';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
-import { connect } from 'react-redux';
 import { getFeed } from '../../redux/action/feedAction';
-import { withRouter } from 'react-router-dom';
 
-const useStyles = makeStyles(theme => ({}))
+
+
+const useStyles = makeStyles(theme => ({}));
 
 const NotificationButton = ({color,dispatch,history,socketIo,state}) => {
     const classes = useStyles();
@@ -18,6 +20,13 @@ const NotificationButton = ({color,dispatch,history,socketIo,state}) => {
     const [flag, setFlag] = React.useState(false);
     const [feedList, setFeedList] = React.useState('');
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const iconStyle = {
+        color: color == "white" ? "white" : "#3f50b5",
+    };
+    /* re-renders the component if the serverside sends a 
+    web-socket response regarding sign-out event, sign-in event,
+    feed event, or mobile-nav event. url-change will also 
+    trigger the re-rendering of the component */
     React.useEffect(() => {
         socketIo.on('sign-out', (message)=>{
             setFeedNum(0);
@@ -37,6 +46,8 @@ const NotificationButton = ({color,dispatch,history,socketIo,state}) => {
         });
         },[history,state])
 
+    /* onClick handler that opens or closes the 
+    swipeable drawer depending on its state */
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
     }
@@ -50,7 +61,7 @@ const NotificationButton = ({color,dispatch,history,socketIo,state}) => {
             >
                 <Badge badgeContent={feedNum} >
                     <NotificationsIcon 
-                        style={{color: color == "white" ? "white" : "#3f50b5"}}
+                        style={iconStyle}
                         onClick={handleClick}
                     />
                 </Badge>
@@ -75,6 +86,6 @@ const mapStateToProps = (state,props) => ({
     socketIo: props.socketIo,
     color: props.color,
     state: props.state,
-})
+});
 
 export default withRouter(connect(mapStateToProps)(NotificationButton));
