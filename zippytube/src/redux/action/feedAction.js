@@ -7,7 +7,7 @@ import { getCookieType } from './userAction';
 sending request to the /auth endpoint to validate the user's token store in redis.
 Once the validation succeeds, the retured feeds will be stored in feedData, and
 feedList will be updated with its respective components */
-export const getFeed = (setFeedNum,setFeedList,setFeedData,handleClose,setFlag) => (dispatch) => {
+export const getFeed = (setFeedNum,setFeedList,setFeedData,redirectToProfile,setFlag) => (dispatch) => {
     const token = getCookieType('token');
     axios.post('/auth/check-account',{token:token})
     .then(userObj => {
@@ -17,12 +17,12 @@ export const getFeed = (setFeedNum,setFeedList,setFeedData,handleClose,setFlag) 
             let newFeeds = 0;
             for (let i = 0; i < feeds.length; i++)
                 newFeeds = feeds[i].seen == false ? newFeeds + 1 : newFeeds;
-
+            console.log(userObj.data.username);
             let currFeed = (feeds && feeds.length > 0) ? feeds.map(feed => 
                 <MenuItem 
                     style={{color: feed.seen == false ? 'black' : 'gray'}} 
                     id={feed._id} 
-                    onClick={() => handleClose(feeds)}
+                    onClick={() => redirectToProfile(feeds,userObj.data.username)}
                     disabled={feed.seen ? true : false}
                 >
                     {feed.message}

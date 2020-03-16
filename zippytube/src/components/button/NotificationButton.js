@@ -31,9 +31,14 @@ const NotificationButton = ({color,dispatch,history,socketIo,state,feeds}) => {
         setAnchorEl(event.currentTarget);
     }
 
-    const handleClose = (feedData) => {
-        setFeedToRead(feedData,socketIo,setAnchorEl);
+    const handleClose = (event) => {
+        setAnchorEl(event.currentTarget);
         // function that turns every feed into true;
+    }
+
+    const redirectToProfile = (feedData,username) => {
+        setFeedToRead(feedData,socketIo,setAnchorEl);
+        history.push(`/user-profile/${username}`)
     }
 
     /* re-renders the component if the serverside sends a 
@@ -43,15 +48,15 @@ const NotificationButton = ({color,dispatch,history,socketIo,state,feeds}) => {
     React.useEffect(() => {
         socketIo.on('sign-in', (message)=>{
             dispatch(getFeed(setFeedNum,setFeedList,
-                    setFeedData,handleClose,setFlag));
+                    setFeedData,redirectToProfile,setFlag));
         });
         socketIo.on('feed', (message) => {
             dispatch(getFeed(setFeedNum,setFeedList,
-                    setFeedData,handleClose,setFlag));
+                    setFeedData,redirectToProfile,setFlag));
         });
         socketIo.on('mobile-nav', (message) => {
             dispatch(getFeed(setFeedNum,setFeedList,
-                    setFeedData,handleClose,setFlag));
+                    setFeedData,redirectToProfile,setFlag));
             console.log('recieved');
         });
         history.listen((location,action) => {
