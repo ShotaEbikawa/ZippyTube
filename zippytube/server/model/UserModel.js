@@ -35,6 +35,10 @@ const UserModel = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment'
     }],
+    feed: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Feed',
+    }],
     media: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Media'

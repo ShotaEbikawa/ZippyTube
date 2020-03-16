@@ -70,7 +70,7 @@ class MediaMethods {
                     console.log(error);
                     return -1;
                 }
-                Feed.addFeed(token,'The video has been uploaded!!');
+                Feed.addFeed(userId,'The video has been uploaded!!');
             });
         })
     }

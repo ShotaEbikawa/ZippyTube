@@ -86,19 +86,23 @@ io.on('connection',socketIo=> {
     socketIo.emit('me','Hello World')
     socketIo.on('sign-out',()=>{
         socketIo.emit('sign-out','signed out');
-    })
+    });
     socketIo.on('uploaded',()=>{
         socketIo.emit('uploaded','profile pic uploaded');
-    })
+    });
     socketIo.on('mobile-nav',()=>{
         socketIo.emit('mobile-nav','mobile-nav activated');
-    })
+    });
+    socketIo.on('feed',()=>{
+        console.log('feed sent')
+        socketIo.emit('feed','update feed');
+    });
     socketIo.on('sign-in',()=>{
         socketIo.emit('sign-in','signed in');
-    })
+    });
     socketIo.on('disconnect', () => {
         console.log('user disconnected');
-    })
+    });
 })
 
 
