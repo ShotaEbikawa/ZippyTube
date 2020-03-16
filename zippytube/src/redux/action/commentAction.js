@@ -45,7 +45,7 @@ export const fetchComments = (mediaId,setComments,setIsOpen) => {
        let commentList = res.data.comment;
        let comment = commentList.reverse().map((result,i) => <CommentList comment={result}/>);
        setComments(comment);
-       setIsOpen(true);
+       //setIsOpen(true);
     })
     .catch(err => {
         console.log(err);
