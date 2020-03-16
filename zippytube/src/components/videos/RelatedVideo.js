@@ -40,7 +40,8 @@ const useStyles = makeStyles(theme => ({
     // the video's username
     userStyle: {
         fontSize: '1rem',
-        fontWeight:'348',
+        fontWeight:'350',
+        color: '#4a4b52',
     },
     // the video's title
     titleStyle: {
