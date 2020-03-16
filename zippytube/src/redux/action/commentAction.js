@@ -1,8 +1,8 @@
 import React from 'react';
 import CommentList from '../../components/CommentList';
-import { getCookieType } from './userAction';
 import { updateComment } from './mediaAction';
 import axios from 'axios';
+import { getCookieType } from './userAction';
 
 
 
@@ -32,7 +32,7 @@ export const createComment = (obj) => {
         .catch(err=>console.log(err));
     })
     .catch(err => {
-        console.log('Token does not match')
+        obj.history.push('/signup');
     })
 }
 

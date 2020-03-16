@@ -57,6 +57,7 @@ const CommentForm = ({dispatch,username, videoId,history, setFlag}) => {
             videoId: videoId,
             commentObj: commentObj,
             comments: comments,
+            history: history,
             setIsOpen: setIsOpen,
             setComments: setComments,
             setCommentObj: setCommentObj,
