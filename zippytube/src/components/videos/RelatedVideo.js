@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     thumbnailCol: {
         width: '40%',
         '@media only screen and (max-width:800px) and (min-width:500px)': {width: '30%'},
-        '@media only screen and (max-width:400px)': {
+        '@media only screen and (max-width:415px)': {
             width: '100%',
             height: '170px',
         }
@@ -24,12 +24,12 @@ const useStyles = makeStyles(theme => ({
     descCol: {
         width: '60%',
         '@media only screen and (max-width:800px) and (min-width:500px)': {width: '70%'},
-        '@media only screen and (max-width:400px)': {width: '100%'}
+        '@media only screen and (max-width:415px)': {width: '100%'}
     },
     // parent element that holds the grid items (videos)
     gridContainer: {
         cursor: 'pointer',
-        '@media only screen and (max-width:400px)': {display: 'block'}
+        '@media only screen and (max-width:415px)': {display: 'block'}
     },
     // parent element that holds the required child elements
     // if there are no matching queries

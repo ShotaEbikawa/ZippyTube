@@ -25,17 +25,21 @@ const NotificationButton = ({color,dispatch,history,socketIo,state,feeds}) => {
         color: color == "white" ? "white" : "#3f50b5",
     };
 
-    /* onClick handler that opens or closes the 
-    swipeable drawer depending on its state */
+    /* onClick handler that opens the swipeable 
+    drawer depending on its state */
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
     }
 
+    /* handleClose is another onClick handler that
+    closes the swipeable drawer depending on its state */
     const handleClose = (event) => {
         setAnchorEl(event.currentTarget);
         // function that turns every feed into true;
     }
 
+    /* redirectToProfile redirects a user to one's profile page
+    if a user clicks a feed regarding video-uploads */
     const redirectToProfile = (feedData,username) => {
         setFeedToRead(feedData,socketIo,setAnchorEl);
         history.push(`/user-profile/${username}`)
@@ -57,7 +61,6 @@ const NotificationButton = ({color,dispatch,history,socketIo,state,feeds}) => {
         socketIo.on('mobile-nav', (message) => {
             dispatch(getFeed(setFeedNum,setFeedList,
                     setFeedData,redirectToProfile,setFlag));
-            console.log('recieved');
         });
         history.listen((location,action) => {
             socketIo.emit('feed', 'update feed');

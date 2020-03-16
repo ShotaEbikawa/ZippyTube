@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
             width: '60%',
         },
         '@media only screen and (max-width: 500px)': {width: '50%'},
-        '@media only screen and (max-width: 375px)': {width: '100%',}
+        '@media only screen and (max-width: 415px)': {width: '100%',}
     },
     // parent element that holds the video's thumbnail
     cardImage: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
         '@media only screen and (max-width: 830px)': {width: '30%'},
         '@media only screen and (max-width: 600px)': {width: '40%'},
         '@media only screen and (max-width: 500px)': {width: '50%'},
-        '@media only screen and (max-width: 375px)': {width: '100%'}
+        '@media only screen and (max-width: 415px)': {width: '100%'}
     },
     // the video title
     titleStyle: {

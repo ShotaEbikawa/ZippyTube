@@ -15,13 +15,13 @@ export const getFeed = (setFeedNum,setFeedList,setFeedData,redirectToProfile,set
         .then(res => {
             let feeds = res.data.feed.reverse();
             let newFeeds = 0;
-            for (let i = 0; i < feeds.length; i++)
+            for (let i = 0; i < feeds.length; i++) 
                 newFeeds = feeds[i].seen == false ? newFeeds + 1 : newFeeds;
-            console.log(userObj.data.username);
+
             let currFeed = (feeds && feeds.length > 0) ? feeds.map(feed => 
                 <MenuItem 
-                    style={{color: feed.seen == false ? 'black' : 'gray'}} 
                     id={feed._id} 
+                    style={{color: feed.seen == false ? 'black' : 'gray'}} 
                     onClick={() => redirectToProfile(feeds,userObj.data.username)}
                     disabled={feed.seen ? true : false}
                 >
@@ -43,7 +43,6 @@ to true */
 export const setFeedToRead = (feed,socketIo,setAnchorEl) => {
     axios.post('/feed/set-feed-to-read', {feeds:feed})
     .then(res => {
-        console.log(res);
         socketIo.emit('feed','update feed');
         setAnchorEl(null);
     })

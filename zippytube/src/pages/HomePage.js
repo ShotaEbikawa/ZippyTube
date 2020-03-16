@@ -23,7 +23,6 @@ const HomePage = ({media,dispatch,history,width,socketIo}) => {
 
     React.useEffect(() => {
         dispatch(fetchAllVideos(setFlag))
-        console.log(media)
     },[]);
 
     return(

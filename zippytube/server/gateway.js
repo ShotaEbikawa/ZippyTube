@@ -83,7 +83,7 @@ app.all('/*', (req,res) => {
 
 io.on('connection',socketIo=> {
     console.log('user connected')
-    socketIo.emit('me','Hello World')
+    socketIo.emit('beginApp','Welcome to ZippyTube!!!')
     socketIo.on('sign-out',()=>{
         socketIo.emit('sign-out','signed out');
     });

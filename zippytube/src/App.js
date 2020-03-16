@@ -12,7 +12,7 @@ import {Switch, Route} from 'react-router-dom';
 
 function App() {
   const socketIo = io('/');
-  socketIo.on('me', data => {
+  socketIo.on('beginApp', data => {
     console.log(data);
   })
   
