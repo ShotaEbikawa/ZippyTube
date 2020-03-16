@@ -17,6 +17,13 @@ const useStyles = makeStyles(theme => ({
     commentDesc: {
         marginBottom:'1rem',
         fontWeight: '348'
+    },
+    // link of the user's username
+    linkStyle: {
+        color: '#283cb5',
+        textDecoration: 'none',
+        fontFamily: `-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,
+        Fira Sans,Droid Sans,Helvetica Neue,sans-serif`,
     }
 }));
 
@@ -26,7 +33,9 @@ const CommentList = ({comment}) => {
         <>    
             <div className={classes.commentContainer}>
                     <Typography variant='p' className={classes.commentUser}>
+                    <a className={classes.linkStyle} href={'/user-profile/' + comment.username}>
                         {comment.username}
+                    </a>
                     </Typography><br/>
                     <Typography variant='p' className={classes.commentDesc}>
                         {comment.desc}

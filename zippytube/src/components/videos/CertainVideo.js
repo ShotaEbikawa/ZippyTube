@@ -15,6 +15,14 @@ const useStyles = makeStyles(theme => ({
         height:'100%',
         '&:focus': {outline:'none'},
     },
+    // link of the username
+    linkStyle: {
+        color: '#283cb5',
+        fontWeight: '530',
+        textDecoration: 'none',
+        fontFamily: `-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,
+        Fira Sans,Droid Sans,Helvetica Neue,sans-serif`,
+    }
 }))
 
 const CertainVideo = (props) => {
@@ -36,13 +44,10 @@ const CertainVideo = (props) => {
                             </Typography>
                             <hr/>
                             <Typography variant='h6' >
-                                    <Link>
-                                        <a href={'/user-profile/' + props.video.username}>
+                                        <a className={classes.linkStyle} href={'/user-profile/' + props.video.username}>
                                             {props.video.username}
                                         </a>
-                                    </Link>
                             </Typography>
-                            <br/>
                             <Typography variant='p'>
                                 {props.video.desc}
                             </Typography>

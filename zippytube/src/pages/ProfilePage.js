@@ -15,10 +15,11 @@ const useStyles = makeStyles(theme => ({
     userStyle: {
         marginTop: '1.3rem',
         marginLeft: '3rem',
-        fontWeight: '300',
-        fontFamily: 'Hind Guntur',
+        fontWeight: '330',
         '@media only screen and (max-width: 450px)': {fontSize: '1.5rem'},
-        '@media only screen and (max-width: 350px)': {fontSize: '1rem'}
+        '@media only screen and (max-width: 350px)': {fontSize: '1rem'},
+        fontFamily: `-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,
+                    Ubuntu,Cantarell, Fira Sans,Droid Sans,Helvetica Neue,sans-serif`,
     },
     /* parent element that holds element with class name 
     of headerContainer */

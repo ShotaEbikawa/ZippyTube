@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     // the ZippyTube logo
     logo: {
         marginLeft:'3rem',
-        color: 'black',
+        color: '#283cb5',
         cursor: 'pointer',
     },
     /* the Link component, wrapping the 
@@ -34,10 +34,10 @@ const LogoButton = (props) => {
 
     return (
         <>
-            <Typography variant='h5' className={classes.logo}>
-                <Link className={classes.linkStyle} onClick={handleClick}>
+            <Typography variant='h5' className={classes.logo} onClick={handleClick}>
+                <a className={classes.linkStyle} onClick={handleClick}>
                     ZippyTube
-                </Link>
+                </a>
             </Typography>
         </>
     )
