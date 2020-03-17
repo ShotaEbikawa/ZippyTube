@@ -33,11 +33,9 @@ const useStyles = makeStyles(theme => ({
     },
     // the video title
     titleStyle: {
-        fontWeight:'540',
+        fontWeight:'500',
         '@media only screen and (max-width: 800px)': {fontSize:'100%'},
         '@media only screen and (max-width: 600px)': {fontSize:'90%'},
-        fontFamily: `-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,
-                    Fira Sans,Droid Sans,Helvetica Neue,sans-serif`,
     },
     // parent element that holds the island image
     islandContainer: {

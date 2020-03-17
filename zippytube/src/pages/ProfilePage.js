@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
         fontWeight: '500',
         fontSize: '1.7rem',
         '@media only screen and (max-width: 450px)': {fontSize: '1.5rem'},
-        '@media only screen and (max-width: 350px)': {fontSize: '1rem'},
+        '@media only screen and (max-width: 350px)': {fontSize: '1.3rem'},
         fontFamily: `-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,
                     Ubuntu,Cantarell, Fira Sans,Droid Sans,Helvetica Neue,sans-serif`,
     },
@@ -71,16 +71,19 @@ const ProfilePage = ({username, history, socketIo}) => {
                             ProfileButton component. Otherwise, then
                             display empty content*/
                             (flag) ? 
-                            <ProfileButton 
-                                username={username} 
-                                isUser={isUser} 
-                                userProfile={userUrl} 
-                                socketIo={socketIo}
-                            /> : ''
+                            <>
+                                <ProfileButton 
+                                    username={username} 
+                                    isUser={isUser} 
+                                    userProfile={userUrl} 
+                                    socketIo={socketIo}
+                                />
+                                
+                                <Typography className={classes.userStyle} variant='h4'>
+                                    {username}
+                                </Typography> 
+                            </>: ''
                         }
-                        <Typography className={classes.userStyle} variant='h4'>
-                            {username}
-                        </Typography>
                     </div>
                 </div>
                 <Paper className={classes.uploadedContainer}>

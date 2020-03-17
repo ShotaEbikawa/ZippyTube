@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import IconButton from '@material-ui/core/IconButton';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
@@ -18,6 +19,28 @@ const iconButtonTheme = createMuiTheme({
 })
 
 const useStyles = makeStyles(theme => ({
+    // the username of the logged-in user
+    adminStyle: {
+        marginTop: '1.3rem',
+        marginLeft: '3rem',
+        fontWeight: '500',
+        fontSize: '1.7rem',
+        '@media only screen and (max-width: 450px)': {fontSize: '1.5rem'},
+        '@media only screen and (max-width: 350px)': {fontSize: '1rem'},
+        fontFamily: `-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,
+                    Ubuntu,Cantarell, Fira Sans,Droid Sans,Helvetica Neue,sans-serif`,
+    },
+    // the username of the user
+    userStyle: {
+        marginTop: '1.3rem',
+        marginLeft: '1.2rem',
+        fontWeight: '500',
+        fontSize: '1.7rem',
+        '@media only screen and (max-width: 450px)': {fontSize: '1.5rem'},
+        '@media only screen and (max-width: 350px)': {fontSize: '1rem'},
+        fontFamily: `-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,
+                    Ubuntu,Cantarell, Fira Sans,Droid Sans,Helvetica Neue,sans-serif`,
+    },
     // the profile icon
     iconStyle: {
         backgroundColor: '#e0e0e0',
@@ -75,7 +98,6 @@ const ProfileButton = ({history,username,dispatch,isUser,userUrl,socketIo}) => {
         width:'100%',
         height:'100%',
         color: '#3f50b5',
-        zIndex:1,
         '&:hover': { backgroundColor: '#e0e0e0', },
     }
     React.useEffect(() => {
@@ -111,9 +133,12 @@ const ProfileButton = ({history,username,dispatch,isUser,userUrl,socketIo}) => {
                                         {username[0].toUpperCase()}
                                     </IconButton>  :
                                     <IconButton style={iconProfile} component="span">
-                                    </IconButton>                
+                                    </IconButton>          
                                 }
                             </label>
+                            &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; 
                         </>
                     :      
                         <ThemeProvider theme={iconButtonTheme}>
@@ -127,7 +152,7 @@ const ProfileButton = ({history,username,dispatch,isUser,userUrl,socketIo}) => {
                                     </IconButton>                
                                 }
                             </div>
-                        </ThemeProvider>                       
+                        </ThemeProvider>                      
                 }
             </FormControl>
         </>
