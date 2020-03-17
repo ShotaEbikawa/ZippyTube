@@ -7,6 +7,7 @@ import Link from '@material-ui/core/Link';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 
 const useStyles = makeStyles(theme => ({
+    // the modal
     ModalContainer: {
         padding:'auto',
         margin:'auto',
@@ -17,6 +18,7 @@ const useStyles = makeStyles(theme => ({
             outline: 'none',
         }
     },
+    // parent element that holds the Terms and Service contents
     contentContainer: {
         height: '500px',
         overflowY:'auto',

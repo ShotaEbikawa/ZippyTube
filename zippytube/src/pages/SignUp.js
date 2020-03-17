@@ -40,6 +40,11 @@ const useStyle = makeStyles(theme => ({
     // the ZippyTube logo
     logoStyle: {
         fontWeight:'550'
+    },
+    // link of the ZippyTube logo
+    logoLink: {
+        textDecoration: 'none',
+        color: '#283cb5'
     }
 }));
 
@@ -139,7 +144,9 @@ const SignUp = (props) => {
                 <Paper className={classes.formContainer}>
                     <FormControl color='primary'> 
                         <Typography variant='h6' color='primary' className={classes.logoStyle}>
-                            ZippyTube
+                            <a className={classes.logoLink} href="/">
+                                ZippyTube
+                            </a>
                         </Typography>
                         <br/>
                         <Typography variant='h5'>
