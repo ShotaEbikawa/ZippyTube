@@ -8,7 +8,7 @@ const appServer = server.createServer(app);
 const io = socket(appServer);
 const apiProxy = httpProxy.createProxyServer(app);
 
-const GATEWAY_PORT = 4000;
+const GATEWAY_PORT = 80;
 const FEED_READ_URL = process.env.FEED_URL || 'http://localhost:3007';
 const USER_URL = process.env.USER_URL || 'http://localhost:3003';
 const PROFILE_URL = process.env.PROFILE_URL || 'http://localhost:3010';
