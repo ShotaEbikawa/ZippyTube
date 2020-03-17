@@ -7,6 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import {withRouter} from 'react-router-dom';
+import ServiceModal from '../components/form/ServiceModal';
 import FormControl from '@material-ui/core/FormControl';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
@@ -187,7 +188,7 @@ const SignUp = (props) => {
                             checked = {check}
                             control = {<Checkbox/>}
                             onChange = {e => setCheck(!check)}
-                            label= {<span>I accept the <Link>Terms of Service </Link></span>}
+                            label= {<ServiceModal />}
                         />
 
                         {
