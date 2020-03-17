@@ -15,6 +15,12 @@ const useStyles = makeStyles(theme => ({
     videoContainer: {
         backgroundColor:'#f9f9f9'
     },
+    // the "Recommended" title
+    suggestStyle: {
+        fontFamily:'"Roboto", "Helvetica", "Arial", sans-serif',
+        fontWeight: "500",
+        fontSize: '1.4rem',
+    }
 }));
 
 const HomePage = ({media,dispatch,history,width,socketIo}) => {
@@ -30,7 +36,7 @@ const HomePage = ({media,dispatch,history,width,socketIo}) => {
             <Container>
                 <HomeBanner/>
                 <br/><br/>
-                <Typography variant="h5">
+                <Typography className={classes.suggestStyle} variant="h5">
                     Recommended
                 </Typography>
                 <br/>

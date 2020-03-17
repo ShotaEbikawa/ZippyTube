@@ -31,6 +31,10 @@ const useStyles = makeStyles(theme => ({
             width: '100%',
         }
     },
+    // the "Related Videos" title
+    relatedTitle: {
+        fontWeight: '500',
+    }
 }))
 
 const Video = ({id,media,history,dispatch,video}) => {
@@ -74,7 +78,7 @@ const Video = ({id,media,history,dispatch,video}) => {
                     <Grid className={classes.relatedCol} item>
                         {flag ?
                         <>
-                        <Typography variant='h6'>
+                        <Typography className={classes.relatedTitle} variant='h6'>
                             Related Videos
                         </Typography>
                         <br/></> : ''}

@@ -20,6 +20,7 @@ function App() {
       <>
         <head>
         <link href="https://vjs.zencdn.net/7.5.5/video-js.css" rel="stylesheet" />
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css' />
         <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
         <style>
           @import url('https://fonts.googleapis.com/css?family=Hind+Guntur&display=swap');

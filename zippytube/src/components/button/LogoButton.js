@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     logo text */
     linkStyle: {
         textDecoration:'none',
-        fontWeight:'550',
+        fontWeight:'800',
         fontSize:'1.6rem',
     }
 }))

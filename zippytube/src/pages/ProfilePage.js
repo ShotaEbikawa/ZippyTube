@@ -14,8 +14,9 @@ const useStyles = makeStyles(theme => ({
     // the username of the user
     userStyle: {
         marginTop: '1.3rem',
-        marginLeft: '3rem',
-        fontWeight: '330',
+        marginLeft: '1.2rem',
+        fontWeight: '500',
+        fontSize: '1.7rem',
         '@media only screen and (max-width: 450px)': {fontSize: '1.5rem'},
         '@media only screen and (max-width: 350px)': {fontSize: '1rem'},
         fontFamily: `-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     /* parent element that holds element with class name 
     of headerContainer */
     profileHeaders: {
-        padding: '2rem',
+        padding: '1.2rem',
     },
     /* parent element that holds ProfileButton component 
     and the username of the user*/
@@ -38,6 +39,7 @@ const useStyles = makeStyles(theme => ({
     // the "Videos" title
     videoTitle: {
         padding: '0.7rem 1rem 0rem 1rem',
+        fontWeight: '500'
     }
   }));
 

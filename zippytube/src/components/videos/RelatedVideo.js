@@ -45,12 +45,13 @@ const useStyles = makeStyles(theme => ({
     },
     // the video's title
     titleStyle: {
-        fontWeight:'540',
+        fontWeight: '500',
+        fontSize: '1rem',
     },
     // the video's thumbnail
     thumbnailStyle: {
-      width:'100%',
-      height:'100%',
+      width: '100%',
+      height: '100%',
       
     },
 }))

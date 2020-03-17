@@ -10,7 +10,7 @@ import { makeStyles, withTheme } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
     // parent element that holds ResultVideo component
     videoResults: {
-        backgroundColor: '#f2f2f2',
+        backgroundColor: '#f7f7f7',
         padding:'2rem 2rem',
     },
 }));

@@ -22,11 +22,9 @@ const useStyles = makeStyles(theme => ({
         height: '100%',
         cursor: 'pointer',
         borderRadius:'0',
-        '@media only screen and (max-width: 1200px)': { fontSize:'0.8em'},
-        '@media only screen and (max-width: 960px)': {
-            fontSize:'0.7em',
-            overflow:'none',
-        },
+        fontSize: '0.9rem',
+        fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+        '@media only screen and (max-width: 960px)': {overflow:'none'},
     },
     // parent element that holds the video's thumbnail
     imgContainer: {
@@ -39,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     },
     // the video's title
     titleStyle: {
-        fontWeight:'530',
+        fontWeight:'500',
     }
   }));
 

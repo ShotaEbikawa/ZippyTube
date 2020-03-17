@@ -15,6 +15,11 @@ const useStyles = makeStyles(theme => ({
         height:'100%',
         '&:focus': {outline:'none'},
     },
+    // the video title
+    titleStyle: {
+        fontSize: '1.5rem',
+        fontWeight: '500',
+    },
     // link of the username
     linkStyle: {
         color: '#283cb5',
@@ -39,7 +44,7 @@ const CertainVideo = (props) => {
                         </div> 
                         <br/>         
                         <div className={classes.titleContainer}>
-                            <Typography variant='h5' >
+                            <Typography className={classes.titleStyle} variant='h5'>
                                 {props.video.title}
                             </Typography>
                             <hr/>
