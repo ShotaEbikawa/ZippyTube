@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     // the video title
     titleStyle: {
         fontSize: '1.5rem',
-        fontWeight: '500',
+        fontWeight: '400',
     },
     // link of the username
     linkStyle: {
