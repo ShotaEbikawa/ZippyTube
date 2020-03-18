@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
         display:'none',
         width:'70%',
         height:'70%',
-        marginLeft:'1.2rem',
+        marginLeft:'0.65rem',
         marginTop: '1rem',
         backgroundColor:'transparent',
         zIndex:2,
