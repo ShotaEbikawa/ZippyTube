@@ -9,8 +9,6 @@ export const registerUser = (newUser, history) => {
     .catch(err => { console.log('err'); })
 }
 
-
-
 /* loginUser sends a request to the server to check whether
 the given username and password matches in any of the 
 document in the users collecion */
@@ -41,8 +39,6 @@ export const loginUser = (userName,passWord,setToggle,setPassErr,setPassError,se
     });
 }
 
-
-
 /* isAuthenticated sends a request to the server to 
 validate whether a given id and token matches
 to any document in users collection if user's cookie exists */
@@ -70,15 +66,11 @@ export const isAuthenticated = (socketIo) => (dispatch) => {
     }
 }
 
-
-
 // checks whether the cookie is empty
 export const cookieIsEmpty = (token,id) => {
     if (id == '' || id == undefined || token == '' || token == undefined) return true;
     return false;
 }
-
-
 
 /** 
  * Credit goes to this user Mac:
@@ -88,8 +80,6 @@ export const getCookieType = (type) => {
     var b = document.cookie.match('(^|[^;]+)\\s*' + type + '\\s*=\\s*([^;]+)');
     return b ? b.pop() : '';
 }
-
-
 
 /* signOut clears user's cookie assigned in
 all of the path that exists in the app */

@@ -2,8 +2,6 @@ import React from 'react'
 import axios from 'axios'
 import { getCookieType } from './userAction';
 
-
-
 /* createVideos sends the required data regarding the submitted videos
 to the /media-write endpoint. Before it sends to that endpoint, it will
 first check whether the user's token exists in Redis. Once the validation
@@ -47,8 +45,6 @@ export const fetchAllVideos = (setFlag) => (dispatch) => {
     .catch(err => console.log(err));
 }
 
-
-
 /* fetchResults sends the request to the server to retrieve all 
 of the documents in the media collection that matches the 
 given query that the user made */
@@ -65,8 +61,6 @@ export const fetchResults = (query,setFlag) => (dispatch) => {
     .catch(err=>console.log(err));
 }
 
-
-
 /* fetchRelated sends a request to media-read endpoint, where it 
 fetches all of the media documents (videos) that matches to the
 selected media (video)'s title and description. */
@@ -82,10 +76,8 @@ export const fetchRelated = (setFlag,query,id) => (dispatch) => {
     })
 }
 
-
-
-// getVideo sends the request to the server to retrieve the 
-// media collection with the matching video id.
+/* getVideo sends the request to the server to retrieve the 
+media collection with the matching video id. */
 export const getVideo = (id,setFlag,history,setCertainVideo, CertainVideo) => (dispatch) => {
     axios.get(`/media-read/video?id=${id}`)
     .then(res=>res.data)

@@ -9,7 +9,7 @@ The primary motivation behind the creation of this project was to gain a better 
 * <strong>Node.js</strong> for runtime environment
 * <strong>MongoDB</strong> for NoSQL DBMS
 * <strong>Redis</strong> for distributed cache system
-* <strong>Kafka</strong> for publish subsribe model
+* <strong>Socket.io</strong> for the request response pattern
 * <strong>PM2</strong> for production process manager and a load-balancer
 * <strong>Amazon AWS</strong> for cloud computing services
 

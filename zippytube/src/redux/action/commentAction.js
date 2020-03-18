@@ -4,8 +4,6 @@ import { updateComment } from './mediaAction';
 import axios from 'axios';
 import { getCookieType } from './userAction';
 
-
-
 /* createComment sends a request to the /comment-write endpoint to
 create a new comment document in the comment collection. Before
 it fulfills a given functionality, it sends a request to the /auth

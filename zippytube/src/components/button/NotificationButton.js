@@ -10,8 +10,6 @@ import Badge from '@material-ui/core/Badge';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 import { getFeed, setFeedToRead } from '../../redux/action/feedAction';
 
-
-
 const useStyles = makeStyles(theme => ({}));
 
 const NotificationButton = ({color,dispatch,history,socketIo,state,feeds}) => {

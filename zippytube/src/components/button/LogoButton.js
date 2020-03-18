@@ -5,8 +5,6 @@ import { withRouter } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import { makeStyles, withTheme } from '@material-ui/core/styles'; 
 
-
-
 const useStyles = makeStyles(theme => ({
     // the ZippyTube logo
     logo: {

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { getCookieType } from './userAction';
 
-
 /* fetchProfile sends the request to the get-profile-info endpoint
 to retrieve the given user's profile info. */
 const fetchProfile = (username,setMedias,setUserUrl,setFlag) => {
@@ -13,8 +12,6 @@ const fetchProfile = (username,setMedias,setUserUrl,setFlag) => {
     })
     .catch(err=> console.log(err));
 }
-
-
 
 /* getProfileInfo retrieves all of the relevant data (media and user info)
 to display them on the given user's profile page.
@@ -39,9 +36,6 @@ export const getProfileInfo = (username, setMedias, setFlag,setIsUser,setUserUrl
         fetchProfile(username,setMedias,setUserUrl,setFlag);
     }
 }
-
-
-
 
 /* uploadProfile sends a request to the /profile endpoint 
 to upload the given image file to the AWS S3 bucket
