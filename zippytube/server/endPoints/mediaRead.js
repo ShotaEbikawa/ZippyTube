@@ -21,8 +21,9 @@ that the user entered from the client-side */
 app.get('/media-read/fetch-video', (req,res) => {
     console.log('connecting to the server');
     console.log(req.query.search);
+    console.log(req.query.id)
     console.log(req.query.type)
-    MediaMethods.fetchVideo(req.query.search, res,req.query.type);
+    MediaMethods.fetchVideo(req.query.id,req.query.search,res,req.query.type);
 })
 
 app.get('/media-read/video', (req,res) => {

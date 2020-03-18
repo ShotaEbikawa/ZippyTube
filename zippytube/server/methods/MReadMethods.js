@@ -20,13 +20,13 @@ class MReadMethods {
     Notice that the function is performing full-text search,
     meaning any word that matches in the values of title or 
     description will be considered as a document to be returned */
-    static fetchVideo(query,res,type) {
-        Media.find({$text: {$search: query}}).limit(10).then((videos) => {
+    static fetchVideo(id,query,res,type) {
+        Media.find({$text: {$search: query},_id:{$ne:id}}).limit().then((videos) => {
             if (videos) {
                 if (type == 'related') {
                     if (videos.length < 10) {
                         console.log(videos.length)
-                        this.concatVideo(res,videos,10-videos.length);
+                        this.concatVideo(res,id,videos,10-videos.length);
                         return;
                     }
                 }               
@@ -70,21 +70,25 @@ class MReadMethods {
     /* concatVideo method fetches any remaining videos from
     the media collection and concatenates to the fetched videos via
     fetchVideo method */
-    static concatVideo(res,videos,nums) {
+    static concatVideo(res,id,videos,nums) {
         Media.find({}).then((remainingVideos) => {
             if (remainingVideos) {
-                let idDict = new Set();
-                for (let i = 0; i < videos.length; i++) idDict.add(videos[i]._id);
+                let idDict = {}
+                idDict[id] = true;
+                // push all existing id in the object (dictionary)
+                for (let i = 0; i < videos.length; i++)
+                    idDict[videos[i]._id] = true;
+
+                /* push media document only if its id does not
+                exist in the object */
                 for (let i = 0; i < remainingVideos.length; i++) {
                     if (nums == 0) break;
-                    if (!idDict.has(remainingVideos[i]._id)) {
-                        idDict.add(remainingVideos[i]._id);
+                    if (remainingVideos[i]._id in idDict == false) {
+                        idDict[remainingVideos[i]._id]=true;
                         videos.push(remainingVideos[i]);
                         nums--;
                     }
                 }
-                console.log(idDict);
-                console.log(videos.length);
                 res.json({data: videos});
                 return;
             }

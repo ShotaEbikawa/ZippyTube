@@ -71,17 +71,12 @@ export const fetchResults = (query,setFlag) => (dispatch) => {
 fetches all of the media documents (videos) that matches to the
 selected media (video)'s title and description. */
 export const fetchRelated = (setFlag,query,id) => (dispatch) => {
-    axios.get(`/media-read/fetch-video?search=${query}&type=${'related'}`)
+    axios.get(`/media-read/fetch-video?search=${query}&id=${id}&type=${'related'}`)
     .then(res=>res.data)
     .then(results=>{
-        let temp = [];
-        results.data.map(result => {
-            if (result._id != id)
-                temp.push(result);
-        })
         dispatch({
             type:'GET_QUERY',
-            payload: {data:temp}
+            payload: {data:results.data}
         })
         setFlag(true);
     })
