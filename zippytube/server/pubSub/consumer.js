@@ -1,5 +1,4 @@
 const {Kafka} = require('kafkajs');
-const URL = 'ws://localhost:4000/websocket';
 const FeedMethods = require('../methods/FeedMethods');
 
 consumeMessage();
@@ -27,7 +26,7 @@ async function consumeMessage() {
         })
     } 
     finally {
-        console.log('it is working');
+        console.log('message sent');
     }
 }
 

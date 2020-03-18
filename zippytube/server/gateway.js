@@ -18,12 +18,13 @@ const MEDIA_READ_URL = process.env.MEDIA_READ_URL || 'http://localhost:3005';
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Origin", "*"); 
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 app.use(cors())
 
+// endpoint handling user authentication system
 app.all('/auth*', (req, res)=>{
     console.log("Routing to Auth: ", req.url);
     apiProxy.web(req, res, {target: USER_URL});
@@ -32,6 +33,7 @@ app.all('/auth*', (req, res)=>{
     });
 })
 
+// endpoint handling video upload system
 app.all('/media-write*', (req,res) => {
     console.log("Routing to Media (write): ", req.url);
     apiProxy.web(req,res, {target: MEDIA_WRITE_URL});
@@ -40,6 +42,8 @@ app.all('/media-write*', (req,res) => {
     });
 })
 
+/* endpoint handling video fetching system
+(videos with matching query, related videos; etc.) */
 app.all('/media-read*', (req,res) => {
     console.log("Routing to Media (read): ", req.url);
     apiProxy.web(req,res, {target: MEDIA_READ_URL});
@@ -48,6 +52,7 @@ app.all('/media-read*', (req,res) => {
     });
 })
 
+// endpoint handling comment feature
 app.all('/comment*', (req,res) => {
     console.log("Routing to Comment (write): ", req.url);
     apiProxy.web(req,res, {target: COMMENT_WRITE_URL});
@@ -56,6 +61,9 @@ app.all('/comment*', (req,res) => {
     });
 })
 
+/* endpoint handling profile page feature 
+(profile image uploads, fetching the user's 
+profile information; etc.) */
 app.all('/profile*', (req,res) => {
     console.log("Routing to Profile: ", req.url);
     apiProxy.web(req,res, {target: PROFILE_URL});
@@ -64,6 +72,7 @@ app.all('/profile*', (req,res) => {
     })
 })
 
+/* endpoint handling notification feed feature */
 app.all('/feed*', (req,res) => {
     console.log("Routing to Feed (read): ", req.url);
     apiProxy.web(req,res, {target: FEED_READ_URL});
@@ -72,6 +81,7 @@ app.all('/feed*', (req,res) => {
     })
 })
 
+/* the default endpoint (presentation layer) */
 app.all('/*', (req,res) => {
     console.log("Routing to the Presentation layer of the app")
     apiProxy.web(req,res, {target: FRONTEND_URL});
@@ -80,26 +90,34 @@ app.all('/*', (req,res) => {
     });
 })
 
-
+/* serverside websocket that sends response to given 
+websocket requests */
 io.on('connection',socketIo=> {
     console.log('user connected')
+    // beginning of the app
     socketIo.emit('beginApp','Welcome to ZippyTube!!!')
     socketIo.on('sign-out',()=>{
         socketIo.emit('sign-out','signed out');
     });
+    // when the profile image uploads succeeds
     socketIo.on('uploaded',()=>{
         socketIo.emit('uploaded','profile pic uploaded');
     });
+    /* when mobile navbar is activated 
+    (after reaching given resolution sizes) */
     socketIo.on('mobile-nav',()=>{
         socketIo.emit('mobile-nav','mobile-nav activated');
     });
+    // when a given event triggers a feed update
     socketIo.on('feed',()=>{
         console.log('feed sent')
         socketIo.emit('feed','update feed');
     });
+    // when a user signs in to one's account
     socketIo.on('sign-in',()=>{
         socketIo.emit('sign-in','signed in');
     });
+    // when a websocket connection gets lost
     socketIo.on('disconnect', () => {
         console.log('user disconnected');
     });

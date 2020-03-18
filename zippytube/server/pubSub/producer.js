@@ -9,15 +9,6 @@ async function produceMessage(token,msg) {
         console.log("Connecting...")
         await producer.connect();
         console.log("Connected!!!")
-/*         await admin.createTopics({
-            "topics": [{
-                "topic": "Users",
-                "numPartitions": 2
-            }]
-        }) */
-/*      let partition = msg[0] > "n" ? 1 : 0;
-        console.log(msg[0],msg[0] > "N");
-        console.log("N">"M",partition) */
         await producer.send({
             "topic": 'video',
             "messages": [

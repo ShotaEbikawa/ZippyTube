@@ -61,6 +61,8 @@ app.use(cors());
 app.use(bodyParser());
 app.use(cookieParser());
 
+/* retrieves a give user's information (video that one uploaded,
+profile images, and a username) */
 app.get('/profile/get-profile-info', (req,res) => {
     // console.log('here')
     const username = req.query.username;
@@ -68,6 +70,9 @@ app.get('/profile/get-profile-info', (req,res) => {
     User.getUserByUserName(username,res);
 })
 
+
+/* uploads a new profile image to the S3 bucket and appends its url to its
+profile_url attribute */
 app.post('/profile/upload-profile', upload.single('file'), (req,res) => {
     User.storeNewProfile(req,res);
 })
