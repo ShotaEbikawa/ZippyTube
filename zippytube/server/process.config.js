@@ -38,12 +38,6 @@ module.exports = {
             watch: true,
         },
         {
-            name:'consumer',
-            script: './pubSub/consumer.js',
-            ignore_watch: ["../node_modules","./uploads"],
-            watch: true,
-        },
-        {
             name: 'media-server-read',
             script: './endPoints/mediaRead.js',
             ignore_watch: ["../node_modules","./uploads"],

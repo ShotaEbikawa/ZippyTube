@@ -31,6 +31,5 @@ const CommentModel = mongoose.Schema({
     },
 })
 
-// CommentModel.index({desc: 'text', username: 'text'});
 const Comment = mongoose.model('Comment', CommentModel);
 module.exports = Comment;
