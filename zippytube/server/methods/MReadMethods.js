@@ -71,11 +71,21 @@ class MReadMethods {
     the media collection and concatenates to the fetched videos via
     fetchVideo method */
     static concatVideo(res,videos,nums) {
-        Media.find({}).limit(nums).then((remainingVideos) => {
+        Media.find({}).then((remainingVideos) => {
             if (remainingVideos) {
-                let temp = videos.concat(remainingVideos);
-                temp.map(media => console.log(media.title));
-                res.json({data: videos.concat(remainingVideos)});
+                let idDict = new Set();
+                for (let i = 0; i < videos.length; i++) idDict.add(videos[i]._id);
+                for (let i = 0; i < remainingVideos.length; i++) {
+                    if (nums == 0) break;
+                    if (!idDict.has(remainingVideos[i]._id)) {
+                        idDict.add(remainingVideos[i]._id);
+                        videos.push(remainingVideos[i]);
+                        nums--;
+                    }
+                }
+                console.log(idDict);
+                console.log(videos.length);
+                res.json({data: videos});
                 return;
             }
             res.status(403).send('error');
