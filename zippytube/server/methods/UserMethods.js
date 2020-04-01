@@ -67,17 +67,15 @@ class UserMethods {
     1) adds it in the document's token attributes
     2) assigns the given token as user's cookie */
     static loginUser(username, password, res) {
-        let token = new ObjectId();
-        User.findOneAndUpdate({username: username, password: password}, {token:token}, (err, user) => {
+        let newToken = new ObjectId()
+        User.findOneAndUpdate({username: username, password: password}, {token: newToken}, (err, user) => {
             console.log(user);
             if (err || user === null) {
                 res.status(404).send('err');
                 return;
             }
-            addToken(user.token,user);
-            let userId = user._id;
-            let userToken = user.token;
-            let tokenObj = {id: userId, token: userToken};
+            addToken(newToken,user);
+            let tokenObj = {id: user._id, token: newToken};
             res.send(tokenObj);
         })
     }

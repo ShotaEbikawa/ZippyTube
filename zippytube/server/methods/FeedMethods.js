@@ -18,7 +18,7 @@ mongoose.connection.on('error', (error) => {
 
 class FeedMethods {
     // adds new notification feed to the Feed collection
-    static addFeed(userId,message) {
+    static addFeed(userId,message,io) {
         if (userId == '' || message == '')
             return -1;
 
@@ -34,7 +34,7 @@ class FeedMethods {
             }
             console.log(data);
             console.log('Feed successfully added');
-            this.addFeedToUser(userId,data._id);
+            this.addFeedToUser(userId,data._id,io);
             return 1
         })
     }
@@ -42,7 +42,7 @@ class FeedMethods {
 
     /* addFeedToUser method adds the initialized feed document
     into a respective user document's feed attribute */
-    static addFeedToUser(userId, feedId) {
+    static addFeedToUser(userId, feedId,io) {
         User.findOne({_id:userId}, (err,doc) => {
             if (err)  {
                 console.log(err);
@@ -54,6 +54,7 @@ class FeedMethods {
                     console.log(error);
                     return -1;
                 }
+                io.emit('uploaded', 'video is uploaded');
                 return 1;
             });
         })

@@ -46,21 +46,21 @@ class MediaMethods {
 
     /* updateVideo adds the given video's thumbnail's url to 
     its document in media collection. */
-    static updateVideo(url,token,video_url) {
+    static updateVideo(url,token,video_url,io) {
         let query = {url:video_url,token:token};
         Media.findOneAndUpdate(query, {thumbnail:url}, (err,doc) => {
             if (err) {
                 console.log(err);
             }
             // createTopic(token,'The video has been uploaded!!','video')
-            this.addMediaToUser(token,doc._id,doc.user._id);
+            this.addMediaToUser(token,doc._id,doc.user._id,io);
         })
     }
 
     /* addMediaToUser method appends finds the user document
     with the matching user id, and appends the given media
     document id to its media attribute */
-    static addMediaToUser(token,mediaId,userId) {
+    static addMediaToUser(token,mediaId,userId,io) {
         User.findOne({_id:userId}, (err,doc) => {
             if (err)
                 console.log(err);
@@ -70,7 +70,7 @@ class MediaMethods {
                     console.log(error);
                     return -1;
                 }
-                Feed.addFeed(userId,'The video has been uploaded!!');
+                Feed.addFeed(userId,'The video has been uploaded!!',io);
             });
         })
     }

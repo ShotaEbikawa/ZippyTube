@@ -55,7 +55,7 @@ function uploadPhoto(req,url,fileInfo,filePath) {
         console.log('screenshots processed');
         filePath = `../uploads/${fileInfo}.png`;
         fileUrl = `http://zippytube.s3.us-west-1.amazonaws.com/${fileInfo}.mp4`
-        uploadScreenshots(filePath, `${fileInfo}.jpeg`, fileUrl,req.body.token);
+        uploadScreenshots(filePath, `${fileInfo}.jpeg`, fileUrl,req.body.token,req.io);
     })
     .takeScreenshots({
         filename: fileInfo,
@@ -89,7 +89,7 @@ function convertVideo(req,fileInfo,filePath) {
 into S3 bucket. After the file was successfully uploaded into
 S3 bucket, it will call MediaMethods.updateVideo function
 to update the given document's thumbnail attributes. */
-function uploadScreenshots(source,target,video_url,token) {
+function uploadScreenshots(source,target,video_url,token,io) {
     fs.readFile(source, (err,data) => {
         if (!err) {
             let params = {
@@ -109,7 +109,7 @@ function uploadScreenshots(source,target,video_url,token) {
                             console.log('file deleted');
                             const url = `http://zippytube.s3.us-west-1.amazonaws.com/${target}`;
                             console.log(token);
-                            MediaMethods.updateVideo(url,token,video_url);
+                            MediaMethods.updateVideo(url,token,video_url,io);
                         }
                     });
                 }

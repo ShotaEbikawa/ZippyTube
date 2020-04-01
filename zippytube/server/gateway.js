@@ -17,12 +17,45 @@ const MEDIA_WRITE_URL = process.env.MEDIA_WRITE_URL || 'http://localhost:3004';
 const MEDIA_READ_URL = process.env.MEDIA_READ_URL || 'http://localhost:3005';
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*"); 
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-app.use(cors())
+/* serverside websocket that sends response to given 
+websocket requests */
+io.on('connection',socketIo=> {
+    console.log('user connected');
+    app.use((req, res, next) => {
+        req.io = socketIo;
+        res.header("Access-Control-Allow-Origin", "*"); 
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
+    app.use(cors());
+    // beginning of the app
+    socketIo.emit('beginApp','Welcome to ZippyTube!!!')
+    socketIo.on('sign-out',()=>{
+        socketIo.emit('sign-out','signed out');
+    });
+    // when the profile image uploads succeeds
+    socketIo.on('uploaded',()=>{
+        socketIo.emit('uploaded','profile pic uploaded');
+    });
+    /* when mobile navbar is activated 
+    (after reaching given resolution sizes) */
+    socketIo.on('mobile-nav',()=>{
+        socketIo.emit('mobile-nav','mobile-nav activated');
+    });
+    // when a given event triggers a feed update
+    socketIo.on('feed',()=>{
+        console.log('feed sent')
+        socketIo.emit('feed','update feed');
+    });
+    // when a user signs in to one's account
+    socketIo.on('sign-in',()=>{
+        socketIo.emit('sign-in','signed in');
+    });
+    // when a websocket connection gets lost
+    socketIo.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+})
 
 // endpoint handling user authentication system
 app.all('/auth*', (req, res)=>{
@@ -90,38 +123,6 @@ app.all('/*', (req,res) => {
     });
 })
 
-/* serverside websocket that sends response to given 
-websocket requests */
-io.on('connection',socketIo=> {
-    console.log('user connected')
-    // beginning of the app
-    socketIo.emit('beginApp','Welcome to ZippyTube!!!')
-    socketIo.on('sign-out',()=>{
-        socketIo.emit('sign-out','signed out');
-    });
-    // when the profile image uploads succeeds
-    socketIo.on('uploaded',()=>{
-        socketIo.emit('uploaded','profile pic uploaded');
-    });
-    /* when mobile navbar is activated 
-    (after reaching given resolution sizes) */
-    socketIo.on('mobile-nav',()=>{
-        socketIo.emit('mobile-nav','mobile-nav activated');
-    });
-    // when a given event triggers a feed update
-    socketIo.on('feed',()=>{
-        console.log('feed sent')
-        socketIo.emit('feed','update feed');
-    });
-    // when a user signs in to one's account
-    socketIo.on('sign-in',()=>{
-        socketIo.emit('sign-in','signed in');
-    });
-    // when a websocket connection gets lost
-    socketIo.on('disconnect', () => {
-        console.log('user disconnected');
-    });
-})
 
 
 appServer.listen(GATEWAY_PORT);

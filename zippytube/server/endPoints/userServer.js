@@ -30,8 +30,6 @@ app.post('/auth/login-account', (req,res)=> {
     console.log(req.body)
     const username = req.body.username;
     const password = req.body.password;
-    console.log(username,password)
-    console.log('is it going in here')
     UserMethods.loginUser(username, password, res);
     try {
     } catch (err) {
